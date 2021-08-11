@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/navbar.css";
+import ".././styles/navbar.css";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -16,7 +16,7 @@ const Navbar = () => {
     <div>
       {/* medium and large screens */}
       <div className="hidden sm:flex justify-center">
-        <div className="grid grid-cols-4 md:w-9/12 text-center font-semibold text-sm">
+        <div className="grid grid-cols-5 md:w-9/12 text-center font-semibold text-sm">
           <div className="p-4">
             <Link
               to="/"
@@ -27,6 +27,18 @@ const Navbar = () => {
               }`}
             >
               STOCKS
+            </Link>
+          </div>
+          <div className="p-4">
+            <Link
+              to="/addStock"
+              className={`font-bold ${
+                window.location.pathname === "/addStock"
+                  ? "navlink-hover"
+                  : "navlink-no-hover"
+              }`}
+            >
+              ADD STOCKS
             </Link>
           </div>
           <div className="p-4 hidden sm:block">
@@ -101,6 +113,28 @@ const Navbar = () => {
                 }`}
               >
                 STOCKS
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`flex justify-center ${
+            window.location.pathname === "/addStock"
+              ? "bg-blue-500"
+              : "navlink-no-hover"
+          }`}
+        >
+          <div className="flex justify-center w-11/12 ">
+            <div className="pt-3 pb-3 pl-2 text-sm text-white">
+              <Link
+                to="/addStock"
+                className={`font-bold ${
+                  window.location.pathname === "/addStock"
+                    ? "navlink-mobile-hover"
+                    : "navlink-no-hover"
+                }`}
+              >
+                ADD STOCKS
               </Link>
             </div>
           </div>
