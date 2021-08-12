@@ -4,9 +4,9 @@ const Stocks = () => {
   return (
     <div>
       {/* medium and large screens */}
-      <div className="hidden sm:block pt-10">
-        <div style={{ maxHeight: "30vh" }}>
-          <div className="flex justify-center ">
+      <div className="hidden sm:block pt-10 pb-32 h-screen">
+        <div className="">
+          <div className="flex justify-center">
             <div className="flex justify-center sm:w-11/12 lg:w-10/12">
               <label className="mr-5 my-auto">CATEGORY : </label>
               <select
@@ -37,7 +37,7 @@ const Stocks = () => {
         </div>
         <div
           className="overflow-y-auto pb-10 font-normal"
-          style={{ height: "70vh" }}
+          style={{ maxHeight: "70vh" }}
         >
           {[...Array(10)].map((element, i) => (
             <div className="flex justify-center">

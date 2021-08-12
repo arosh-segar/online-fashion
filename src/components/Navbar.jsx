@@ -1,16 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ".././styles/navbar.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const location = useLocation();
   const [openMenu, setOpenMenu] = useState(false);
-
-  useEffect(() => {
-    console.log(location.pathname);
-  });
 
   return (
     <div>

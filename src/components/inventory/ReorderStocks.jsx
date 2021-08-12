@@ -4,8 +4,8 @@ const ReorderStocks = () => {
   return (
     <div>
       {/* medium and large screens */}
-      <div className="hidden sm:block pt-10">
-        <div style={{ maxHeight: "30vh" }}>
+      <div className="hidden sm:block pt-10 h-screen">
+        <div>
           <div className="flex justify-center ">
             <div className="flex justify-center sm:w-11/12 lg:w-10/12">
               <label className="mr-5 my-auto">RISK LEVEL : </label>
