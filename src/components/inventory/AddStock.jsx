@@ -1,35 +1,102 @@
 import React, { useState } from "react";
+import { API_URL } from "../../constants";
+import axios from "axios";
+import { serialize } from "object-to-formdata";
 
 const AddStock = () => {
-  const [xs, setXs] = useState(false);
-  const [s, setS] = useState(false);
-  const [m, setM] = useState(false);
-  const [l, setL] = useState(false);
-  const [xl, setXl] = useState(false);
+  const [checkXS, setCheckXS] = useState(false);
+  const [checkS, setcheckS] = useState(false);
+  const [checkM, setcheckM] = useState(false);
+  const [checkL, setcheckL] = useState(false);
+  const [checkXL, setcheckXL] = useState(false);
+  const [productName, setProductName] = useState("");
+  const [productType, setProductType] = useState("");
+  const [productCategory, setProductCategory] = useState("");
+  const [pricePerUnit, setPricePerUnit] = useState("");
+  const [reorderQty, setReorderQty] = useState("");
+  const [xsSizeAvailableQty, setXsSizeAvailableQty] = useState("");
+  const [sSizeAvailableQty, setSSizeAvailableQty] = useState("");
+  const [mSizeAvailableQty, setMSizeAvailableQty] = useState("");
+  const [lSizeAvailableQty, setLSizeAvailableQty] = useState("");
+  const [xlSizeAvailableQty, setXlSizeAvailableQty] = useState("");
+  const [productImage, setProductImage] = useState("");
+  const [previewProductImage, setPreviewProductImage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let xs, s, m, l, xl;
+
+    checkXS
+      ? (xs = {
+          xsSizeAvailableQty: parseFloat(xsSizeAvailableQty),
+        })
+      : (xs = null);
+
+    checkS
+      ? (s = {
+          sSizeAvailableQty: parseFloat(sSizeAvailableQty),
+        })
+      : (s = null);
+
+    checkM
+      ? (m = {
+          mSizeAvailableQty: parseFloat(mSizeAvailableQty),
+        })
+      : (m = null);
+
+    checkL
+      ? (l = {
+          lSizeAvailableQty: parseFloat(lSizeAvailableQty),
+        })
+      : (l = null);
+
+    checkXL
+      ? (xl = {
+          xlSizeAvailableQty: parseFloat(xlSizeAvailableQty),
+        })
+      : (xl = null);
+
+    const sizes = {
+      xs,
+      s,
+      m,
+      l,
+      xl,
+    };
+
+    const product = {
+      productName,
+      productType,
+      productCategory,
+      pricePerUnit: parseFloat(pricePerUnit),
+      reorderQty: parseFloat(reorderQty),
+      sizes,
+      productImage,
+    };
+
+    const formData = serialize(product);
+
+    axios
+      .post(`${API_URL}/inventory/addStock`, formData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log(product);
+  };
 
   return (
     <div>
       <div className="block mt-10 pb-10 min-h-screen">
         <div className="flex items-center justify-center">
-          <div className="w-11/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden">
-            {/* Product code */}
-            <div class="w-full px-3 mt-10 mb-6 md:mb-0">
-              <label
-                class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                for="grid-first-name"
-              >
-                Product code
-              </label>
-              <input
-                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="grid-first-name"
-                type="text"
-                placeholder="Jane"
-              />
-              <p class="text-red-500 text-xs italic">
-                Please fill out this field.
-              </p>
-            </div>
+          <form
+            onSubmit={handleSubmit}
+            className="w-11/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden"
+          >
             {/* Product Name */}
             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
               <label
@@ -40,9 +107,10 @@ const AddStock = () => {
               </label>
               <input
                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="grid-first-name"
                 type="text"
-                placeholder="Jane"
+                placeholder="NIKE T-shirt"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
               />
               <p class="text-red-500 text-xs italic">
                 Please fill out this field.
@@ -58,16 +126,16 @@ const AddStock = () => {
               </label>
               <select
                 className="p-2 border border-none w-full rounded-lg text-black"
-                name="cars"
-                id="cars"
                 style={{ textAlignLast: "center" }}
+                value={productType}
+                onChange={(e) => setProductType(e.target.value)}
               >
                 <option value="0" selected>
                   Select
                 </option>
-                <option value="1">T-shirts</option>
-                <option value="2">Trousers</option>
-                <option value="3">Sports</option>
+                <option value="tShirts">T-shirts</option>
+                <option value="trousers">Trousers</option>
+                <option value="sports">Sports</option>
               </select>
               <p class="text-red-500 text-xs italic">
                 Please fill out this field.
@@ -83,16 +151,16 @@ const AddStock = () => {
               </label>
               <select
                 className="p-2 border border-none w-full rounded-lg text-black"
-                name="cars"
-                id="cars"
                 style={{ textAlignLast: "center" }}
+                value={productCategory}
+                onChange={(e) => setProductCategory(e.target.value)}
               >
                 <option value="0" selected>
                   Select
                 </option>
-                <option value="1">T-shirts</option>
-                <option value="2">Trousers</option>
-                <option value="3">Sports</option>
+                <option value="men">men</option>
+                <option value="women">women</option>
+                <option value="kids">kids</option>
               </select>
               <p class="text-red-500 text-xs italic">
                 Please fill out this field.
@@ -108,9 +176,29 @@ const AddStock = () => {
               </label>
               <input
                 class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="grid-first-name"
-                type="text"
-                placeholder="Jane"
+                placeholder="1000"
+                type="number"
+                value={pricePerUnit}
+                onChange={(e) => setPricePerUnit(e.target.value)}
+              />
+              <p class="text-red-500 text-xs italic">
+                Please fill out this field.
+              </p>
+            </div>
+            {/* Reorder quantity */}
+            <div class="w-full px-3 mt-10 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
+                for="grid-first-name"
+              >
+                Re-order quantity
+              </label>
+              <input
+                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                placeholder="1000"
+                type="number"
+                value={reorderQty}
+                onChange={(e) => setReorderQty(e.target.value)}
               />
               <p class="text-red-500 text-xs italic">
                 Please fill out this field.
@@ -129,11 +217,11 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setXs(!xs)}
+                    onClick={() => setCheckXS(!checkXS)}
                   />
                   <span class="text-sm">XS</span>
                 </label>
-                <div className={xs ? "block" : "hidden"}>
+                <div className={checkXS ? "block" : "hidden"}>
                   <div className="flex flex-row items-center px-10">
                     <label
                       class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -143,37 +231,9 @@ const AddStock = () => {
                     </label>
                     <input
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Minimum quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Re-order quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
+                      type="number"
+                      value={xsSizeAvailableQty}
+                      onChange={(e) => setXsSizeAvailableQty(e.target.value)}
                     />
                   </div>
                 </div>
@@ -184,11 +244,11 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setS(!s)}
+                    onClick={() => setcheckS(!checkS)}
                   />
                   <span class="text-sm">S</span>
                 </label>
-                <div className={s ? "block" : "hidden"}>
+                <div className={checkS ? "block" : "hidden"}>
                   <div className="flex flex-row items-center px-10">
                     <label
                       class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -198,37 +258,9 @@ const AddStock = () => {
                     </label>
                     <input
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Minimum quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Re-order quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
+                      type="number"
+                      value={sSizeAvailableQty}
+                      onChange={(e) => setSSizeAvailableQty(e.target.value)}
                     />
                   </div>
                 </div>
@@ -239,11 +271,11 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setM(!m)}
+                    onClick={() => setcheckM(!checkM)}
                   />
                   <span class="text-sm">M</span>
                 </label>
-                <div className={m ? "block" : "hidden"}>
+                <div className={checkM ? "block" : "hidden"}>
                   <div className="flex flex-row items-center px-10">
                     <label
                       class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -253,37 +285,9 @@ const AddStock = () => {
                     </label>
                     <input
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Minimum quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Re-order quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
+                      type="number"
+                      value={mSizeAvailableQty}
+                      onChange={(e) => setMSizeAvailableQty(e.target.value)}
                     />
                   </div>
                 </div>
@@ -294,11 +298,11 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setL(!l)}
+                    onClick={() => setcheckL(!checkL)}
                   />
                   <span class="text-sm">L</span>
                 </label>
-                <div className={l ? "block" : "hidden"}>
+                <div className={checkL ? "block" : "hidden"}>
                   <div className="flex flex-row items-center px-10">
                     <label
                       class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -308,37 +312,9 @@ const AddStock = () => {
                     </label>
                     <input
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Minimum quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Re-order quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
+                      type="number"
+                      value={lSizeAvailableQty}
+                      onChange={(e) => setLSizeAvailableQty(e.target.value)}
                     />
                   </div>
                 </div>
@@ -349,11 +325,11 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setXl(!xl)}
+                    onClick={() => setcheckXL(!checkXL)}
                   />
                   <span class="text-sm">XL</span>
                 </label>
-                <div className={xl ? "block" : "hidden"}>
+                <div className={checkXL ? "block" : "hidden"}>
                   <div className="flex flex-row items-center px-10">
                     <label
                       class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -363,37 +339,9 @@ const AddStock = () => {
                     </label>
                     <input
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Minimum quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
-                    />
-                  </div>
-                  <div className="flex flex-row items-center px-10">
-                    <label
-                      class="block w-8/12 items-center uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                      for="grid-first-name"
-                    >
-                      Re-order quantity
-                    </label>
-                    <input
-                      class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      id="grid-first-name"
-                      type="text"
-                      placeholder="Jane"
+                      type="number"
+                      value={xlSizeAvailableQty}
+                      onChange={(e) => setXlSizeAvailableQty(e.target.value)}
                     />
                   </div>
                 </div>
@@ -409,18 +357,36 @@ const AddStock = () => {
               </label>
               <input
                 type="file"
-                id="avatar"
-                name="avatar"
-                accept="image/png, image/jpeg"
+                accept=".png, .jpg, .jpeg"
+                name="photo"
+                onChange={(e) => {
+                  setProductImage(e.target.files[0]);
+                  setPreviewProductImage(
+                    URL.createObjectURL(e.target.files[0])
+                  );
+                }}
               />
               <p class="text-red-500 text-xs italic">Please select an image</p>
             </div>
+            {previewProductImage && (
+              <div className="px-4 flex justify-center">
+                <img
+                  src={previewProductImage}
+                  className=" mt-4 rounded-lg h-72 w-72"
+                  alt="not loaded"
+                />
+              </div>
+            )}
+
             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
-              <button className="w-full rounded-md p-2 mb-5 bg-blue-500">
+              <button
+                type="submit"
+                className="w-full rounded-md p-2 mb-5 bg-blue-500"
+              >
                 ADD STOCK
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
