@@ -38,7 +38,7 @@ function App() {
        <Switch>
        <Route exact path={"/"}>
             <Suppliers />
-          </Route>
+        </Route>
         
       </Switch> 
 
