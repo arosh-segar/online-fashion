@@ -2,25 +2,24 @@ let supplier = null;
 const ObjectID = require('mongodb').ObjectId;
 
 
-setTimeout(
-
-  supplier = require('../utils/connection').db('OnlineFashionDB').collection('supplier')
-
-,5000)
+setTimeout(async ()=>{
+   supplier =await require('../utils/connection').db('OnlineFashionDB').collection('supplier')
+}
+,3000)
 
 
 
 const saveSupplier = async ({id,name,address,phoneNo,email}) => {
 
 
-    const result = await supplier.insetOne({id,name,address,phoneNo,email})
-    return result.ops[0]
+    const result = await supplier.insertOne({id,name,address,phoneNo,email})
+    return result
 
 }
 
-const removSupplier = async (id) =>{
+const removeSupplier = async (id) =>{
 
-    return await supplier.removeOne({id:id})
+    return await supplier.deleteOne({id:id})
 
 }
 
@@ -32,15 +31,15 @@ const editSupplier = async ({id,name,address,phoneNo,email}) =>{
 
 const getSuppliers = async () =>{
 
-   const results = await supplier.find({})
-   results.toArray()
+    const results = await supplier.find({})
+    return results.toArray()
 
 }
 
 module.exports={
 
    saveSupplier,
-   removSupplier,
+   removeSupplier,
    editSupplier,
    getSuppliers
 

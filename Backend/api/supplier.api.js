@@ -1,11 +1,11 @@
-const {saveSupplier,removSupplier,editSupplier,getSuppliers} = require('../dal/supplier.dao')
+const {saveSupplier,removeSupplier,editSupplier,getSuppliers} = require('../dal/supplier.dao')
 
 
 
-const addSupplier = async({id,name,address,phoneNo,email})=>{
+const addSupplier = async({supplierID,name,address,phoneNo,email})=>{
 
    const supplier = {
-       id:id,
+       id:supplierID,
        name:name,
        address:address,
        phoneNo:phoneNo,
@@ -19,7 +19,7 @@ const addSupplier = async({id,name,address,phoneNo,email})=>{
 
 const deleteSupplier = async(id) => {
 
-   return await removSupplier(id)
+   return await removeSupplier(id)
 
 }
 

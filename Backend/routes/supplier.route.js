@@ -1,17 +1,19 @@
 const router = require('express').Router()
 const {addSupplier,getAllSuppliers,updateSupplier,deleteSupplier} = require('../api/supplier.api')
 
-router.post("/add",async(req,res)=>{
+router.post("/addSupplier",async(req,res)=>{
 
     let supplier = req.body
 
     supplier = addSupplier(supplier)
 
+    res.status(200).send(supplier)
+
 
 })
 
 
-router.get("/get",async (req,res)=>{
+router.get("/getSuppliers",async (req,res)=>{
 
 
    let suppliers = await getAllSuppliers()
@@ -21,7 +23,7 @@ router.get("/get",async (req,res)=>{
 })
 
 
-router.delete("/delete/:id",async (req,res)=>{
+router.delete("/deleteSupplier/:id",async (req,res)=>{
 
 
     await deleteSupplier(req.params.id)
