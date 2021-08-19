@@ -1,4 +1,8 @@
-const { saveStock } = require("../dal/stock.dao");
+const {
+  saveStock,
+  getAllStocks,
+  deleteStockById,
+} = require("../dal/stock.dao");
 
 const createStock = async ({
   productName,
@@ -22,4 +26,14 @@ const createStock = async ({
   return await saveStock(inventory);
 };
 
-module.exports = { createStock };
+//retrieving the details of all stocks from the dal
+const getStocks = async () => {
+  return await getAllStocks();
+};
+
+//passing the item id of the item that need to deleted
+const deleteStock = async (id) => {
+  return await deleteStockById(id);
+};
+
+module.exports = { createStock, getStocks, deleteStock };

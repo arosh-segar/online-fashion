@@ -29,4 +29,15 @@ const saveStock = async ({
   return result.ops[0];
 };
 
-module.exports = { saveStock };
+//retrieving all the stock records from the db
+const getAllStocks = async () => {
+  const results = await stock.find({});
+  return results.toArray();
+};
+
+//deleting a particular item record from the db
+const deleteStockById = async (id) => {
+  return await stock.findOneAndDelete({ _id: ObjectID(id) });
+};
+
+module.exports = { saveStock, getAllStocks, deleteStockById };
