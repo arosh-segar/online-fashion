@@ -7,17 +7,19 @@ const Vehicles = () => {
         <div className="hidden sm:block pt-10 pb-32 h-screen">
           <div className="">
             <div className="flex justify-center">
-              <div className="flex justify-center sm:w-11/12 lg:w-10/12">
-                 
-                < input
-                  className="p-2 border border-none w-2/4 rounded-lg"
-                  name="cars"
-                  id="cars"
-                  style={{ textAlignLast: "center" }}
-                 >
-                  
-                </input>
-              </div>
+            <div class="flex items-center justify-center">
+    <div class="flex border-2 rounded">
+        <input type="text" class="px-4 py-2 w-80" placeholder="Search..."/>
+        <button class="flex items-center justify-center px-4 border-l">
+            <svg class="w-6 h-6 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24">
+                <path
+                    d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+            </svg>
+        </button>
+    </div>
+</div>
+
             </div>
             <div className="flex justify-center">
               <div className="grid grid-cols-5 sm:grid-cols-4 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
