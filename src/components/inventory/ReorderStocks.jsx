@@ -1,6 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { API_URL } from "../../constants";
+import axios from "axios";
+import ReorderStockItem from "./ReorderStockItem";
 
 const ReorderStocks = () => {
+  const [reorderStocks, setReorderStocks] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/inventory`)
+      .then((response) => {
+        setReorderStocks(
+          response.data.filter(
+            (stock) =>
+              parseFloat(stock.sizes.xs.xsSizeAvailableQty) <
+                parseFloat(stock.reorderQty) ||
+              parseFloat(stock.sizes.s.sSizeAvailableQty) <
+                parseFloat(stock.reorderQty) ||
+              parseFloat(stock.sizes.m.mSizeAvailableQty) <
+                parseFloat(stock.reorderQty) ||
+              parseFloat(stock.sizes.l.lSizeAvailableQty) <
+                parseFloat(stock.reorderQty) ||
+              parseFloat(stock.sizes.xl.xlSizeAvailableQty) <
+                parseFloat(stock.reorderQty)
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
   return (
     <div>
       {/* medium and large screens */}
@@ -35,21 +65,14 @@ const ReorderStocks = () => {
           </div>
         </div>
         <div className="overflow-y-auto pb-10" style={{ height: "70vh" }}>
-          {[...Array(10)].map((element, i) => (
-            <div className="flex justify-center">
-              <div className="grid gap-5 grid-cols-5 sm:grid-cols-5 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
-                <div className="pt-4 pb-4 m-auto">P00{i + 1}</div>
-                <div className="pt-4 pb-4 m-auto">PRODUCT {i + 1}</div>
-                <div className="pt-4 pb-4 m-auto">{100 * (i + 10)}</div>
-                <div className="pt-4 pb-4 m-auto">{100 * (i + 2)}</div>
-                <div className="pt-4 pb-4 mr-2">
-                  <button className="text-xs pt-2 pb-2 md:pt-4 md:pb-4 w-full md:w-10/12 rounded-md bg-blue-600">
-                    <i className="fa fa-paper-plane mr-3 transition duration-150 ease-in-out"></i>
-                    RE-ORDER
-                  </button>
-                </div>
-              </div>
-            </div>
+          {reorderStocks.map((reorderStock) => (
+            <>
+              <ReorderStockItem
+                key={reorderStock._id}
+                view="web"
+                reorderStock={reorderStock}
+              />
+            </>
           ))}
         </div>
       </div>
@@ -75,38 +98,7 @@ const ReorderStocks = () => {
             </div>
           </div>
           {[...Array(10)].map((element, i) => (
-            <div className="flex justify-center">
-              <div className="grid gap-5 text-center grid-cols-1 sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40">
-                <div className="mt-2 pt-1 pb-1 m-auto">
-                  <div className="">PRODUCT CODE</div>
-                  <div className="text-xs">P00{i + 1}</div>
-                </div>
-                <div className="pt-1 pb-1 m-auto hidden sm:block">
-                  <img
-                    className="rounded-lg h-20"
-                    src="https://images.unsplash.com/photo-1525268499284-86ec700c826d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                    alt="No pic"
-                  />
-                </div>
-                <div className="pt-1 pb-1 m-auto">
-                  <div className="">PRODUCT NAME</div>
-                  <div className="text-xs">PRODUCT {i + 1}</div>
-                </div>
-                <div className="pt-1 pb-1 m-auto">
-                  <div className="">AVAILABLE QUANTITY</div>
-                  <div className="text-xs">{100 * (i + 10)}</div>
-                </div>
-                <div className="pt-1 pb-1 m-auto">
-                  <div className="">RE-ORDER QUANTITY</div>
-                  <div className="text-xs">{100 * (i + 2)}</div>
-                </div>
-                <div className="flex-row mx-auto justify-center pt-4 pb-4">
-                  <button className="p-2 pr-4 pl-4 mb-3 w-full rounded-md bg-blue-600">
-                    <i className="fa fa-paper-plane mr-3"></i>RE-ORDER
-                  </button>
-                </div>
-              </div>
-            </div>
+            <div></div>
           ))}
         </div>
       </div>

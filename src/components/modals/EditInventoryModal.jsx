@@ -409,7 +409,7 @@ const EditInventoryModal = (props) => {
                   type="submit"
                   className="w-full rounded-md p-2 mb-5 bg-blue-500"
                 >
-                  ADD STOCK
+                  EDIT STOCK
                 </button>
               </div>
             </form>
