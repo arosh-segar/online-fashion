@@ -26,7 +26,18 @@ router.get("/getSuppliers",async (req,res)=>{
 router.delete("/deleteSupplier/:id",async (req,res)=>{
 
 
-    await deleteSupplier(req.params.id)
+   let deleted = await deleteSupplier(req.params.id)
+
+   res.status(200).send(deleted)
+
+})
+
+router.put("/updateSupplier/:id",async (req,res)=>{
+
+
+    let updated = await updateSupplier(req.params.id,req.body,)
+
+    res.status(200).send(updated)
 
 })
 

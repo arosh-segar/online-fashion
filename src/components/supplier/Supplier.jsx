@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import { API_URL } from "../../constants";
-import ViewSupplier from './ViewSupplier'
+import EditSupplier from './EditSupplier'
 import DeleteSupplier from '../modals/DeleteSupplierModal'
 
 
@@ -14,18 +14,27 @@ const Supplier = (props) =>{
     const [openDelete,setDelete] = useState(false)
     const onOpenDelete = () => setDelete(true)
     const onCloseDelete = () => setDelete(false)
-    const onDeleteSupplier = ()=>{
-       // props.deleteSupplier(props.supplier.id)
-        onCloseDelete()
-    }
 
+
+
+    const deleteSupplier = (id)=>{
+
+        axios.delete(`${API_URL}/supplier/deleteSupplier/${id}`)
+            .then(response =>{
+                console.log("deleted")
+                onCloseDelete()
+            }).catch(e =>{
+            console.log(e)
+        })
+
+    }
 
 
     return(
 
         <div>
             <div className="flex justify-center">
-              <div className="grid gap-5 grid-cols-5 sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
+              <div className="grid gap-5 grid-cols-6 sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
                   <div className="pt-4 pb-4 m-auto">{props.supplier.id}</div>
                   <div className="pt-4 pb-4 m-auto">{props.supplier.name}</div>
                   <div className="pt-4 pb-4 m-auto">{props.supplier.address}</div>
@@ -44,7 +53,7 @@ const Supplier = (props) =>{
                 </div>
               </div>
             </div>
-            <ViewSupplier
+            <EditSupplier
              openEdit={openEdit}
              onCloseEdit={onCloseEdit}
              supplier={props.supplier}
@@ -53,7 +62,7 @@ const Supplier = (props) =>{
              openDelete = {openDelete}
              onCloseDelete = {onCloseDelete}
              id={props.supplier.id}
-             onDeleteSuppplier={onDeleteSupplier}
+             deleteSupplier={deleteSupplier}
             />
         </div>    
 

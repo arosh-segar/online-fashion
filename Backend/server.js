@@ -1,7 +1,7 @@
 const Express = require("express");
 const cors = require("cors");
 
-//const SupplierRoutes = require("./routes/supplier.route");
+const SupplierRoutes = require("./routes/supplier.route");
 const InventoryRoutes = require("./routes/inventory.route");
 //const DeliveryRoutes = require("./routes/delivery.route");
 
@@ -12,7 +12,7 @@ const app = new Express();
 app.use(cors());
 app.use(Express.json());
 
-//app.use("/supplier", SupplierRoutes);
+app.use("/supplier", SupplierRoutes);
 app.use("/inventory", InventoryRoutes);
 //app.use("/delivery", DeliveryRoutes);
 

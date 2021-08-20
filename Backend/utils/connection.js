@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const URI = process.env.URI;
 
-const client = new MongoClient(URI, {
+const client =  new MongoClient(URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

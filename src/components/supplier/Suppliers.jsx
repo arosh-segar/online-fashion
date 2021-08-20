@@ -28,17 +28,6 @@ const Suppliers = () =>{
    },[])
 
 
-    const deleteSupplier = (id)=>{
-
-    axios.delete(`${API_URL}/supplier/deleteSupplier/${id}`)
-        .then(response =>{
-            console.log("delted")
-        }).catch(e =>{
-            console.log(e)
-    })
-
-   }
-
     return(
 
         <div>
@@ -46,7 +35,7 @@ const Suppliers = () =>{
             <button
                 className="bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                  onClick={onOpenAddModal}>
-                + Add Supplier
+                + ADD SUPPLIER
             </button>
         <div className="hidden sm:block pt-10 pb-32 h-screen">
           <div className="flex justify-center">
@@ -56,21 +45,22 @@ const Suppliers = () =>{
               <div className="p-3">ADDRESS</div>
               <div className="p-3">PHONE NO</div>
               <div className="p-3">EMAIL</div>
+                <div className="p-3">ACTIONS</div>
             </div>
           </div>
-        </div>
         <div
           className="overflow-y-auto pb-10 font-normal"
           style={{ maxHeight: "70vh" }}
         >
           {suppliers.map(supplier => {
-            return <Supplier supplier={supplier} key={supplier._id} deleteSupplier={deleteSupplier}/>
+            return <Supplier supplier={supplier} key={supplier._id}/>
           })}
         </div>
         <AddSupplier
           openAdd={openAdd}
           onCloseAdd={onCloseAddModal}
         />
+        </div>
         </div>
 
         )

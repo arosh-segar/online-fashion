@@ -24,8 +24,9 @@ const removeSupplier = async (id) =>{
 }
 
 const editSupplier = async ({id,name,address,phoneNo,email}) =>{
+    
 
-   return await supplier.updateOne({id:id},{$set:{name,address,phoneNo,email}})
+   return await supplier.replaceOne({id:id},{id,name,address,phoneNo,email})
 
 }
 
