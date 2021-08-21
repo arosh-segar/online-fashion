@@ -9,6 +9,7 @@ const Suppliers = () =>{
 
 
     const [suppliers,setSuppliers] = useState([])
+
     const [openAdd, setAdd] = useState(false);
     const onOpenAddModal = () => setAdd(true);
     const onCloseAddModal = () => setAdd(false);
@@ -25,7 +26,7 @@ const Suppliers = () =>{
         console.log(error)
      })
 
-   },[])
+   },[openAdd])
 
 
     return(
@@ -33,7 +34,7 @@ const Suppliers = () =>{
         <div>
         {/* medium and large screens */}
             <button
-                className="bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                className="ml-40 mt-20  bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                  onClick={onOpenAddModal}>
                 + ADD SUPPLIER
             </button>

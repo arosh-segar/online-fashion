@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from 'axios'
 import {API_URL} from "../../constants";
 import {Modal} from 'react-responsive-modal'
+import ResponseModal from "../modals/ResponseModal";
 
 
 const AddSupplier = (props) => {
@@ -13,6 +14,12 @@ const AddSupplier = (props) => {
     const [phoneNo, setPhoneNo] = useState("");
     const [email, setEmail] = useState("");
 
+    const [openResponse, setOpenResponse] = useState(false);
+    const onOpenResponseModal = () => setOpenResponse(true);
+    const onCloseResponseModal = () => {
+        setOpenResponse(false)
+        onCloseAdd()
+    }
 
     const handleSubmit = (e) => {
 
@@ -29,7 +36,7 @@ const AddSupplier = (props) => {
         axios.post(`${API_URL}/supplier/addSupplier`, Supplier)
             .then(response => {
                 console.log(response.data)
-                onCloseAdd()
+                onOpenResponseModal()
             })
             .catch(e => {
                 console.log(e.data)
@@ -63,10 +70,13 @@ const AddSupplier = (props) => {
                                         onChange={e => {
                                             setSupplierID(e.target.value)
                                         }}
+                                        required
                                     />
-                                    <p class="text-red-500 text-xs italic">
-                                        Please fill out this field.
-                                    </p>
+                                    {!supplierID &&(
+                                        <p class="text-red-500 text-xs italic">
+                                            Please fill out this field.
+                                        </p>)
+                                    }
                                 </div>
                                 {/* Name */}
                                 <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -84,10 +94,13 @@ const AddSupplier = (props) => {
                                         onChange={e => {
                                             setName(e.target.value)
                                         }}
+                                        required
                                     />
+                                    {!name &&(
                                     <p class="text-red-500 text-xs italic">
                                         Please fill out this field.
                                     </p>
+                                    )}
                                 </div>
                                 {/* Address */}
                                 <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -105,10 +118,13 @@ const AddSupplier = (props) => {
                                         onChange={e => {
                                             setAddress(e.target.value)
                                         }}
+                                        required
                                     />
+                                    {!address &&(
                                     <p class="text-red-500 text-xs italic">
                                         Please fill out this field.
                                     </p>
+                                    )}
                                 </div>
                                 {/* PhoneNo */}
                                 <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -126,10 +142,13 @@ const AddSupplier = (props) => {
                                         onChange={e => {
                                             setPhoneNo(e.target.value)
                                         }}
+                                        required
                                     />
-                                    <p class="text-red-500 text-xs italic">
-                                        Please fill out this field.
-                                    </p>
+                                    {!phoneNo &&(
+                                        <p class="text-red-500 text-xs italic">
+                                            Please fill out this field.
+                                        </p>
+                                    )}
                                 </div>
                                 {/* Email */}
                                 <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -147,15 +166,19 @@ const AddSupplier = (props) => {
                                         onChange={e => {
                                             setEmail(e.target.value)
                                         }}
+                                        required
                                     />
+                                    {!email && (
                                     <p class="text-red-500 text-xs italic">
                                         Please fill out this field.
                                     </p>
+                                    )}
                                 </div>
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
                                 <button className="w-full rounded-md p-2 mb-5 bg-blue-500" type="submit">
                                     ADD SUPPLIER
                                 </button>
+                                <ResponseModal heading={'Add Supplier'} text={`You have successfully added the Supplier`} color={'#4287f5'} openResponse={openResponse} onCloseResponseModal={onCloseResponseModal} />
                             </div>
                         </form>
                 </div>

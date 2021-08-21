@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from 'axios'
 import { API_URL } from "../../constants";
 import {Modal} from 'react-responsive-modal'
+import ResponseModal from "../modals/ResponseModal";
 
 const EditSupplier = (props) => {
 
@@ -11,6 +12,12 @@ const EditSupplier = (props) => {
     const [address, setAddress] = useState(props.supplier.address);
     const [phoneNo, setPhoneNo] = useState(props.supplier.phoneNo);
     const [email, setEmail] = useState(props.supplier.email);
+    const [openResponse, setOpenResponse] = useState(false);
+    const onOpenResponseModal = () => setOpenResponse(true);
+    const onCloseResponseModal = () => {
+        setOpenResponse(false)
+        onCloseEdit()
+    }
 
 
     const handleSubmit = (e)=>{
@@ -27,8 +34,7 @@ const EditSupplier = (props) => {
 
         axios.put(`${API_URL}/supplier/updateSupplier/${supplierID}`,Supplier)
             .then(response =>{
-                console.log(response.data)
-                onCloseEdit()
+                onOpenResponseModal()
             })
             .catch(e=>{
                 console.log(e.data)
@@ -62,9 +68,11 @@ const EditSupplier = (props) => {
                                     value={supplierID}
                                     onChange={e=>{setSupplierID(e.target.value)}}
                                 />
-                                <p class="text-red-500 text-xs italic">
-                                    Please fill out this field.
-                                </p>
+                                {!supplierID &&(
+                                    <p class="text-red-500 text-xs italic">
+                                        Please fill out this field.
+                                    </p>)
+                                }
                             </div>
                             {/* Name */}
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -81,9 +89,11 @@ const EditSupplier = (props) => {
                                     value={name}
                                     onChange={e=>{setName(e.target.value)}}
                                 />
-                                <p class="text-red-500 text-xs italic">
-                                    Please fill out this field.
-                                </p>
+                                {!name &&(
+                                    <p class="text-red-500 text-xs italic">
+                                        Please fill out this field.
+                                    </p>)
+                                }
                             </div>
                             {/* Address */}
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -100,9 +110,11 @@ const EditSupplier = (props) => {
                                     value={address}
                                     onChange={e=>{setAddress(e.target.value)}}
                                 />
-                                <p class="text-red-500 text-xs italic">
-                                    Please fill out this field.
-                                </p>
+                                {!address &&(
+                                    <p class="text-red-500 text-xs italic">
+                                        Please fill out this field.
+                                    </p>)
+                                }
                             </div>
                             {/* PhoneNo */}
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -119,9 +131,11 @@ const EditSupplier = (props) => {
                                     value={phoneNo}
                                     onChange={e=>{setPhoneNo(e.target.value)}}
                                 />
-                                <p class="text-red-500 text-xs italic">
-                                    Please fill out this field.
-                                </p>
+                                {!phoneNo &&(
+                                    <p class="text-red-500 text-xs italic">
+                                        Please fill out this field.
+                                    </p>)
+                                }
                             </div>
                             {/* Email */}
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -138,14 +152,17 @@ const EditSupplier = (props) => {
                                     value={email}
                                     onChange={e=>{setEmail(e.target.value)}}
                                 />
-                                <p class="text-red-500 text-xs italic">
-                                    Please fill out this field.
-                                </p>
+                                {!email &&(
+                                    <p class="text-red-500 text-xs italic">
+                                        Please fill out this field.
+                                    </p>)
+                                }
                             </div>
                         <div class="w-full px-3 mt-3 mb-6 md:mb-0">
                             <button className="w-full rounded-md p-2 mb-5 bg-blue-500" type ="submit" >
                                 UPDATE SUPPLIER
                             </button>
+                            <ResponseModal heading={'Edit Supplier'} text={`You have successfully updated the Supplier`} color={'#4287f5'} openResponse={openResponse} onCloseResponseModal={onCloseResponseModal} />
                         </div>
                     </form>
             </div>
