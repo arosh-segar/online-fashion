@@ -1,14 +1,26 @@
-import React from "react";
+import React from 'react'
+import {useState,useEffect} from 'react'
+import axios from 'axios'
+import { API_URL } from "../../constants";
+import AddVehicle from "./AddVehicle";
 
 const Vehicles = () => {
+  const [openAdd, setAdd] = useState(false);
+    const onOpenAddModal = () => setAdd(true);
+    const onCloseAddModal = () => setAdd(false);
     return (
       <div>
         {/* medium and large screens */}
+        <button
+                className="bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                 onClick={onOpenAddModal}>
+                + Add Supplier
+            </button>
         <div className="hidden sm:block pt-10 pb-32 h-screen">
           <div className="">
             <div className="flex justify-center">
             <div class="flex items-center justify-center">
-    <div class="flex border-2 rounded">
+            <div class="flex border-2 rounded">
         <input type="text" class="px-4 py-2 w-80" placeholder="Search..."/>
         <button class="flex items-center justify-center px-4 border-l">
             <svg class="w-6 h-6 text-gray-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
@@ -55,6 +67,10 @@ const Vehicles = () => {
               </div>
             ))}
           </div>
+          <AddVehicle
+          openAdd={openAdd}
+          onCloseAdd={onCloseAddModal}
+        />
         </div>
   
         {/* small screens */}

@@ -1,17 +1,17 @@
 const router = require("express").Router();
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
-const { createVehicle } = require("../api/delivery.api");
+const { createVehicle,getAllVehicle,updateVehicle,deleteVehicle } = require("../api/delivery.api");
 
 router.post("/addVehicle", async (req, res) => {
 
     try{
 
-        let vehicle = await addVehicle( {
-            vechileName = req.body.vechileName,
-            vechileBrand = req.body.vechileBrand,
-            driverName = req.body.driverName
-        });
+        let vehicle = req.body
+
+        
+
+        vehicle = createVehicle(vehicle)
 
         if(vehicle) {
             res.status(201).send(vehicle);
@@ -22,5 +22,22 @@ router.post("/addVehicle", async (req, res) => {
         console.log(err);
     }
 });
+
+router.get("/getVehicle",async (req,res)=>{
+
+
+    let Vehicle = await getAllVehicle()
+ 
+    res.status(200).send(Vehicle)
+ 
+ })
+ 
+ 
+ router.delete("/deleteVehicle/:vechileNumber",async (req,res)=>{
+ 
+ 
+     await deleteVehicle(req.params.vechileNumber)
+ 
+ })
 
 module.exports = router;
