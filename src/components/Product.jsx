@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-const Product = () => {
+const Product = (props) => {
   const [xs, setXs] = useState({ type: "xs", active: false });
   const [s, setS] = useState({ type: "s", active: false });
   const [m, setM] = useState({ type: "m", active: false });
   const [l, setL] = useState({ type: "l", active: false });
   const [xl, setXl] = useState({ type: "xl", active: false });
+  const stock = props.location.state.stock;
 
   const handleSize = (type) => {
     type === xs.type
@@ -33,7 +34,7 @@ const Product = () => {
             <div class="w-full md:w-1/2 px-10 mb-10 md:mb-0">
               <div class="relative">
                 <img
-                  src="https://pvlearn.com/wp-content/uploads/2019/08/adobe-stock-image-1.jpg"
+                  src={stock.productImageUrl}
                   class="w-full h-96 relative z-10 rounded-lg"
                   alt=""
                 />
@@ -43,61 +44,75 @@ const Product = () => {
             <div class="w-full md:w-1/2 px-10">
               <div class="mb-10">
                 <h1 class="font-bold uppercase text-2xl mb-5">
-                  Mens's Ragged Waterproof Jacket
+                  {stock.productName}
                 </h1>
               </div>
               <div className="mb-10">
                 <p class="mb-2 font-medium text-center">Available sizes</p>
                 <div className="flex flex-wrap justify-center items-center mt-6 space-x-1 sm:space-x-5 lg:space-x-10">
-                  <div
-                    onClick={() => handleSize("xs")}
-                    className={`hover:bg-green-400 bg-gray-400 ${
-                      !xs.active ? "bg-gray-400" : "bg-green-400"
-                    } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
-                  >
-                    XS
-                  </div>
-                  <div
-                    onClick={() => handleSize("s")}
-                    className={`hover:bg-green-400 bg-gray-400 ${
-                      !s.active ? "bg-gray-400" : "bg-green-400"
-                    } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
-                  >
-                    S
-                  </div>
-                  <div
-                    onClick={() => handleSize("m")}
-                    className={`hover:bg-green-400 bg-gray-400 ${
-                      !m.active ? "bg-gray-400" : "bg-green-400"
-                    } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
-                  >
-                    M
-                  </div>
-                  <div
-                    onClick={() => handleSize("l")}
-                    className={`hover:bg-green-400 bg-gray-400 ${
-                      !l.active ? "bg-gray-400" : "bg-green-400"
-                    } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
-                  >
-                    L
-                  </div>
-                  <div
-                    onClick={() => handleSize("xl")}
-                    className={`hover:bg-green-400 bg-gray-400 ${
-                      !xl.active ? "bg-gray-400" : "bg-green-400"
-                    } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
-                  >
-                    XL
-                  </div>
+                  {stock.sizes.xs && (
+                    <div
+                      onClick={() => handleSize("xs")}
+                      className={`hover:bg-green-400 bg-gray-400 ${
+                        !xs.active ? "bg-gray-400" : "bg-green-400"
+                      } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
+                    >
+                      XS
+                    </div>
+                  )}
+
+                  {stock.sizes.s && (
+                    <div
+                      onClick={() => handleSize("s")}
+                      className={`hover:bg-green-400 bg-gray-400 ${
+                        !s.active ? "bg-gray-400" : "bg-green-400"
+                      } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
+                    >
+                      S
+                    </div>
+                  )}
+
+                  {stock.sizes.m && (
+                    <div
+                      onClick={() => handleSize("m")}
+                      className={`hover:bg-green-400 bg-gray-400 ${
+                        !m.active ? "bg-gray-400" : "bg-green-400"
+                      } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
+                    >
+                      M
+                    </div>
+                  )}
+
+                  {stock.sizes.l && (
+                    <div
+                      onClick={() => handleSize("l")}
+                      className={`hover:bg-green-400 bg-gray-400 ${
+                        !l.active ? "bg-gray-400" : "bg-green-400"
+                      } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
+                    >
+                      L
+                    </div>
+                  )}
+
+                  {stock.sizes.xl && (
+                    <div
+                      onClick={() => handleSize("xl")}
+                      className={`hover:bg-green-400 bg-gray-400 ${
+                        !xl.active ? "bg-gray-400" : "bg-green-400"
+                      } font-semibold h-10 w-10 rounded-full flex items-center justify-center cursor-pointer`}
+                    >
+                      XL
+                    </div>
+                  )}
                 </div>
               </div>
               <div>
                 <div class="inline-block align-bottom mr-5">
-                  <span class="text-2xl leading-none align-baseline">$</span>
+                  <span class="text-2xl leading-none align-baseline">LK</span>
                   <span class="font-bold text-5xl leading-none align-baseline">
-                    59
+                    {stock.pricePerUnit}
                   </span>
-                  <span class="text-2xl leading-none align-baseline">.99</span>
+                  <span class="text-2xl leading-none align-baseline">.00</span>
                 </div>
                 <div class="inline-block align-bottom">
                   <button class="bg-yellow-300 opacity-75 hover:opacity-100 text-yellow-900 hover:text-gray-900 rounded-full px-10 py-2 font-semibold">

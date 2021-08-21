@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
 import StockItem from "./StockItem";
+import Clip from "../loaders/Clip";
 
 const Stocks = () => {
   const [stocks, setStocks] = useState([]);
+  const [isStockLoading,setIsStockLoading] = useState(true);
   const [filterCategory, setFilterCategory] = useState("all");
 
   useEffect(() => {
@@ -12,11 +14,16 @@ const Stocks = () => {
       .get(`${API_URL}/inventory`)
       .then((response) => {
         setStocks(response.data);
+        setIsStockLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  });
+  },[]);
+
+
+
+
 
   const deleteStock = (id) => {
     console.log(id);
@@ -67,6 +74,13 @@ const Stocks = () => {
           className="overflow-y-auto pb-10 font-normal"
           style={{ maxHeight: "70vh" }}
         >
+          {isStockLoading &&
+              <>
+                <Clip />
+              </>
+
+          }
+
           {filterCategory === "all" ? (
             <>
               {stocks.map((stock) => (
