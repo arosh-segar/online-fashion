@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
 import ReorderStockItem from "./ReorderStockItem";
+import Clip from "../loaders/Clip";
 
 const ReorderStocks = () => {
   const [reorderStocks, setReorderStocks] = useState([]);
+  const [isStockLoading,setIsStockLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -25,11 +27,13 @@ const ReorderStocks = () => {
                 parseFloat(stock.reorderQty)
           )
         );
+
+        setIsStockLoading(false)
       })
       .catch((error) => {
         console.log(error);
       });
-  });
+  },[]);
 
   return (
     <div>
@@ -65,6 +69,12 @@ const ReorderStocks = () => {
           </div>
         </div>
         <div className="overflow-y-auto pb-10" style={{ height: "70vh" }}>
+          {isStockLoading &&
+          <>
+            <Clip />
+          </>
+
+          }
           {reorderStocks.map((reorderStock) => (
             <>
               <ReorderStockItem
