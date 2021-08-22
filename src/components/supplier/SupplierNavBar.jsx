@@ -40,7 +40,7 @@ const SupplierNavbar = () => {
           </div>
           <div className="p-4 hidden sm:block">
             <Link
-              to="/stockRequests"
+              to="/supplier/stockRequests"
               className={`font-bold ${
                 window.location.pathname === "/supplier/stockRequests"
                   ? "navlink-hover"

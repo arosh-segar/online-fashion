@@ -109,11 +109,10 @@ const EditInventoryModal = (props) => {
   };
 
   return (
-    <div className="">
+    <div>
       <Modal open={openEdit} onClose={onCloseEditModal} center>
         <div className="p-5 w-250 md:w-500">
           <h2 className="text-center font-semibold font-sans">Edit Stock</h2>
-
           <div className="">
             <form
               onSubmit={handleSubmit}

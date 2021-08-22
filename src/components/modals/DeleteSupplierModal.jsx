@@ -3,7 +3,7 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 
 const DeleteSupplierModal = (props) => {
-    const { onCloseDelete, openDelete, onDeleteSupplier ,id} = props;
+   const { onCloseDelete, openDelete ,id,deleteSupplier} = props;
     return (
         <div>
             <Modal open={openDelete} onClose={onCloseDelete} center>
@@ -15,7 +15,7 @@ const DeleteSupplierModal = (props) => {
                     <div className="text-white flex justify-center items-center mt-10">
                         <button
                             className="py-2 px-10 rounded-md bg-blue-500 mr-5"
-                            onClick={()=>onDeleteSupplier}
+                            onClick={() => deleteSupplier(id)}
                         >
                             Yes
                         </button>
