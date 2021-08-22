@@ -24,7 +24,7 @@ const EditSupplier = (props) => {
 
         e.preventDefault()
 
-        const Supplier = {
+        const supplier = {
             name,
             address,
             phoneNo,
@@ -32,9 +32,11 @@ const EditSupplier = (props) => {
         }
 
 
-        axios.put(`${API_URL}/supplier/updateSupplier/${supplierID}`,Supplier)
+        axios.put(`${API_URL}/supplier/updateSupplier/${supplierID}`,supplier)
             .then(response =>{
                 onOpenResponseModal()
+                supplier.id=supplierID
+                props.onInputChange(supplier)
             })
             .catch(e=>{
                 console.log(e.data)
@@ -66,6 +68,7 @@ const EditSupplier = (props) => {
                                     id="grid-first-name"
                                     type="text"
                                     value={supplierID}
+                                    disabled={true}
                                     onChange={e=>{setSupplierID(e.target.value)}}
                                 />
                                 {!supplierID &&(
@@ -127,8 +130,11 @@ const EditSupplier = (props) => {
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="grid-first-name"
-                                    type="number"
+                                    type="text"
                                     value={phoneNo}
+                                    pattern="([0][0-9]{9})"
+                                    maxLength={"10"}
+                                    size="10"
                                     onChange={e=>{setPhoneNo(e.target.value)}}
                                 />
                                 {!phoneNo &&(
@@ -148,7 +154,7 @@ const EditSupplier = (props) => {
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="grid-first-name"
-                                    type="text"
+                                    type="email"
                                     value={email}
                                     onChange={e=>{setEmail(e.target.value)}}
                                 />
@@ -162,7 +168,7 @@ const EditSupplier = (props) => {
                             <button className="w-full rounded-md p-2 mb-5 bg-blue-500" type ="submit" >
                                 UPDATE SUPPLIER
                             </button>
-                            <ResponseModal heading={'Edit Supplier'} text={`You have successfully updated the Supplier`} color={'#4287f5'} openResponse={openResponse} onCloseResponseModal={onCloseResponseModal} />
+                            <ResponseModal heading={'Edit Supplier'} text={`You have successfully updated the Supplier ${supplierID}`} color={'#4287f5'} openResponse={openResponse} onCloseResponseModal={onCloseResponseModal} />
                         </div>
                     </form>
             </div>

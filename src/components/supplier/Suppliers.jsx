@@ -9,24 +9,42 @@ const Suppliers = () =>{
 
 
     const [suppliers,setSuppliers] = useState([])
+    const [id,setID] = useState("")
 
     const [openAdd, setAdd] = useState(false);
     const onOpenAddModal = () => setAdd(true);
     const onCloseAddModal = () => setAdd(false);
 
+    const [openDelete,setDelete] = useState(false)
+    const onOpenDelete = () => setDelete(true)
+    const onCloseDelete = () => setDelete(false)
+
+    const [openEdit,setEdit] = useState(false)
+    const onOpenEdit = () => setEdit(true)
+    const onCloseEdit = () => setEdit(false)
 
    useEffect(()=>{
 
      axios.get(`${API_URL}/supplier/getSuppliers`)
      .then((response)=>{
          console.log(response.data)
-        setSuppliers(response.data)
+         setSuppliers(response.data)
+         setID(generateID())
+         console.log(id)
      })
      .catch((error)=>{
         console.log(error)
      })
 
-   },[openAdd])
+   },[openAdd,openDelete])
+
+
+    const generateID = ()=>{
+
+        console.log(suppliers.length+1)
+        return `S${suppliers.length+1}${Math.floor(Math.random()*10)}`
+
+    }
 
 
     return(
@@ -54,12 +72,23 @@ const Suppliers = () =>{
           style={{ maxHeight: "70vh" }}
         >
           {suppliers.map(supplier => {
-            return <Supplier supplier={supplier} key={supplier._id}/>
+            return (
+                    <Supplier
+                        supplier={supplier}
+                        key={supplier._id}
+                        onOpenDelete={onOpenDelete}
+                        onCloseDelete={onCloseDelete}
+                        openDelete={openDelete}
+                        openEdit={openEdit}
+                        onOpenEdit={onOpenEdit}
+                        onCloseEdit={onCloseEdit}/>
+                   )
           })}
         </div>
         <AddSupplier
           openAdd={openAdd}
           onCloseAdd={onCloseAddModal}
+          id={id}
         />
         </div>
         </div>

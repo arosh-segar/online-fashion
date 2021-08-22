@@ -7,33 +7,17 @@ import DeleteSupplier from '../modals/DeleteSupplierModal'
 
 const Supplier = (props) =>{
 
-    const [supplier,setSupplier] = useState({})
-    const [openEdit,setEdit] = useState(false)
-    const onOpenEdit = () => setEdit(true)
-    const onCloseEdit = () => setEdit(false)
+    const [supplier,setSupplier] = useState(props.supplier)
 
-    const [openDelete,setDelete] = useState(false)
-    const onOpenDelete = () => setDelete(true)
-    const onCloseDelete = () => setDelete(false)
+    const {openDelete,onOpenDelete,onCloseDelete,onCloseEdit,onOpenEdit,openEdit} =props
 
-    useEffect(() => {
-        axios.get(`${API_URL}/supplier/getSuppliers`)
-            .then((response)=>{
-                response.data.map(supplier=>{
-                    if(supplier.id==props.supplier.id){
-                        setSupplier(supplier)
-                    }
-                })
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
-    }, [openEdit,openDelete]);
+    const handleChange = (supplier) =>{
 
+        setSupplier(supplier)
 
+    }
 
     const deleteSupplier = (id)=>{
-
         axios.delete(`${API_URL}/supplier/deleteSupplier/${id}`)
             .then(response =>{
                 console.log("deleted")
@@ -72,6 +56,7 @@ const Supplier = (props) =>{
              openEdit={openEdit}
              onCloseEdit={onCloseEdit}
              supplier={props.supplier}
+             onInputChange={handleChange}
             />
             <DeleteSupplier
              openDelete = {openDelete}

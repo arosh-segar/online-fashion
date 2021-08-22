@@ -37,12 +37,12 @@ const PurchaseOrders = () =>{
     ]
 
     const orders = [
-        {id:10,supplierID:121,requestID:[101,102],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
-        {id:11,supplierID:121,requestID:[131,104],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
-        {id:12,supplierID:123,requestID:[103],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
-        {id:13,supplierID:124,requestID:[105],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"},
-        {id:14,supplierID:125,requestID:[103,109],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"},
-        {id:15,supplierID:125,requestID:[100,112],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"}
+        {id:10,supplierID:'S121',requestID:[101,102],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
+        {id:11,supplierID:'S11',requestID:[131,104],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
+        {id:12,supplierID:'S23',requestID:[103],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
+        {id:13,supplierID:'S24',requestID:[105],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"},
+        {id:14,supplierID:'S15',requestID:[103,109],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"},
+        {id:15,supplierID:'S55',requestID:[100,112],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"}
 
     ]
 
