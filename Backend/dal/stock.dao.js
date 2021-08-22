@@ -26,7 +26,7 @@ const saveStock = async ({
     reorderQty,
     productImageUrl,
   });
-  return result.ops[0];
+  return result;
 };
 
 //retrieving all the stock records from the db
@@ -40,4 +40,32 @@ const deleteStockById = async (id) => {
   return await stock.findOneAndDelete({ _id: ObjectID(id) });
 };
 
-module.exports = { saveStock, getAllStocks, deleteStockById };
+//update stock details
+const updateStockById = async (
+  id,
+  {
+    productName,
+    productType,
+    productCategory,
+    pricePerUnit,
+    sizes,
+    reorderQty,
+    productImageUrl,
+  }
+) => {
+  const result = await stock.replaceOne(
+    { _id: ObjectID(id) },
+    {
+      productName,
+      productType,
+      productCategory,
+      pricePerUnit,
+      sizes,
+      reorderQty,
+      productImageUrl,
+    }
+  );
+  return result;
+};
+
+module.exports = { saveStock, getAllStocks, deleteStockById, updateStockById };

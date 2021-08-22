@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
 import { serialize } from "object-to-formdata";
+// import Scale from "../loaders/Scale";
+import ResponseModal from "../modals/ResponseModal";
 
 const AddStock = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [checkXS, setCheckXS] = useState(false);
   const [checkS, setcheckS] = useState(false);
   const [checkM, setcheckM] = useState(false);
@@ -21,6 +24,30 @@ const AddStock = () => {
   const [xlSizeAvailableQty, setXlSizeAvailableQty] = useState("");
   const [productImage, setProductImage] = useState("");
   const [previewProductImage, setPreviewProductImage] = useState("");
+  /* Response Modal variables */
+  const [openResponse, setOpenResponse] = useState(false);
+  const onOpenResponseModal = () => setOpenResponse(true);
+  const onCloseResponseModal = () => setOpenResponse(false);
+
+  const resetValues = () => {
+    setCheckXS(checkXS && false);
+    setcheckS(checkS && false);
+    setcheckM(checkM && false);
+    setcheckL(checkL && false);
+    setcheckXL(checkXL && false);
+    setProductName("");
+    setProductType("");
+    setProductCategory("");
+    setPricePerUnit("");
+    setReorderQty("");
+    setXsSizeAvailableQty("");
+    setSSizeAvailableQty("");
+    setMSizeAvailableQty("");
+    setLSizeAvailableQty("");
+    setXlSizeAvailableQty("");
+    setProductImage("");
+    setPreviewProductImage("");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,16 +104,19 @@ const AddStock = () => {
 
     const formData = serialize(product);
 
+    setIsLoading(true);
+
     axios
       .post(`${API_URL}/inventory/addStock`, formData)
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
+        setIsLoading(false);
+        setOpenResponse(true);
+        resetValues();
       })
       .catch((error) => {
         console.log(error);
       });
-
-    console.log(product);
   };
 
   return (
@@ -111,10 +141,16 @@ const AddStock = () => {
                 placeholder="NIKE T-shirt"
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
+                required
               />
-              <p class="text-red-500 text-xs italic">
-                Please fill out this field.
-              </p>
+              {!productName || productName.length < 5 ? (
+                <p class="text-red-500 text-sm italic text-center">
+                  Please fill out this field. Length of the name should be
+                  greater than 5
+                </p>
+              ) : (
+                ""
+              )}
             </div>
             {/* Product Type */}
             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -129,17 +165,20 @@ const AddStock = () => {
                 style={{ textAlignLast: "center" }}
                 value={productType}
                 onChange={(e) => setProductType(e.target.value)}
+                required
               >
-                <option value="0" selected>
+                <option value="" selected>
                   Select
                 </option>
                 <option value="tShirts">T-shirts</option>
                 <option value="trousers">Trousers</option>
                 <option value="sports">Sports</option>
               </select>
-              <p class="text-red-500 text-xs italic">
-                Please fill out this field.
-              </p>
+              {!productType && (
+                <p class="text-red-500 text-sm italic text-center">
+                  Please select a product type
+                </p>
+              )}
             </div>
             {/* Product Category */}
             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -154,17 +193,20 @@ const AddStock = () => {
                 style={{ textAlignLast: "center" }}
                 value={productCategory}
                 onChange={(e) => setProductCategory(e.target.value)}
+                required
               >
-                <option value="0" selected>
+                <option value="" selected>
                   Select
                 </option>
                 <option value="men">men</option>
                 <option value="women">women</option>
                 <option value="kids">kids</option>
               </select>
-              <p class="text-red-500 text-xs italic">
-                Please fill out this field.
-              </p>
+              {!productCategory && (
+                <p class="text-red-500 text-sm italic text-center">
+                  Please select a category
+                </p>
+              )}
             </div>
             {/* Price per unit */}
             <div class="w-full px-3 mt-10 mb-6 md:mb-0">
@@ -180,10 +222,13 @@ const AddStock = () => {
                 type="number"
                 value={pricePerUnit}
                 onChange={(e) => setPricePerUnit(e.target.value)}
+                required
               />
-              <p class="text-red-500 text-xs italic">
-                Please fill out this field.
-              </p>
+              {!pricePerUnit && (
+                <p class="text-red-500 text-sm italic text-center">
+                  Please fill out this field.
+                </p>
+              )}
             </div>
             {/* Reorder quantity */}
             <div class="w-full px-3 mt-10 mb-6 md:mb-0">
@@ -199,10 +244,16 @@ const AddStock = () => {
                 type="number"
                 value={reorderQty}
                 onChange={(e) => setReorderQty(e.target.value)}
+                required
               />
-              <p class="text-red-500 text-xs italic">
-                Please fill out this field.
-              </p>
+              {!reorderQty || reorderQty > 1000 ? (
+                <p class="text-red-500 text-sm italic text-center">
+                  Please fill out this field and minimum re=order quantity
+                  should not exceed 1000
+                </p>
+              ) : (
+                ""
+              )}
             </div>
             <div class="w-full px-3 mt-10 mb-6 md:mb-0">
               <label
@@ -236,6 +287,14 @@ const AddStock = () => {
                       onChange={(e) => setXsSizeAvailableQty(e.target.value)}
                     />
                   </div>
+                  {!xsSizeAvailableQty ||
+                    (parseFloat(xsSizeAvailableQty) <
+                      parseFloat(reorderQty) && (
+                      <p class="text-red-500 text-sm italic text-center">
+                        Available quantity has to be higher than the re-order
+                        quantity
+                      </p>
+                    ))}
                 </div>
               </div>
               {/* S */}
@@ -263,6 +322,13 @@ const AddStock = () => {
                       onChange={(e) => setSSizeAvailableQty(e.target.value)}
                     />
                   </div>
+                  {!sSizeAvailableQty ||
+                    (parseFloat(sSizeAvailableQty) < parseFloat(reorderQty) && (
+                      <p class="text-red-500 text-sm italic text-center">
+                        Available quantity has to be higher than the re-order
+                        quantity
+                      </p>
+                    ))}
                 </div>
               </div>
               {/* M */}
@@ -290,6 +356,13 @@ const AddStock = () => {
                       onChange={(e) => setMSizeAvailableQty(e.target.value)}
                     />
                   </div>
+                  {!mSizeAvailableQty ||
+                    (parseFloat(mSizeAvailableQty) < parseFloat(reorderQty) && (
+                      <p class="text-red-500 text-sm italic text-center">
+                        Available quantity has to be higher than the re-order
+                        quantity
+                      </p>
+                    ))}
                 </div>
               </div>
               {/* L */}
@@ -317,6 +390,13 @@ const AddStock = () => {
                       onChange={(e) => setLSizeAvailableQty(e.target.value)}
                     />
                   </div>
+                  {!lSizeAvailableQty ||
+                    (parseFloat(lSizeAvailableQty) < parseFloat(reorderQty) && (
+                      <p class="text-red-500 text-sm italic text-center">
+                        Available quantity has to be higher than the re-order
+                        quantity
+                      </p>
+                    ))}
                 </div>
               </div>
               {/* XL */}
@@ -345,6 +425,13 @@ const AddStock = () => {
                     />
                   </div>
                 </div>
+                {!xlSizeAvailableQty ||
+                  (parseFloat(xlSizeAvailableQty) < parseFloat(reorderQty) && (
+                    <p class="text-red-500 text-sm italic text-center">
+                      Available quantity has to be higher than the re-order
+                      quantity
+                    </p>
+                  ))}
               </div>
             </div>
             {/* Product Image */}
@@ -366,7 +453,11 @@ const AddStock = () => {
                   );
                 }}
               />
-              <p class="text-red-500 text-xs italic">Please select an image</p>
+              {!productImage && (
+                <p class="text-red-500 text-sm italic text-center">
+                  Please select an image
+                </p>
+              )}
             </div>
             {previewProductImage && (
               <div className="px-4 flex justify-center">
@@ -377,6 +468,14 @@ const AddStock = () => {
                 />
               </div>
             )}
+            {/* {isLoading && (
+              <>
+                <Scale />
+                <p className="text-center">
+                  Please wait the information is being processed...
+                </p>
+              </>
+            )} */}
 
             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
               <button
@@ -385,6 +484,13 @@ const AddStock = () => {
               >
                 ADD STOCK
               </button>
+              <ResponseModal
+                heading={"Add stock"}
+                text={`You have successfully added the product`}
+                color={"#4287f5"}
+                openResponse={openResponse}
+                onCloseResponseModal={onCloseResponseModal}
+              />
             </div>
           </form>
         </div>

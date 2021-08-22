@@ -4,10 +4,18 @@ import { Modal } from "react-responsive-modal";
 import { API_URL } from "../../constants";
 import { serialize } from "object-to-formdata";
 import axios from "axios";
+import ResponseModal from "./ResponseModal";
 
 const EditInventoryModal = (props) => {
-  const { onCloseEditModal, openEdit, productCode } = props;
+  const { onCloseEditModal, openEdit, productCode, editStock } = props;
   const stock = props.stock;
+  /* Response Modal variables */
+  const [openResponse, setOpenResponse] = useState(false);
+  const onOpenResponseModal = () => setOpenResponse(true);
+  const onCloseResponseModal = () => {
+    setOpenResponse(false);
+    onCloseEditModal();
+  };
   const [checkXS, setCheckXS] = useState(isNaN(stock.sizes.xs));
   const [checkS, setcheckS] = useState(stock.sizes.s);
   const [checkM, setcheckM] = useState(stock.sizes.m);
@@ -93,16 +101,14 @@ const EditInventoryModal = (props) => {
 
     const formData = serialize(product);
 
-    /* axios
-      .post(`${API_URL}/inventory/addStock`, formData)
+    axios
+      .put(`${API_URL}/inventory/updateStock/${stock._id}`, formData)
       .then((response) => {
-        console.log(response.data);
+        onOpenResponseModal();
       })
       .catch((error) => {
         console.log(error);
-      }); */
-
-    console.log(product);
+      });
   };
 
   return (
@@ -409,8 +415,15 @@ const EditInventoryModal = (props) => {
                   type="submit"
                   className="w-full rounded-md p-2 mb-5 bg-blue-500"
                 >
-                  ADD STOCK
+                  EDIT STOCK
                 </button>
+                <ResponseModal
+                  heading={"Edit stock"}
+                  text={`You have successfully updated ${productName}`}
+                  color={"#4287f5"}
+                  openResponse={openResponse}
+                  onCloseResponseModal={onCloseResponseModal}
+                />
               </div>
             </form>
           </div>

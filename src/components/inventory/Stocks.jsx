@@ -2,21 +2,24 @@ import React, { useEffect, useState } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
 import StockItem from "./StockItem";
+// import Clip from "../loaders/Clip";
 
 const Stocks = () => {
   const [stocks, setStocks] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [isStockLoading, setIsStockLoading] = useState(true);
+  const [filterCategory, setFilterCategory] = useState("all");
 
   useEffect(() => {
     axios
       .get(`${API_URL}/inventory`)
       .then((response) => {
         setStocks(response.data);
+        setIsStockLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, []);
 
   const deleteStock = (id) => {
     console.log(id);
@@ -39,16 +42,16 @@ const Stocks = () => {
               <label className="mr-5 my-auto">CATEGORY : </label>
               <select
                 className="p-2 border border-none w-2/4 rounded-lg"
-                name="cars"
-                id="cars"
                 style={{ textAlignLast: "center" }}
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
               >
                 <option value="all" selected>
                   All
                 </option>
-                <option value="1">T-shirts</option>
-                <option value="2">Trousers</option>
-                <option value="3">Sports</option>
+                <option value="men">Men</option>
+                <option value="women">Women</option>
+                <option value="kids">Kids</option>
               </select>
             </div>
           </div>
@@ -67,14 +70,39 @@ const Stocks = () => {
           className="overflow-y-auto pb-10 font-normal"
           style={{ maxHeight: "70vh" }}
         >
-          {stocks.map((stock) => (
-            <StockItem
-              key={stock._id}
-              stock={stock}
-              view="web"
-              deleteStock={deleteStock}
-            />
-          ))}
+          {/* {isStockLoading && (
+            <>
+              <Clip />
+            </>
+          )} */}
+
+          {filterCategory === "all" ? (
+            <>
+              {stocks.map((stock) => (
+                <StockItem
+                  key={stock._id}
+                  stock={stock}
+                  view="web"
+                  deleteStock={deleteStock}
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              {stocks.map((stock) => (
+                <>
+                  {stock.productCategory === filterCategory && (
+                    <StockItem
+                      key={stock._id}
+                      stock={stock}
+                      view="web"
+                      deleteStock={deleteStock}
+                    />
+                  )}
+                </>
+              ))}
+            </>
+          )}
         </div>
       </div>
 

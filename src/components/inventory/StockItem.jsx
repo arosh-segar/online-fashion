@@ -58,7 +58,6 @@ const StockItem = (props) => {
                 onCloseEditModal={onCloseEditModal}
                 openEdit={openEdit}
                 productCode={productCode}
-                editStock={props.deleteStock}
                 stock={props.stock}
                 id={_id}
               />
@@ -132,6 +131,7 @@ const StockItem = (props) => {
                 editStock={props.deleteStock}
                 stock={props.stock}
                 id={_id}
+                editStock={props.editStock}
               />
               {/* Delete Modal component */}
               <DeleteInventoryModal
