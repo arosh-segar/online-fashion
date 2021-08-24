@@ -23,7 +23,7 @@ const deleteSupplier = async(id) => {
 
 }
 
-const updateSupplier = async(id,name,address,phoneNo,email)=>{
+const updateSupplier = async(id,{name,address,phoneNo,email})=>{
 
     return await editSupplier({id,name,address,phoneNo,email})
 
