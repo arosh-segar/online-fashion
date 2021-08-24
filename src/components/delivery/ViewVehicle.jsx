@@ -3,7 +3,7 @@ import axios from 'axios'
 import { API_URL } from "../../constants";
 import {Modal} from 'react-responsive-modal'
 
-const ViewSupplier = (props) => {
+const ViewVehicle = (props) => {
 
     const {openEdit,onCloseEdit} = props
     const [vechileNumber, setVechileNumber] = useState(props.vechilce.vechileNumber);
@@ -46,7 +46,7 @@ const ViewSupplier = (props) => {
                         className="w-11/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden"
                     >
                         <div className="w-11/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden">
-                            {/* Supplier ID */}
+                            
                             <div class="w-full px-3 mt-10 mb-6 md:mb-0">
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -66,7 +66,7 @@ const ViewSupplier = (props) => {
                                     Please fill out this field.
                                 </p>
                             </div>
-                            {/* Name */}
+                            
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -86,7 +86,7 @@ const ViewSupplier = (props) => {
                                     Please fill out this field.
                                 </p>
                             </div>
-                            {/* Address */}
+                            
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -124,4 +124,4 @@ const ViewSupplier = (props) => {
     );
 };
 
-export default ViewSupplier;
+export default ViewVehicle;

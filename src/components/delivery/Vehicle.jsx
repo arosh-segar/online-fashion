@@ -6,6 +6,7 @@ import DeleteVehicle from './DeleteVehicle'
 
 const Vehicle = (props) =>{
 
+const [vehicle,setVehicle] = useState(props.vehicle)
     const [openEdit,setEdit] = useState(false)
     const onOpenEdit = () => setEdit(true)
     const onCloseEdit = () => setEdit(false)
@@ -18,16 +19,16 @@ const Vehicle = (props) =>{
         onCloseDelete()
     }
 
-
+    
 
     return(
 
         <div>
             <div className="flex justify-center">
-              <div className="grid gap-5 grid-cols-5 sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
-                  <div className="pt-4 pb-4 m-auto">{props.vehicle.vechileNumber}</div>
-                  <div className="pt-4 pb-4 m-auto">{props.vehicle.vechileBrand}</div>
-                  <div className="pt-4 pb-4 m-auto">{props.vehicle.driverName}</div>
+              <div className="grid gap-5 grid-cols-3 sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
+                  <div className="pt-4 pb-4 m-auto">{vehicle.vechileNumber}</div>
+                  <div className="pt-4 pb-4 m-auto">{vehicle.vechileBrand}</div>
+                  <div className="pt-4 pb-4 m-auto">{vehicle.driverName}</div>
                    
                 <div className="pt-2 pb-2 sm:pt-4 sm:pb-4 mr-2">
                   <button className="sm:text-xs md:text-sm sm:pt-2 sm:pr-4 sm:pl-4 sm:pb-2 mb-2 w-full rounded-md bg-blue-600"
@@ -42,11 +43,11 @@ const Vehicle = (props) =>{
                 </div>
               </div>
             </div>
-            <ViewVehicle
+           {/*  <ViewVehicle
              openEdit={openEdit}
              onCloseEdit={onCloseEdit}
              vehicle={props.vehicle}
-            />
+            /> */}
             <DeleteVehicle
              openDelete = {openDelete}
              onCloseDelete = {onCloseDelete}

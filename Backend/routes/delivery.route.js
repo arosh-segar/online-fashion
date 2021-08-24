@@ -40,4 +40,13 @@ router.get("/getVehicle",async (req,res)=>{
  
  })
 
+ router.put("/updateSupplier/:vechileNumber",async (req,res)=>{
+
+
+    let updated = await updateSupplier(req.params.vechileNumber,req.body,)
+
+    res.status(200).send(updated)
+
+})
+
 module.exports = router;
