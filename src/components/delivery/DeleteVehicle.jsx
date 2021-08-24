@@ -15,7 +15,7 @@ const DeleteVehicle = (props) => {
                     <div className="text-white flex justify-center items-center mt-10">
                         <button
                             className="py-2 px-10 rounded-md bg-blue-500 mr-5"
-                            onClick={()=>onDeleteVehicle}
+                            onClick={()=>onDeleteVehicle(vechileNumber)}
                         >
                             Yes
                         </button>

@@ -46,16 +46,17 @@ const Vehicles = () =>{
         <div>
         
             <button
-                className="bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                className="ml-40 mt-20  bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                    onClick={onOpenAddModal}  >
                 + ADD VEHICLE
             </button>
-        <div className="hidden sm:block pt-10 pb-32 h-screen">
+        <div className="hidden sm:block pt-10 pb-10 sm-screen">
           <div className="flex justify-center">
-            <div className="grid grid-cols-3 sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
+            <div className="grid grid-cols-4 sm:grid-cols-4 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
               <div className="p-3">Vehicle Number</div>
               <div className="p-3"> Vehicle Brand</div>
               <div className="p-3">Driver Name</div>
+                <div className="p-3">Action</div>
             </div>
           </div>
         </div>

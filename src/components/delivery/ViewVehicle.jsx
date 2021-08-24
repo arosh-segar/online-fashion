@@ -6,9 +6,9 @@ import {Modal} from 'react-responsive-modal'
 const ViewVehicle = (props) => {
 
     const {openEdit,onCloseEdit} = props
-    const [vechileNumber, setVechileNumber] = useState(props.vechilce.vechileNumber);
-  const [vechileBrand, setVechileBrand] = useState(props.vechilce.vechileBrand);
-  const [driverName, setDriverName] = useState(props.vechilce.driverName);
+    const [vechileNumber, setVechileNumber] = useState(props.vehicle.vechileNumber);
+    const [vechileBrand, setVechileBrand] = useState(props.vehicle.vechileBrand);
+    const [driverName, setDriverName] = useState(props.vehicle.driverName);
      
 
 
@@ -23,7 +23,7 @@ const ViewVehicle = (props) => {
           }
 
 
-        axios.patch(`${API_URL}/delivery/addVehicle`,Vehicle)
+        axios.put(`${API_URL}/delivery/updateVehicle/${vechileNumber}`,Vehicle)
             .then(response =>{
                 console.log(response.data)
                 onCloseEdit()
@@ -39,14 +39,12 @@ const ViewVehicle = (props) => {
     return (
         <div>
             <Modal open={openEdit} onClose={onCloseEdit}>
-            <div className="block mt-10 pb-10 min-h-screen">
-                <div className="flex items-center justify-center">
+            <div className="p-5 w-250 md:w-500">
+                <h2 className="text-center font-semibold font-sans">UPDATE SUPPLIER</h2>
                     <form
                         onSubmit={handleSubmit}
-                        className="w-11/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden"
+                        className="mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden"
                     >
-                        <div className="w-11/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden">
-                            
                             <div class="w-full px-3 mt-10 mb-6 md:mb-0">
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -105,7 +103,6 @@ const ViewVehicle = (props) => {
                                 <p class="text-red-500 text-xs italic">
                                     Please fill out this field.
                                 </p>
-                            </div>
                              
                         </div>
                         <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -114,7 +111,6 @@ const ViewVehicle = (props) => {
                             </button>
                         </div>
                     </form>
-                </div>
             </div>
             </Modal>
         </div>
