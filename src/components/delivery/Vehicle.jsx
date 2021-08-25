@@ -6,7 +6,7 @@ import DeleteVehicle from './DeleteVehicle'
 
 const Vehicle = (props) =>{
 
-    const [vehicle,setVehicle] = useState(props.vehicle)
+    const [vehicle] = useState(props.vehicle)
     const [openEdit,setEdit] = useState(false)
     const onOpenEdit = () => setEdit(true)
     const onCloseEdit = () => setEdit(false)
@@ -15,7 +15,7 @@ const Vehicle = (props) =>{
     const onOpenDelete = () => setDelete(true)
     const onCloseDelete = () => setDelete(false)
     const onDeleteVehicle = ()=>{
-        props.deleteSupplier(props.vehicle.vechileNumber)
+        props.deleteVehicles(vehicle.vechileNumber)
         onCloseDelete()
     }
 
