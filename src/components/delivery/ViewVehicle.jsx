@@ -27,6 +27,7 @@ const ViewVehicle = (props) => {
             .then(response =>{
                 console.log(response.data)
                 onCloseEdit()
+                alert("Successfully edited")
             })
             .catch(e=>{
                 console.log(e.data)
@@ -56,13 +57,11 @@ const ViewVehicle = (props) => {
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="grid-first-name"
                                     type="text"
-                                    placeholder="Jane"
+                                    
                                     value={vechileNumber}
                                     onChange={e=>{setVechileNumber(e.target.value)}}
                                 />
-                                <p class="text-red-500 text-xs italic">
-                                    Please fill out this field.
-                                </p>
+                                
                             </div>
                             
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -76,13 +75,11 @@ const ViewVehicle = (props) => {
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="grid-first-name"
                                     type="text"
-                                    placeholder="Jane"
+                                    
                                     value={vechileBrand}
                                     onChange={e=>{setVechileBrand(e.target.value)}}
                                 />
-                                <p class="text-red-500 text-xs italic">
-                                    Please fill out this field.
-                                </p>
+                                 
                             </div>
                             
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -96,13 +93,11 @@ const ViewVehicle = (props) => {
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                     id="grid-first-name"
                                     type="text"
-                                    placeholder="Jane"
+                                     
                                     value={driverName}
                                     onChange={e=>{setDriverName(e.target.value)}}
                                 />
-                                <p class="text-red-500 text-xs italic">
-                                    Please fill out this field.
-                                </p>
+                                
                              
                         </div>
                         <div class="w-full px-3 mt-3 mb-6 md:mb-0">

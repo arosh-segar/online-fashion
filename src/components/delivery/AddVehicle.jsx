@@ -24,7 +24,9 @@ const AddVehicle = (props) => {
       axios.post(`${API_URL}/delivery/addVehicle`, Vehicle)
           .then(response => {
               console.log(response.data)
+               
               onCloseAdd()
+              alert("Successfully added")
           })
           .catch(e => {
               console.log(e.data)
@@ -56,10 +58,8 @@ const AddVehicle = (props) => {
                                         onChange={e => {
                                             setVechileNumber(e.target.value)
                                         }}
-                                    />
-                                    <p class="text-red-500 text-xs italic">
-                                        Please fill out this field.
-                                    </p>
+                                    required/>
+                                   
                                 </div>
                                 {/* Name */}
                                 <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -73,14 +73,12 @@ const AddVehicle = (props) => {
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                         id="grid-first-name"
                                         type="text"
-                                        placeholder="Deedat"
+                                       
                                         onChange={e => {
                                             setVechileBrand(e.target.value)
                                         }}
-                                    />
-                                    <p class="text-red-500 text-xs italic">
-                                        Please fill out this field.
-                                    </p>
+                                        required/>
+                                     
                                 </div>
                                 {/* Address */}
                                 <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -94,14 +92,12 @@ const AddVehicle = (props) => {
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                         id="grid-first-name"
                                         type="text"
-                                        placeholder="No.01,Galle Road,Colombo-6"
+                                        
                                         onChange={e => {
                                             setDriverName(e.target.value)
                                         }}
-                                    />
-                                    <p class="text-red-500 text-xs italic">
-                                        Please fill out this field.
-                                    </p>
+                                        required />
+                                     
                                 </div>
                                  
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
