@@ -10,12 +10,16 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
 import ShoppingCart from "./components/ShoppingCart";
 import AddStock from "./components/inventory/AddStock";
+import SupplieNavBar from "./components/supplier/SupplierNavBar"
+import AddSupplier from "./components/supplier/AddSupplier"
+import Suppliers from "./components/supplier/Suppliers"
+
 
 function App() {
   return (
     <Router>
       <body className="bg-gradient-to-r from-blue-600 to-blue-400">
-        <Navbar />
+        {/* <Navbar />
         <Switch>
           <Route exact path={"/"}>
             <Stocks />
@@ -29,7 +33,15 @@ function App() {
           <Route path={"/products"}>
             <Product />
           </Route>
-        </Switch>
+        </Switch> */}
+       <SupplieNavBar/>
+       <Switch>
+       <Route exact path={"/"}>
+            <Suppliers />
+        </Route>
+        
+      </Switch> 
+
       </body>
     </Router>
   );

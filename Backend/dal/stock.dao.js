@@ -5,7 +5,7 @@ setTimeout(() => {
   stock = require("../utils/connection")
     .db("OnlineFashionDB")
     .collection("stock");
-}, 10000);
+}, 3000);
 
 //Add stock to the database
 const saveStock = async ({
@@ -15,7 +15,7 @@ const saveStock = async ({
   pricePerUnit,
   sizes,
   reorderQty,
-  productImageUrl,
+  productImageUrl
 }) => {
   const result = await stock.insertOne({
     productName,

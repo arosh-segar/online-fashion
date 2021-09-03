@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
 import StockItem from "./StockItem";
-// import Clip from "../loaders/Clip";
+import Clip from "../loaders/Clip";
 
 const Stocks = () => {
   const [stocks, setStocks] = useState([]);
@@ -70,11 +70,11 @@ const Stocks = () => {
           className="overflow-y-auto pb-10 font-normal"
           style={{ maxHeight: "70vh" }}
         >
-          {/* {isStockLoading && (
+          {isStockLoading && (
             <>
               <Clip />
             </>
-          )} */}
+          )}
 
           {filterCategory === "all" ? (
             <>

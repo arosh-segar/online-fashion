@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
 import { serialize } from "object-to-formdata";
-// import Scale from "../loaders/Scale";
+import Scale from "../loaders/Scale";
 import ResponseModal from "../modals/ResponseModal";
 
 const AddStock = () => {
@@ -468,14 +468,14 @@ const AddStock = () => {
                 />
               </div>
             )}
-            {/* {isLoading && (
+            {isLoading && (
               <>
                 <Scale />
                 <p className="text-center">
                   Please wait the information is being processed...
                 </p>
               </>
-            )} */}
+            )}
 
             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
               <button
