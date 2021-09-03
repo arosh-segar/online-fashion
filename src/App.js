@@ -8,12 +8,11 @@ import Product from "./components/Product";
 import ReorderStocks from "./components/inventory/ReorderStocks";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
-import ShoppingCart from "./components/ShoppingCart";
+//import ShoppingCart from "./components/ShoppingCart";
 import AddStock from "./components/inventory/AddStock";
-import SupplieNavBar from "./components/supplier/SupplierNavBar"
-import AddSupplier from "./components/supplier/AddSupplier"
-import Suppliers from "./components/supplier/Suppliers"
-
+import SupplieNavBar from "./components/supplier/SupplierNavBar";
+import AddSupplier from "./components/supplier/AddSupplier";
+import Suppliers from "./components/supplier/Suppliers";
 
 function App() {
   return (
@@ -34,14 +33,12 @@ function App() {
             <Product />
           </Route>
         </Switch> */}
-       <SupplieNavBar/>
-       <Switch>
-       <Route exact path={"/"}>
+        <SupplieNavBar />
+        <Switch>
+          <Route exact path={"/"}>
             <Suppliers />
-        </Route>
-        
-      </Switch> 
-
+          </Route>
+        </Switch>
       </body>
     </Router>
   );
