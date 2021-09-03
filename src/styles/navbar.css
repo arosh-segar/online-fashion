@@ -1,0 +1,12 @@
+.navlink-hover {
+  color: aquamarine;
+  border-bottom: 3px solid aquamarine;
+}
+
+.navlink-mobile-hover {
+  color: aquamarine;
+}
+
+.navlink-no-hover {
+  color: white;
+}
