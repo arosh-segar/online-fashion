@@ -7,6 +7,8 @@ export default class Products extends Component {
     super(props);
   }
 
+  // Navigation bar for customer
+
   render() {
     return (
       <div className="SPM-navbar">
@@ -19,6 +21,8 @@ export default class Products extends Component {
         <Link to={"/customer/cart"}>
           <i class="w3-xxlarge fa fa-shopping-cart"></i>
         </Link>
+
+        <Link to={"/customer/order"}>My Orders</Link>
       </div>
     );
   }
