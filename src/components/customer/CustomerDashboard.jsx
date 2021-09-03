@@ -65,6 +65,7 @@ const CustomerDashboard = () => {
 
     //   }
     // }
+
     setCart(
       cart.filter(function (cartItem) {
         return cartItem !== item;

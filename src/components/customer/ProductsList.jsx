@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import axios from 'axios';
 import Navigation from "./Navigation";
 import "../styles/productItems.css";
 import men1 from "../images/categories/men1.jpg";

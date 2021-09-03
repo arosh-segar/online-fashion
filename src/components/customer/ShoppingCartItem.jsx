@@ -36,6 +36,8 @@ const ShoppingCartItem = (props) => {
         setXl(x.size.xl);
       }
     }
+
+    // previous method
     // if (item.sizes.xs.active === true) {
     //   setXs(xs + 1);
     // }
@@ -52,6 +54,8 @@ const ShoppingCartItem = (props) => {
     //   setXl(xl + 1);
     // }
   }, []);
+
+  // previous method
   // const p = (xs + s + m + l + xl) * props.item.pricePerUnit;
   // props.calculateTotal(p, "", props.item._id);
 

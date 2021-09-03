@@ -7,6 +7,8 @@ export default class Products extends Component {
     super(props);
   }
 
+  // Navigation bar for customer
+
   render() {
     return (
       <div className="SPM-navbar">
