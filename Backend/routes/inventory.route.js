@@ -7,6 +7,10 @@ const {
   deleteStock,
   modifyStock,
 } = require("../api/inventory.api");
+const {
+  createStockRequest,
+  getStockRequests,
+} = require("../api/stockRequest.api");
 
 //create a stock
 router.post("/addStock", upload.single("productImage"), async (req, res) => {
@@ -121,5 +125,39 @@ router.put(
     }
   }
 );
+
+//create a stock request
+router.post("/addStockRequest", async (req, res) => {
+  const { productID, productName, sizes, status } = req.body;
+
+  const stockRequest = await createStockRequest({
+    productID,
+    productName,
+    sizes,
+    status,
+  });
+
+  if (stockRequest) {
+    res.status(201).send({
+      productID,
+      productName,
+      sizes,
+      status,
+    });
+  } else {
+    res.status(502).json({ error: "Stock wasn't added" });
+  }
+});
+
+//retrieve all the stock requests from the database
+router.get("/stockRequests", async (req, res) => {
+  let stockRequests = await getStockRequests();
+
+  if (stockRequests) {
+    res.status(201).send(stockRequests);
+  } else {
+    res.status(502).send("Error");
+  }
+});
 
 module.exports = router;
