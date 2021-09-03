@@ -14,6 +14,7 @@ const ShoppingCart = (props) => {
     handleCartTotal();
   }, []);
 
+  // Handling cart items delete
   const handleDelete = (item) => {
     setCart(
       cart.filter(function (cartItem) {
