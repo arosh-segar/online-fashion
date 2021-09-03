@@ -221,7 +221,7 @@ export default class Registration extends Component {
             <br />
             <br />
             <button type="submit" className="SPM-btn-register">
-              Create Account
+              Register
             </button>
             <button type="reset" className="SPM-btn-reset">
               Reset Form
