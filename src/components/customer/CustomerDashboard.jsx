@@ -29,6 +29,7 @@ const CustomerDashboard = () => {
       });
   });
 
+  // Adding items to shopping cart
   const addItem = (item) => {
     if (item) setCart([...cart, item]);
 
@@ -41,6 +42,7 @@ const CustomerDashboard = () => {
     // item.availableqty = item.qty - 1;
   };
 
+  // Removing items from shopping cart
   const removeItem = (item) => {
     // setCart(
     //   cart,
@@ -73,6 +75,7 @@ const CustomerDashboard = () => {
       })
     );
 
+    //Increasing and updating cart items quantity
     setQty(
       qty.filter(function (newQty) {
         return newQty._id !== item._id;
@@ -105,6 +108,7 @@ const CustomerDashboard = () => {
     }
   };
 
+  // Calculating total of cart items
   const calculateCartTotal = () => {
     let total = 0.0;
 
