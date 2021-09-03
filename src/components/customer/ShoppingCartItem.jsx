@@ -348,6 +348,7 @@ const ShoppingCartItem = (props) => {
             )}
           </div>
 
+          {/* Remove items from shopping cart */}
           <button
             className="rounded-full h-6 w-5 bg-red-600 text-white font-medium flex justify-center items-center mt-12 ml-2 my-auto"
             onClick={remove}
