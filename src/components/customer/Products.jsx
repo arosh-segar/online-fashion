@@ -15,6 +15,7 @@ const Product = (props) => {
     // .catch((error) => {
     //   console.log(error);
     // });
+
     setproducts(props.products);
     console.log("data: ", props.products);
   }, []);
