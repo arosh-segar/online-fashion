@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { API_URL } from "../constants";
+import { API_URL } from "../../constants";
 import axios from "axios";
 import ProductItem from "./ProductItem";
 
-const Product = () => {
+const Product = (props) => {
   const [products, setproducts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${API_URL}/inventory`)
-      .then((response) => {
-        setproducts(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+    // axios;
+    // .get(`${API_URL}/inventory`)
+    // .then((response) => {
+    //   setproducts(response.data);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
+    setproducts(props.products);
+    console.log("data: ", props.products);
+  }, []);
   return (
     <section class="bg-yellow-300 h-screen">
       <div class="px-5 sm:px-10 lg:px-20 py-10 lg:py-24 mx-auto">

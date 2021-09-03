@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const ProductItem = ({ stock }) => {
+const ProductItem = (props) => {
   const [noOfSizes, setNoOfSizes] = useState(0);
+  const stock = props.stock;
 
   useEffect(() => {
     stock.sizes.xs && setNoOfSizes(noOfSizes + 1);
@@ -68,7 +69,7 @@ const ProductItem = ({ stock }) => {
           <Link
             class="px-2 w-full py-2 text-xs font-semibold text-white text-center uppercase transition-colors duration-200 transform bg-blue-500 rounded hover:bg-blue-600 focus:bg-gray-400 focus:outline-none"
             to={{
-              pathname: "/product",
+              pathname: "/customer/product",
               state: {
                 stock: stock,
               },
