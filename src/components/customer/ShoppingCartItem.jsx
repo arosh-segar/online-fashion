@@ -43,8 +43,6 @@ const ShoppingCartItem = (props) => {
         tot = xs + s + m + l + xl + 1;
       else tot = xs + s + m + l + xl + 1;
       totAmt = tot * price;
-      // console.log("tot: ", tot, "price: ", totAmt);
-      // console.log("id: ", props.item._id);
 
       calcMethod(totAmt, action, props.item._id);
     }
@@ -52,7 +50,6 @@ const ShoppingCartItem = (props) => {
     if (action === "decrease") {
       tot = xs + s + m + l + xl - 1;
       totAmt = tot * price;
-      // console.log("dtot: ", tot, "dprice: ", totAmt);
       if (tot < 0) {
         calcMethod(0, props.item._id);
       } else {
