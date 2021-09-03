@@ -12,7 +12,10 @@ const EditInventoryModal = (props) => {
   /* Response Modal variables */
   const [openResponse, setOpenResponse] = useState(false);
   const onOpenResponseModal = () => setOpenResponse(true);
-  const onCloseResponseModal = () => {setOpenResponse(false); onCloseEditModal()}
+  const onCloseResponseModal = () => {
+    setOpenResponse(false);
+    onCloseEditModal();
+  };
   const [checkXS, setCheckXS] = useState(isNaN(stock.sizes.xs));
   const [checkS, setcheckS] = useState(stock.sizes.s);
   const [checkM, setcheckM] = useState(stock.sizes.m);
@@ -413,7 +416,13 @@ const EditInventoryModal = (props) => {
                 >
                   EDIT STOCK
                 </button>
-                <ResponseModal heading={'Edit stock'} text={`You have successfully updated ${productName}`} color={'#4287f5'} openResponse={openResponse} onCloseResponseModal={onCloseResponseModal} />
+                <ResponseModal
+                  heading={"Edit stock"}
+                  text={`You have successfully updated ${productName}`}
+                  color={"#4287f5"}
+                  openResponse={openResponse}
+                  onCloseResponseModal={onCloseResponseModal}
+                />
               </div>
             </form>
           </div>

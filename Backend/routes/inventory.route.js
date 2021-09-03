@@ -101,7 +101,7 @@ router.put(
       });
 
       const stockItem = {
-        _id:req.params.id,
+        _id: req.params.id,
         productName,
         productType,
         productCategory,
@@ -109,10 +109,10 @@ router.put(
         sizes,
         reorderQty,
         productImageUrl: imageUrl,
-      }
+      };
 
       if (stock) {
-        res.status(201).send({stock:stockItem});
+        res.status(201).send({ stock: stockItem });
       } else {
         res.status(502).json({ error: "Stock wasn't updated" });
       }

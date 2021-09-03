@@ -3,7 +3,7 @@ import DeleteInventoryModal from "../modals/DeleteInventoryModal";
 import EditInventoryModal from "../modals/EditInventoryModal";
 
 const StockItem = (props) => {
-  const { _id, productName, sizes, productImageUrl, reorderQty } = props.stock;
+  const { _id, productName, sizes, productImageUrl, reorderQty } = props.cart;
   const productCode = _id.substring(17, 23).toUpperCase();
   const view = props.view;
   /* Delete Modal variables */
