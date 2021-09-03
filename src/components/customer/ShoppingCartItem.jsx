@@ -18,6 +18,8 @@ const ShoppingCartItem = (props) => {
 
   // -----------------------------------------------------------------------------------------
 
+  // ----------------- SPRINT 2 ADD ORDER ----------------------------------------------------
+
   const [item, setItem] = useState(props.item);
   const [qty, setQty] = useState(props.qty);
 
