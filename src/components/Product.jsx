@@ -6,6 +6,7 @@ const Product = (props) => {
   const [m, setM] = useState({ type: "m", active: false });
   const [l, setL] = useState({ type: "l", active: false });
   const [xl, setXl] = useState({ type: "xl", active: false });
+  //Setting stock from passed props
   const stock = props.location.state.stock;
 
   const handleSize = (type) => {

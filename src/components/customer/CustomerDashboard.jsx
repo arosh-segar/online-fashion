@@ -29,6 +29,7 @@ const CustomerDashboard = () => {
       });
   });
 
+  // Adding items to shopping cart
   const addItem = (item) => {
     if (item) setCart([...cart, item]);
 
@@ -41,6 +42,7 @@ const CustomerDashboard = () => {
     // item.availableqty = item.qty - 1;
   };
 
+  // Removing items from shopping cart
   const removeItem = (item) => {
     // setCart(
     //   cart,
