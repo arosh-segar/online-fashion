@@ -67,12 +67,15 @@ const CustomerDashboard = () => {
 
     //   }
     // }
+
+    // Setting cart items
     setCart(
       cart.filter(function (cartItem) {
         return cartItem !== item;
       })
     );
 
+    // setting quantity
     setQty(
       qty.filter(function (newQty) {
         return newQty._id !== item._id;

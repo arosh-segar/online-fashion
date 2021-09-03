@@ -164,11 +164,13 @@ const ShoppingCart = (props) => {
         <div className="mx-auto w-11/12 lg:w-10/12 mt-10">
           <div className="grid grid-cols-5 font-semibold">
             <div className="p-3 col-span-3"></div>
+
             {/* Display Total */}
-            <div className="p-3 text-center text-white font-semibold">
+
+            {/* <div className="p-3 text-center text-white font-semibold">
               Total
-            </div>
-            <div className="text-white text-center p-3">{total}</div>
+            </div> */}
+            {/* <div className="text-white text-center p-3">{total}</div> */}
           </div>
         </div>
       </div>

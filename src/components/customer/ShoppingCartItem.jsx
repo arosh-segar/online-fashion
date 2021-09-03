@@ -209,6 +209,7 @@ const ShoppingCartItem = (props) => {
                   <button
                     className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md"
                     onClick={() => {
+                      // Only displaying sizes if the size exists in the selected product added to shopping cart
                       if (xs > 0) {
                         setXs(xs - 1);
                         incrementTot(xs, item.pricePerUnit, "decrease", "xs");
