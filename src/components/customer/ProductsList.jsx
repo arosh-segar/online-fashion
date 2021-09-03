@@ -23,7 +23,6 @@ export default class ProductsList extends Component {
     };
   }
 
-  //Slideshow added using local images
   componentDidMount() {
     // axios.get('http://localhost:5000/')
     //     .then(response => {

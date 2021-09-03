@@ -15,8 +15,6 @@ const Product = (props) => {
   useEffect(() => {
     for (let x of cart) {
       if (stock._id === x._id) {
-        // Avoiding customer adding a product which already exists in shopping cart
-        console.log("duplicate record");
         setMessage("This Product has been added to cart already!");
       }
     }

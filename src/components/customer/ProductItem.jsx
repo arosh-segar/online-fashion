@@ -13,8 +13,6 @@ const ProductItem = (props) => {
     stock.sizes.xl && setNoOfSizes(noOfSizes + 1);
   }, []);
 
-  // Displaying the products as separate component when displayed as product list
-
   return (
     <div class="max-w-xs w-full mx-auto overflow-hidden bg-red-300 rounded-lg shadow-lg dark:bg-gray-800 hover:shadow-2xl">
       <img

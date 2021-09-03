@@ -29,7 +29,6 @@ const CustomerDashboard = () => {
       });
   });
 
-  // Adding items to shopping cart
   const addItem = (item) => {
     if (item) setCart([...cart, item]);
 
@@ -42,7 +41,6 @@ const CustomerDashboard = () => {
     // item.availableqty = item.qty - 1;
   };
 
-  // Removing items from shopping cart
   const removeItem = (item) => {
     // setCart(
     //   cart,
@@ -68,14 +66,12 @@ const CustomerDashboard = () => {
     //   }
     // }
 
-    // Setting cart items
     setCart(
       cart.filter(function (cartItem) {
         return cartItem !== item;
       })
     );
 
-    // setting quantity
     setQty(
       qty.filter(function (newQty) {
         return newQty._id !== item._id;

@@ -165,8 +165,6 @@ const ShoppingCart = (props) => {
           <div className="grid grid-cols-5 font-semibold">
             <div className="p-3 col-span-3"></div>
 
-            {/* Display Total */}
-
             {/* <div className="p-3 text-center text-white font-semibold">
               Total
             </div> */}
