@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import axios from 'axios'
 import {API_URL} from "../../constants";
 import {Modal} from 'react-responsive-modal'
@@ -9,7 +9,14 @@ const AddOrder = (props) => {
     const {openAdd, onCloseAdd} = props
     const [suppliers,setSuppliers] = useState([101,102,103])
     const [requests,setRequests] = useState([11,21,22,32])
+    const [ss,setss] = useState(0)
+    const [sr,setsr] = useState(0)
 
+    console.log(ss)
+
+    useEffect(() => {
+
+    }, [suppliers]);
 
 
     const handleSubmit = (e) => {
@@ -58,6 +65,9 @@ const AddOrder = (props) => {
                             <Select
                                 className="basic-multi-select appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 options={options}
+                                onChange={ input=> {
+                                    setss(input.value)
+                                }}
                             />
                             <p class="text-red-500 text-xs italic">
                                 Please fill out this field.
@@ -74,13 +84,18 @@ const AddOrder = (props) => {
                                 className="basic-multi-select appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                 options={options}
                                 isMulti
+                                onChange={ input=> {
+                                    setsr(input.value)
+                                }}
                             />
                             <p className="text-red-500 text-xs italic">
                                 Please fill out this field.
                             </p>
                         </div>
                         <div class="w-full px-3 mt-3 mb-6 md:mb-0">
-                            <button className="w-full rounded-md p-2 mb-5 bg-blue-500" type="submit">
+                            <button className={`w-full rounded-md p-2 mb-5 bg-blue-${(ss==0||sr==0)?"300":"600"}`} type="submit"
+                             disabled={(ss===0) ? true:false}
+                            >
                                 ADD ORDER
                             </button>
                         </div>

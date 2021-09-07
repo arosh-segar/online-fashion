@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {addSupplier,getAllSuppliers,updateSupplier,deleteSupplier} = require('../api/supplier.api')
-
+const {getStockRequests} = require("../api/stockRequest.api");
 router.post("/addSupplier",async(req,res)=>{
 
     let supplier = req.body
@@ -38,6 +38,18 @@ router.put("/updateSupplier/:id",async (req,res)=>{
     let updated = await updateSupplier(req.params.id,req.body,)
 
     res.status(200).send(updated)
+
+})
+
+router.get("/getStockRequests",async(req,res)=>{
+
+    let stockRequests = await getStockRequests()
+
+    if(stockRequests){
+        res.status(200).send(stockRequests)
+    }else {
+        res.status(502).send("Error")
+    }
 
 })
 

@@ -46,7 +46,7 @@ const PurchaseOrder = (props) =>{
                     <div className="pt-2 pb-2 sm:pt-4 sm:pb-4 mr-2">
                         <button
                             className={`sm:text-xs md:text-sm sm:pt-2 sm:pr-4 sm:pl-4 sm:pb-2 mb-2 w-full rounded-md bg-blue-${order.status=="pending"?"600":"500"}`}
-                            onClick={onOpenEdit}s
+                            onClick={onOpenEdit}
                             disabled={order.status=="pending"?false:true}
                         >
                             <i className="fa fa-pencil mr-1 md:mr-3 transition duration-150 ease-in-out"></i>
