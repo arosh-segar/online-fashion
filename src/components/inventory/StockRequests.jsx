@@ -15,6 +15,7 @@ const StockRequests = () => {
       .then((response) => {
         setStockRequests(response.data);
         setIsStockLoading(false);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);

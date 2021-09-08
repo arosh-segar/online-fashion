@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "react-responsive-modal";
 import { API_URL } from "../../constants";
 import axios from "axios";
+import ResponseModal from "../modals/ResponseModal";
 
 const StockRequestModal = (props) => {
   const [checkXS, setCheckXS] = useState(false);
@@ -16,7 +17,10 @@ const StockRequestModal = (props) => {
   const [xlRange, setXLRange] = useState(0);
   const { openStockRequestModal, onCloseStockRequestModal } = props;
   const reorderStock = props.reorderStock;
-
+  const length = props.length;
+  /* Response Modal variables */
+  const [openResponse, setOpenResponse] = useState(false);
+  const onCloseResponseModal = () => setOpenResponse(false);
   const refillReorder = () => {
     checkXS &&
       setXSRange(
@@ -44,14 +48,19 @@ const StockRequestModal = (props) => {
       );
   };
 
+  const generateID = () => {
+    return `R${length + 1}${Math.floor(Math.random() * 10)}`;
+  };
+
   const handleSubmit = () => {
     const stockRequest = {
       productID: reorderStock._id,
+      requestID: generateID(),
       productName: reorderStock.productName,
       sizes: {
         xs: xsRange > 0 ? xsRange : null,
         s: sRange > 0 ? sRange : null,
-        m: mRange > 0 ? sRange : null,
+        m: mRange > 0 ? mRange : null,
         l: lRange > 0 ? lRange : null,
         xl: xlRange > 0 ? xlRange : null,
       },
@@ -61,13 +70,11 @@ const StockRequestModal = (props) => {
     axios
       .post(`${API_URL}/inventory/addStockRequest`, stockRequest)
       .then((response) => {
-        console.log(response);
+        setOpenResponse(true);
       })
       .catch((error) => {
         console.log(error);
       });
-
-    console.log(stockRequest);
   };
   return (
     <Modal
@@ -245,6 +252,13 @@ const StockRequestModal = (props) => {
           >
             SEND STOCK REQUEST
           </button>
+          <ResponseModal
+            heading={"Stock Request"}
+            text={`The stock request has been sent successfully`}
+            color={"#4287f5"}
+            openResponse={openResponse}
+            onCloseResponseModal={onCloseResponseModal}
+          />
         </div>
       </div>
     </Modal>

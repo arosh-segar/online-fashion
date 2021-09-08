@@ -8,9 +8,16 @@ setTimeout(() => {
 }, 10000);
 
 //Add stock request to the database
-const saveStockRequest = async ({ productID, productName, sizes, status }) => {
+const saveStockRequest = async ({
+  productID,
+  requestID,
+  productName,
+  sizes,
+  status,
+}) => {
   const result = await stockRequest.insertOne({
     productID,
+    requestID,
     productName,
     sizes,
     status,

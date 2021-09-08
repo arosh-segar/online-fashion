@@ -3,6 +3,7 @@ import StockRequestModal from "../modals/StockRequestModal";
 
 const ReorderStockItem = (props) => {
   const { _id, productName, sizes, reorderQty } = props.reorderStock;
+  const length = props.length;
   const productCode = _id.substring(17, 23).toUpperCase();
   const view = props.view;
   /* Stock purchase Modal variables */
@@ -14,7 +15,7 @@ const ReorderStockItem = (props) => {
     <>
       {/* Web view */}
       {view === "web" && (
-        <div className="flex justify-center">
+        <div className="flex justify-center h-40">
           <div className="grid gap-5 grid-cols-5 sm:grid-cols-5 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
             <div className="pt-4 pb-4 m-auto">{productCode}</div>
             <div className="pt-4 pb-4 m-auto">{productName}</div>
@@ -54,6 +55,7 @@ const ReorderStockItem = (props) => {
                 openStockRequestModal={openStockRequestModal}
                 onCloseStockRequestModal={onCloseStockRequestModal}
                 reorderStock={props.reorderStock}
+                length={length}
               />
             </div>
           </div>
