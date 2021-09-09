@@ -1,6 +1,7 @@
 import "./index.css";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
+import DeliveryNavBar from "./components/delivery/DeliveryNavbar"
 import Stocks from "./components/inventory/Stocks";
 import Products from "./components/Products";
 import Counter from "./components/Counter";
@@ -10,10 +11,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
 //import ShoppingCart from "./components/ShoppingCart";
 import AddStock from "./components/inventory/AddStock";
-import SupplieNavBar from "./components/supplier/SupplierNavBar";
-import AddSupplier from "./components/supplier/AddSupplier";
-import Suppliers from "./components/supplier/Suppliers";
-
+import Vehicles from "./components/delivery/Vehicles";
+import Vehicle
+ from "./components/delivery/Vehicle";
+ 
 function App() {
   return (
     <Router>
@@ -33,11 +34,12 @@ function App() {
             <Product />
           </Route>
         </Switch> */}
-        <SupplieNavBar />
+        <DeliveryNavBar/>
         <Switch>
-          <Route exact path={"/"}>
-            <Suppliers />
-          </Route>
+          <Router  exact path={"/"}>
+
+        <Vehicles/> 
+          </Router>
         </Switch>
       </body>
     </Router>
