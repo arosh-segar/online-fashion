@@ -178,11 +178,9 @@ const ReorderStocks = () => {
           <div className="flex justify-center items-center mx-auto">
             <div className="flex justify-center">
               <Link
+                target="_blank"
                 to={{
                   pathname: "/stockRequestsSummary",
-                  state: {
-                    reorderStocks: reorderStocks,
-                  },
                 }}
                 className="bg-green-500  text-white px-5 py-3 rounded-lg"
               >

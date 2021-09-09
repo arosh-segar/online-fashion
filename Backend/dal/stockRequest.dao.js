@@ -11,6 +11,7 @@ setTimeout(() => {
 const saveStockRequest = async ({
   productID,
   requestID,
+  pricePerUnit,
   productName,
   sizes,
   status,
@@ -18,6 +19,7 @@ const saveStockRequest = async ({
   const result = await stockRequest.insertOne({
     productID,
     requestID,
+    pricePerUnit,
     productName,
     sizes,
     status,

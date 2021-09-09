@@ -128,11 +128,13 @@ router.put(
 
 //create a stock request
 router.post("/addStockRequest", async (req, res) => {
-  const { productID, requestID, productName, sizes, status } = req.body;
+  const { productID, requestID, pricePerUnit, productName, sizes, status } =
+    req.body;
 
   const stockRequest = await createStockRequest({
     productID,
     requestID,
+    pricePerUnit,
     productName,
     sizes,
     status,
@@ -142,6 +144,7 @@ router.post("/addStockRequest", async (req, res) => {
     res.status(201).send({
       productID,
       requestID,
+      pricePerUnit,
       productName,
       sizes,
       status,

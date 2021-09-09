@@ -56,6 +56,7 @@ const StockRequestModal = (props) => {
     const stockRequest = {
       productID: reorderStock._id,
       requestID: generateID(),
+      pricePerUnit: reorderStock.pricePerUnit,
       productName: reorderStock.productName,
       sizes: {
         xs: xsRange > 0 ? xsRange : null,
@@ -66,7 +67,6 @@ const StockRequestModal = (props) => {
       },
       status: "pending",
     };
-
     axios
       .post(`${API_URL}/inventory/addStockRequest`, stockRequest)
       .then((response) => {

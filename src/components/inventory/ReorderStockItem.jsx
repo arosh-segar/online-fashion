@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import StockRequestModal from "../modals/StockRequestModal";
 
 const ReorderStockItem = (props) => {
