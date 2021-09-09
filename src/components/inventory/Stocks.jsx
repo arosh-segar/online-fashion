@@ -6,7 +6,7 @@ import Clip from "../loaders/Clip";
 
 const Stocks = () => {
   const [stocks, setStocks] = useState([]);
-  const [isStockLoading,setIsStockLoading] = useState(true);
+  const [isStockLoading, setIsStockLoading] = useState(true);
   const [filterCategory, setFilterCategory] = useState("all");
 
   useEffect(() => {
@@ -19,11 +19,7 @@ const Stocks = () => {
       .catch((error) => {
         console.log(error);
       });
-  },[]);
-
-
-
-
+  }, []);
 
   const deleteStock = (id) => {
     console.log(id);
@@ -74,12 +70,11 @@ const Stocks = () => {
           className="overflow-y-auto pb-10 font-normal"
           style={{ maxHeight: "70vh" }}
         >
-          {isStockLoading &&
-              <>
-                <Clip />
-              </>
-
-          }
+          {isStockLoading && (
+            <>
+              <Clip />
+            </>
+          )}
 
           {filterCategory === "all" ? (
             <>

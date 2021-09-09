@@ -1,0 +1,71 @@
+.SPM-navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.SPM-navbar a {
+    float: left;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    padding: 12px 70px;
+    text-decoration: none;
+}
+
+.SPM-navbar a:hover {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+}
+
+.SPM-dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.SPM-dropdown .SPM-dropbtn {
+    font-size: 18px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 12px 80px;
+    background-color: #333;
+    font-family: inherit;
+    margin: 0;
+}
+
+.SPM-dropdown:hover .SPM-dropbtn {
+    background-color: black;
+    font-weight: bold;
+    color: white;
+}
+
+.SPM-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.SPM-dropdown-content a {
+    float: none;
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.SPM-dropdown-content a:hover {
+    background-color: #e6e6ff;
+    padding: 8px 10px;
+    color: black;
+}
+
+.SPM-dropdown:hover .SPM-dropdown-content {
+    display: block;
+}
