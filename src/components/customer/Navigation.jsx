@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import "../../styles/navigation.css";
+import Home from "./Home";
+import "../../styles/navigation.css";
 
 export default class Products extends Component {
   constructor(props) {
@@ -12,9 +13,9 @@ export default class Products extends Component {
   render() {
     return (
       <div className="SPM-navbar">
-        <Link to={"/"}>Home</Link>
+        <Link to={"/customer"}>Home</Link>
 
-        <Link to={"/registration"}>Registration</Link>
+        <Link to={"/customer/registration"}>Registration</Link>
 
         <Link to={"/customer/products"}>Products</Link>
 
