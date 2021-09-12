@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import { API_URL } from "../../constants";
 import EditOrder from "./EditOrder";
+import {Link} from "react-router-dom";
 
 
 
@@ -17,6 +18,10 @@ const PurchaseOrder = (props) =>{
 
     const {order} = props
 
+    const ids = order.items.map(item =>{
+        return item.requestID
+    } )
+
     const deleteOrder = (id)=>{
 
         axios.delete(`${API_URL}/supplier/deleteOrder/${id}`)
@@ -29,24 +34,35 @@ const PurchaseOrder = (props) =>{
 
     }
 
+    console.log(order)
 
     return(
-
-
 
         <div>
             <div className="flex justify-center">
                 <div className="grid gap-5 grid-cols-7 sm:grid-cols-7 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
                     <div className="pt-4 pb-4 m-auto">{order.id}</div>
-                    <div className="pt-4 pb-4 m-auto">{order.supplierID}</div>
-                    <div className="pt-4 pb-4 m-auto">{order.requestID.join(",")}</div>
+                    <div className="pt-4 pb-4 m-auto">{order.supplier.id}</div>
+                    <div className="pt-4 pb-4 m-auto">{ids.join(",")}</div>
                     <div className="pt-4 pb-4 m-auto">{order.status}</div>
                     <div className="pt-4 pb-4 m-auto">{order.orderedDate}</div>
                     <div className="pt-4 pb-4 m-auto">{order.deliveredDate}</div>
                     <div className="pt-2 pb-2 sm:pt-4 sm:pb-4 mr-2">
+                        <Link
+                            target={"_blank"}
+                            to={{pathname:`/supplier/orderReport/${order.id}`}}
+                        >
+                           <button
+                               className={`sm:text-xs md:text-sm sm:pt-2 sm:pr-4 sm:pl-4 sm:pb-2 mb-2 w-full rounded-md bg-blue-${order.status=="pending"?"600":"500"}`}
+                               disabled={order.status=="pending"?false:true}
+                            >
+                            <i className="fa fa-print mr-1 md:mr-3 transition duration-150 ease-in-out"></i>
+                            PRINT
+                           </button>
+                        </Link>
                         <button
                             className={`sm:text-xs md:text-sm sm:pt-2 sm:pr-4 sm:pl-4 sm:pb-2 mb-2 w-full rounded-md bg-blue-${order.status=="pending"?"600":"500"}`}
-                            onClick={onOpenEdit}s
+                            onClick={onOpenEdit}
                             disabled={order.status=="pending"?false:true}
                         >
                             <i className="fa fa-pencil mr-1 md:mr-3 transition duration-150 ease-in-out"></i>
@@ -61,12 +77,13 @@ const PurchaseOrder = (props) =>{
                         </button>
                     </div>
                 </div>
+
             </div>
-            <EditOrder
-             openEdit={openEdit}
-             onCloseEdit={onCloseEdit}
-             order={order}
-            />
+            {/*<EditOrder*/}
+            {/* openEdit={openEdit}*/}
+            {/* onCloseEdit={onCloseEdit}*/}
+            {/* order={order}*/}
+            {/*/>*/}
         </div>
 
     )

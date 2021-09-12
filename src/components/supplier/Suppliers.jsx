@@ -5,7 +5,7 @@ import axios from 'axios'
 import { API_URL } from "../../constants";
 import AddSupplier from "./AddSupplier";
 
-const Suppliers = () =>{
+const Suppliers = (props) =>{
 
 
     const [suppliers,setSuppliers] = useState([])
@@ -41,7 +41,6 @@ const Suppliers = () =>{
 
     const generateID = ()=>{
 
-        console.log(suppliers.length+1)
         return `S${suppliers.length+1}${Math.floor(Math.random()*10)}`
 
     }

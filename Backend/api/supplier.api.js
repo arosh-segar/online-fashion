@@ -1,5 +1,5 @@
 const {saveSupplier,removeSupplier,editSupplier,getSuppliers} = require('../dal/supplier.dao')
-
+const {saveOrder,removeOrder,editOrder,getOrders} = require('../dal/purchaseOrder.dao')
 
 
 const addSupplier = async({supplierID,name,address,phoneNo,email})=>{
@@ -35,9 +35,34 @@ const getAllSuppliers = async() => {
 
 }
 
+const addOrder = async({id,supplier,items})=>{
+
+    const Order = {
+
+        id:id,
+        supplier:supplier,
+        items:items,
+        status:'Pending',
+        orderedDate:new Date().getDate(),
+        deliveredDate:'-'
+
+    }
+console.log(Order)
+    return await saveOrder(Order)
+
+}
+
+const getAllOrders = async () => {
+
+    return await getOrders()
+
+}
+
 module.exports = {
     addSupplier,
     deleteSupplier,
     updateSupplier,
-    getAllSuppliers
+    getAllSuppliers,
+    addOrder,
+    getAllOrders
 }

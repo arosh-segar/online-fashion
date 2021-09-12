@@ -10,40 +10,41 @@ import Select from "react-select";
 const PurchaseOrders = () =>{
 
 
-    const [suppliers,setSuppliers] = useState([])
+    const [orders,setOrders] = useState([])
+    const [id,setID] = useState("")
+
     const [openAdd, setAdd] = useState(false);
     const onOpenAddModal = () => setAdd(true);
     const onCloseAddModal = () => setAdd(false);
     const [filter,setFilter] = useState("ALL")
 
 
-    // useEffect(()=>{
-    //
-    //     axios.get(`${API_URL}/supplier/getRequests`)
-    //         .then((response)=>{
-    //             console.log(response.data)
-    //             setSuppliers(response.data)
-    //         })
-    //         .catch((error)=>{
-    //             console.log(error)
-    //         })
-    //
-    // },[])
+    useEffect(()=>{
+
+        axios.get(`${API_URL}/supplier/getOrders`)
+            .then((response)=>{
+                console.log(response.data)
+                setOrders(response.data)
+                setID(generateID())
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+
+    },[])
+
+
+    const generateID = ()=>{
+
+        return `${orders.length+1}${Math.floor(Math.random()*10)}`
+
+    }
+
 
     const options =[
         {value:"ALL",label:"ALL"},
         {value:"pending",label:"Pending"},
         {value:'received',label:"Received"}
-    ]
-
-    const orders = [
-        {id:10,supplierID:'S121',requestID:[101,102],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
-        {id:11,supplierID:'S11',requestID:[131,104],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
-        {id:12,supplierID:'S23',requestID:[103],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
-        {id:13,supplierID:'S24',requestID:[105],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"},
-        {id:14,supplierID:'S15',requestID:[103,109],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"},
-        {id:15,supplierID:'S55',requestID:[100,112],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"}
-
     ]
 
     return(
@@ -91,6 +92,7 @@ const PurchaseOrders = () =>{
             </div>
             <AddOrder
              openAdd={openAdd}
+             id={id}
              onCloseAdd={onCloseAddModal}
             />
         </div>
