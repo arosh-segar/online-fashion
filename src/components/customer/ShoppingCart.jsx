@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ShoppingCartItem from "./ShoppingCartItem";
+import axios from "axios";
+import { API_URL } from "../../constants";
 import moment from "moment";
 // let products = [];
 // let duplicate = false;
@@ -198,27 +200,68 @@ const ShoppingCart = (props) => {
     console.log("qty: ", qty);
 
     var date = moment().format("DD-MM-YYYY hh:mm:ss");
+
     console.log("date: ", date);
+
+    // let product = {
+    //   productID: "",
+    //   productName: "",
+    //   productType: "",
+    //   productCategory: "",
+    //   productPricePerUnit: 0.0,
+    //   productImageUrl: "",
+    //   productQty: {
+    //     xs: 0,
+    //     s: 0,
+    //     m: 0,
+    //     l: 0,
+    //     xl: 0,
+    //   },
+    // };
+
+    let orderProductArr = [];
+
+    for (let x of cart) {
+      let product = {};
+      let index = cart.indexOf(x);
+      let sizes = qty[index].size;
+
+      product.productID = x._id;
+      product.productName = x.productName;
+      product.productType = x.productType;
+      product.productCategory = x.productCategory;
+      product.productPricePerUnit = x.pricePerUnit;
+      product.productImageUrl = x.productImageUrl;
+      product.productQty = sizes;
+
+      orderProductArr.push(product);
+    }
+
+    // console.log("order products: ", orderProductArr);
+    // console.log("tot: ", props.cartTotal);
+
+    let totalAmount = props.cartTotal;
+    // console.log("api: ", API_URL);
+
     let orderObject = {
       purchaseDate: date,
-      productID: "",
-      productName: "",
-      productType: "",
-      productCategory: "",
-      productPricePerUnit: 0.0,
-      productImageUrl: "",
-      productQty: {
-        xs: 0,
-        s: 0,
-        m: 0,
-        l: 0,
-        xl: 0,
-      },
-      totalBillAmount: 0.0,
+      products: orderProductArr,
+      totalBillAmount: totalAmount,
       status: "pending",
     };
-    for (let x of cart) {
-    }
+
+    console.log("order: ", orderObject);
+
+    axios
+      .post(`${API_URL}/customer/create-order`, orderObject)
+      .then((response) => {
+        console.log("success", response.data);
+        alert("successfully placed order!");
+      })
+      .catch((e) => {
+        console.log("error", e.data);
+        alert("error");
+      });
   };
 
   return (
