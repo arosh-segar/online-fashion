@@ -192,7 +192,8 @@ const ShoppingCart = (props) => {
     console.log("cart:", cart);
     console.log("qty: ", qty);
 
-    var date = moment().format("DD-MM-YYYY hh:mm:ss");
+    let date = moment().format("DD-MM-YYYY hh:mm:ss");
+    let email = "vinayagar@gmail.com";
 
     console.log("date: ", date);
 
@@ -241,6 +242,7 @@ const ShoppingCart = (props) => {
       products: orderProductArr,
       totalBillAmount: totalAmount,
       status: "pending",
+      customerEmail: email,
     };
 
     console.log("order: ", orderObject);

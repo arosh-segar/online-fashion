@@ -10,6 +10,7 @@ import ShoppingCart from "./ShoppingCart";
 import Products from "./Products";
 import Product from "./Product";
 import Navigation from "./Navigation";
+import OrdersList from "./OrdersList";
 
 const CustomerDashboard = () => {
   const [products, setproducts] = useState([]);
@@ -177,6 +178,10 @@ const CustomerDashboard = () => {
 
           <Route path={"/customer/registration"}>
             <Registration />
+          </Route>
+
+          <Route path={"/customer/orders"}>
+            <OrdersList />
           </Route>
 
           <Route path="/customer/products">
