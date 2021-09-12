@@ -19,7 +19,7 @@ const CustomerDashboard = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/inventory`)
+      .get(`${API_URL}/customer/get-all-products`)
       .then((response) => {
         setproducts(response.data);
       })
