@@ -3,21 +3,14 @@ import ShoppingCartItem from "./ShoppingCartItem";
 import axios from "axios";
 import { API_URL } from "../../constants";
 import moment from "moment";
-// let products = [];
-// let duplicate = false;
-// let totDuplicate = false;
-// let cartTotal = [];
+
 const ShoppingCart = (props) => {
   const [cart, setCart] = useState([]);
-  // const [total, setTotal] = useState(0.0);
   const [qty, setQty] = useState([]);
 
   useEffect(() => {
     setCart(props.cart);
     setQty(props.qty);
-    // setTotal(props.cartTotal);
-    // setTotal(props.cartTotal);
-    // handleCartTotal();
   }, []);
 
   // Handling cart items delete
