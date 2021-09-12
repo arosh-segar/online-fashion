@@ -36,11 +36,6 @@ const OrderItem = (props) => {
                 status={"qty"}
               />
             ))}
-            {/* {sizes.xs && <p>XS - {sizes.xs.xsSizeAvailableQty}</p>}
-            {sizes.s && <p>S - {sizes.s.sSizeAvailableQty}</p>}
-            {sizes.m && <p>M - {sizes.m.mSizeAvailableQty}</p>}
-            {sizes.l && <p>L - {sizes.l.lSizeAvailableQty}</p>}
-            {sizes.xl && <p>XL - {sizes.xl.xlSizeAvailableQty}</p>} */}
           </div>
           <div className="pt-4 pb-4 m-auto text-gray-900">
             {totalBillAmount}

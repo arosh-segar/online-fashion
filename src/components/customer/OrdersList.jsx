@@ -20,6 +20,7 @@ const OrdersList = () => {
       .catch((error) => {
         console.log(error);
       });
+    console.log("fil: ", filterCategory);
   }, []);
 
   return (
@@ -38,9 +39,8 @@ const OrdersList = () => {
                 <option value="all" selected>
                   All
                 </option>
-                <option value="men">Men</option>
-                <option value="women">Women</option>
-                <option value="kids">Kids</option>
+                <option value="pending">My Pending Orders</option>
+                <option value="confirmed">My Confirmed Orders</option>
               </select>
             </div>
           </div>
@@ -62,12 +62,6 @@ const OrdersList = () => {
           className="overflow-y-auto pb-10 font-normal"
           style={{ maxHeight: "70vh" }}
         >
-          {/* {isStockLoading && (
-            <>
-              <Clip />
-            </>
-          )} */}
-
           {filterCategory === "all" ? (
             <>
               {orders.map((orderItem) => (
@@ -76,41 +70,15 @@ const OrdersList = () => {
             </>
           ) : (
             <>
-              {/* {stocks.map((stock) => (
+              {orders.map((orderItem) => (
                 <>
-                  {stock.productCategory === filterCategory && (
-                    <StockItem key={stock._id} stock={stock} />
+                  {orderItem.status === filterCategory && (
+                    <OrderItem key={orderItem._id} orderItem={orderItem} />
                   )}
                 </>
-              ))} */}
+              ))}
             </>
           )}
-        </div>
-      </div>
-
-      {/* small screens */}
-      <div className="block sm:hidden mt-10">
-        <div className="">
-          <div className="flex justify-center">
-            <div className="flex justify-center w-11/12">
-              <select
-                className="p-2 border border-none w-full rounded-lg"
-                name="cars"
-                id="cars"
-                style={{ textAlignLast: "center" }}
-              >
-                <option value="all" selected>
-                  All
-                </option>
-                <option value="1">T-shirts</option>
-                <option value="2">Trousers</option>
-                <option value="3">Sports</option>
-              </select>
-            </div>
-          </div>
-          {/* {stocks.map((stock) => (
-            <StockItem key={stock._id} stock={stock} />
-          ))} */}
         </div>
       </div>
     </div>
