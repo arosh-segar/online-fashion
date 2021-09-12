@@ -9,13 +9,12 @@ import Registration from "./Registration";
 import ShoppingCart from "./ShoppingCart";
 import Products from "./Products";
 import Product from "./Product";
+import Navigation from "./Navigation";
 
 const CustomerDashboard = () => {
   const [products, setproducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [qty, setQty] = useState([
-    { _id: "", price: 0.0, size: { xs: 0, s: 0, m: 0, l: 0, xl: 0 } },
-  ]);
+  const [qty, setQty] = useState([]);
   const [cartTotal, setCartTotal] = useState(0.0);
 
   useEffect(() => {
@@ -27,11 +26,31 @@ const CustomerDashboard = () => {
       .catch((error) => {
         console.log(error);
       });
+    // console.log("qty: ", qty);
+    // console.log("cart2: ", cart);
+    if (qty.length == 0) setCartTotal(0.0);
+    else {
+      let amt = 0.0;
+
+      for (let x of qty) {
+        if (x._id !== qty._id) {
+          let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
+          amt = amt + 1.0 * (x.price * no);
+        }
+      }
+      setCartTotal(amt);
+    }
   });
 
   // Adding items to shopping cart
   const addItem = (item) => {
     if (item) setCart([...cart, item]);
+
+    // setCart(
+    //   cart.filter(function (cartItem) {
+    //     return cartItem._id !== "";
+    //   })
+    // );
 
     // for (let x of cart) {
     //   console.log("arr:", x);
@@ -74,20 +93,18 @@ const CustomerDashboard = () => {
         return cartItem !== item;
       })
     );
-
     //Increasing and updating cart items quantity
     setQty(
       qty.filter(function (newQty) {
         return newQty._id !== item._id;
       })
     );
-
-    return cart;
   };
 
   const updateQuantity = (id, price, size) => {
     // item.availableqty = qty;
     let exist = false;
+    let amt = 0.0;
 
     for (let x of qty) {
       if (x._id === id) {
@@ -104,23 +121,30 @@ const CustomerDashboard = () => {
         price: price,
         size: size,
       };
+
       setQty([...qty, item]);
     }
   };
 
   // Calculating total of cart items
-  const calculateCartTotal = () => {
-    let total = 0.0;
+  // const calculateCartTotal = () => {
+  //   let total = 0.0;
 
-    for (let x of qty) {
-      let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
+  //   // if (qty.length === 1) {
+  //   //   // let sizes = size.xs + size.s + size.m + size.l + size.xl;
+  //   //   let newTot = price;
+  //   //   setCartTotal(newTot);
+  //   // }
 
-      total = total + 1.0 * (x.price * no);
-    }
+  //   for (let x of qty) {
+  //     let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
 
-    setCartTotal(total);
-    return total;
-  };
+  //     total = total + 1.0 * (x.price * no);
+  //   }
+
+  //   setCartTotal(total);
+  //   // return total;
+  // };
 
   return (
     <div>
@@ -144,12 +168,14 @@ const CustomerDashboard = () => {
       </div>
 
       <div>
+        <Navigation />
+        {/* <body className="bg-gradient-to-r from-blue-600 to-blue-400"> */}
         <Switch>
-          {/* <Route exact path={"/"}>
+          <Route exact path={"/customer"}>
             <Home />
-          </Route> */}
+          </Route>
 
-          <Route path={"/registration"}>
+          <Route path={"/customer/registration"}>
             <Registration />
           </Route>
 
@@ -174,7 +200,7 @@ const CustomerDashboard = () => {
               removeItem={removeItem}
               updateQuantity={updateQuantity}
               cartTotal={cartTotal}
-              calculateCartTotal={calculateCartTotal}
+              // calculateCartTotal={calculateCartTotal}
               cart={cart}
               qty={qty}
             />
@@ -193,6 +219,7 @@ const CustomerDashboard = () => {
 
           {/* <Redirect to={"/products"} /> */}
         </Switch>
+        {/* </body> */}
       </div>
     </div>
   );
