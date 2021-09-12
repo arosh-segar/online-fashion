@@ -24,7 +24,7 @@ const ShoppingCartItem = (props) => {
   const [qty, setQty] = useState(props.qty);
 
   useEffect(() => {
-    props.handleCartTotal();
+    // props.handleCartTotal();
     setItem(props.item);
     console.log(item);
     console.log("helLo: ", item.sizes.xs.xsSizeAvailableQty);
@@ -62,9 +62,18 @@ const ShoppingCartItem = (props) => {
   // props.calculateTotal(p, "", props.item._id);
 
   const remove = () => {
+    let obj = {
+      xs: xs,
+      s: s,
+      m: m,
+      l: l,
+      xl: xl,
+    };
+
     props.removeItem(item);
     props.handleDelete(item);
-    props.handleCartTotal();
+    // props.updateTotal();
+    // props.handleCartTotal();
   };
 
   const incrementTot = async (value, price, action, size) => {
@@ -120,7 +129,11 @@ const ShoppingCartItem = (props) => {
       } else console.log("Invalid size");
 
       props.updateQuantity(item._id, price, obj);
-      props.handleCartTotal();
+      props.quantityUpdate();
+      // props.updateTotal();
+      // props.calcTot();
+      // props.calculateCartTotal();
+      // props.handleCartTotal();
     }
 
     if (action === "decrease") {
@@ -167,7 +180,7 @@ const ShoppingCartItem = (props) => {
       } else console.log("Invalid size");
 
       props.updateQuantity(item._id, price, obj);
-      props.handleCartTotal();
+      props.quantityUpdate();
     }
   };
 
