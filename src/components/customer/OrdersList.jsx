@@ -20,7 +20,6 @@ const OrdersList = () => {
       .catch((error) => {
         console.log(error);
       });
-    console.log("fil: ", filterCategory);
   }, []);
 
   return (

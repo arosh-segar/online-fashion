@@ -194,6 +194,7 @@ const ShoppingCart = (props) => {
 
     let date = moment().format("DD-MM-YYYY hh:mm:ss");
     let email = "vinayagar@gmail.com";
+    let address = "colombo";
 
     console.log("date: ", date);
 
@@ -224,7 +225,7 @@ const ShoppingCart = (props) => {
       product.productName = x.productName;
       product.productType = x.productType;
       product.productCategory = x.productCategory;
-      product.productPricePerUnit = x.pricePerUnit;
+      product.pricePerUnit = x.pricePerUnit;
       product.productImageUrl = x.productImageUrl;
       product.productQty = sizes;
 
@@ -243,15 +244,19 @@ const ShoppingCart = (props) => {
       totalBillAmount: totalAmount,
       status: "pending",
       customerEmail: email,
+      deliveryAddress: address,
     };
 
-    console.log("order: ", orderObject);
+    // console.log("order: ", orderObject);
 
     axios
       .post(`${API_URL}/customer/create-order`, orderObject)
       .then((response) => {
         console.log("success", response.data);
         alert("successfully placed order!");
+        props.clearCart();
+        setCart([]);
+        setQty([]);
       })
       .catch((e) => {
         console.log("error", e.data);
