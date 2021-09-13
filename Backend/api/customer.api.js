@@ -1,7 +1,7 @@
 const {
   createOrder,
-  getAllStocks,
   getAllOrders,
+  getAllStocks,
 } = require("../dal/customer.dao");
 
 // ---------------------------- ORDER COLLECTION -------------------------------------
@@ -24,6 +24,6 @@ const getOrders = async (email) => {
 
 module.exports = {
   saveOrder,
-  getStocks,
   getOrders,
+  getStocks,
 };

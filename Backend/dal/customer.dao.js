@@ -35,6 +35,6 @@ const getAllStocks = async () => {
 
 module.exports = {
   createOrder,
-  getAllStocks,
   getAllOrders,
+  getAllStocks,
 };
