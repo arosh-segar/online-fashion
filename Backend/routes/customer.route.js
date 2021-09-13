@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { saveOrder, getStocks, getOrders } = require("../api/customer.api");
+const { saveOrder, getOrders, getStocks } = require("../api/customer.api");
 
 // --------------------------- ORDER ------------------------------
 router.post("/create-order", async (req, res) => {
@@ -15,6 +15,7 @@ router.post("/create-order", async (req, res) => {
 });
 
 // ----------------------- STOCK ------------------------------------
+// Retrieve all products for sale and display to customer
 router.get("/get-all-products", async (req, res) => {
   let stocks = await getStocks();
 

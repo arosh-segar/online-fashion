@@ -11,6 +11,7 @@ import Products from "./Products";
 import Product from "./Product";
 import Navigation from "./Navigation";
 import OrdersList from "./OrdersList";
+import EditOrder from "./EditOrder";
 
 const CustomerDashboard = () => {
   const [products, setproducts] = useState([]);
@@ -127,6 +128,12 @@ const CustomerDashboard = () => {
     }
   };
 
+  const clearCart = () => {
+    setCart([]);
+    setQty([]);
+    setCartTotal(0.0);
+  };
+
   // Calculating total of cart items
   // const calculateCartTotal = () => {
   //   let total = 0.0;
@@ -184,6 +191,11 @@ const CustomerDashboard = () => {
             <OrdersList />
           </Route>
 
+          <Route
+            path={"/customer/edit-order"}
+            render={(props) => <EditOrder {...props} products={products} />}
+          ></Route>
+
           <Route path="/customer/products">
             <Products addItem={addItem} products={products} />
           </Route>
@@ -205,6 +217,7 @@ const CustomerDashboard = () => {
               removeItem={removeItem}
               updateQuantity={updateQuantity}
               cartTotal={cartTotal}
+              clearCart={clearCart}
               // calculateCartTotal={calculateCartTotal}
               cart={cart}
               qty={qty}
