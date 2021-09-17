@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { API_URL } from "../../constants";
-import axios from "axios";
 
 const EditOrderItem = (props) => {
   const [isSizesOpen, setSizesOpen] = useState(false);
@@ -10,33 +8,38 @@ const EditOrderItem = (props) => {
   const [l, setL] = useState(0);
   const [xl, setXl] = useState(0);
 
-  const [item, setItem] = useState(props.item);
-  const [allProducts, setAllProducts] = useState(props.products);
-  const [product, setProduct] = useState([]);
-  const [editQty, setEditQty] = useState(props.editQty);
+  // MAXIMUM LIMIT FOR QUANTITY UPDATE DUE TO PRODUCT AVAILABILITY
+  const [xsLimit, setXsLimit] = useState(0);
+  const [sLimit, setSLimit] = useState(0);
+  const [mLimit, setMLimit] = useState(0);
+  const [lLimit, setLLimit] = useState(0);
+  const [xlLimit, setXlLimit] = useState(0);
+
+  const item = props.item;
+  const allProducts = props.allProducts;
+  // const editQty = props.editQty;
+  const [productDetail, setProductDetail] = useState([]);
 
   useEffect(() => {
-    console.log("edit order itm: ", props.item);
-    console.log("edit order qty: ", props.editQty);
-    console.log("pro: ", props.products);
-    // console.log("helLo: ", item.sizes.xs.xsSizeAvailableQty);
+    // console.log("edit order itm: ", props.item);
+    // console.log("edit order qty: ", props.editQty);
+    // console.log("all products: ", props.allProducts);
 
-    for (let x of editQty) {
-      console.log("x: ", x._id);
-      console.log("id:", item.productID);
-      if (x._id === item.productID) {
-        console.log("setting sizes", x.size.xs);
-        setXs(x.size.xs);
-        setS(x.size.s);
-        setM(x.size.m);
-        setL(x.size.l);
-        setXl(x.size.xl);
-      }
-    }
+    // SETTING QTY OF ORDERED PRODUCT IN ONE ORDER
+    setXs(item.productQty.xs);
+    setS(item.productQty.s);
+    setM(item.productQty.m);
+    setL(item.productQty.l);
+    setXl(item.productQty.xl);
 
     for (let y of allProducts) {
       if (y._id === item.productID) {
-        setProduct(y);
+        setProductDetail(y);
+        setXsLimit(parseInt(y.sizes.xs.xsSizeAvailableQty));
+        setSLimit(parseInt(y.sizes.s.sSizeAvailableQty));
+        setMLimit(parseInt(y.sizes.m.mSizeAvailableQty));
+        setLLimit(parseInt(y.sizes.l.lSizeAvailableQty));
+        setXlLimit(parseInt(y.sizes.xl.xlSizeAvailableQty));
       }
     }
   }, []);
@@ -50,7 +53,7 @@ const EditOrderItem = (props) => {
       xl: xl,
     };
 
-    // props.removeItem(item);
+    // console.log("call delete");
     props.handleDelete(item);
   };
 
@@ -107,7 +110,6 @@ const EditOrderItem = (props) => {
       } else console.log("Invalid size");
 
       props.quantityUpdate(item.productID, price, obj);
-      // props.quantityUpdate();
     }
 
     if (action === "decrease") {
@@ -154,7 +156,6 @@ const EditOrderItem = (props) => {
       } else console.log("Invalid size");
 
       props.quantityUpdate(item.productID, price, obj);
-      // props.quantityUpdate();
     }
   };
 
@@ -191,7 +192,7 @@ const EditOrderItem = (props) => {
               {(xs + s + m + l + xl) * item.pricePerUnit}
             </div>
 
-            {isSizesOpen && product.sizes.xs.xsSizeAvailableQty && (
+            {isSizesOpen && productDetail.sizes.xs.xsSizeAvailableQty && (
               <div className="pb-4 m-auto col-span-5 w-full flex flex-1 lg:flex-row">
                 <div className="m-auto my-auto flex lg:flex-row justify-center">
                   <p className="mr-1 lg:mr-2 text-sm my-auto">XS :</p>
@@ -211,15 +212,17 @@ const EditOrderItem = (props) => {
                   </p>{" "}
                   <button
                     onClick={() => {
-                      setXs(xs + 1);
-                      incrementTot(xs, item.pricePerUnit, "increase", "xs");
+                      if (xs < xsLimit) {
+                        setXs(xs + 1);
+                        incrementTot(xs, item.pricePerUnit, "increase", "xs");
+                      }
                     }}
                     className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                   >
                     +
                   </button>
                 </div>
-                {isSizesOpen && product.sizes.s.sSizeAvailableQty && (
+                {isSizesOpen && productDetail.sizes.s.sSizeAvailableQty && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">S :</p>
                     <button
@@ -238,8 +241,10 @@ const EditOrderItem = (props) => {
                     </p>{" "}
                     <button
                       onClick={() => {
-                        setS(1 + s);
-                        incrementTot(s, item.pricePerUnit, "increase", "s");
+                        if (s < sLimit) {
+                          setS(1 + s);
+                          incrementTot(s, item.pricePerUnit, "increase", "s");
+                        }
                       }}
                       className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                     >
@@ -247,7 +252,7 @@ const EditOrderItem = (props) => {
                     </button>
                   </div>
                 )}
-                {isSizesOpen && product.sizes.m.mSizeAvailableQty && (
+                {isSizesOpen && productDetail.sizes.m.mSizeAvailableQty && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">M :</p>
                     <button
@@ -266,8 +271,10 @@ const EditOrderItem = (props) => {
                     </p>{" "}
                     <button
                       onClick={() => {
-                        setM(1 + m);
-                        incrementTot(m, item.pricePerUnit, "increase", "m");
+                        if (m < mLimit) {
+                          setM(1 + m);
+                          incrementTot(m, item.pricePerUnit, "increase", "m");
+                        }
                       }}
                       className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                     >
@@ -276,7 +283,7 @@ const EditOrderItem = (props) => {
                   </div>
                 )}
 
-                {isSizesOpen && product.sizes.l.lSizeAvailableQty && (
+                {isSizesOpen && productDetail.sizes.l.lSizeAvailableQty && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">L :</p>
                     <button
@@ -295,8 +302,10 @@ const EditOrderItem = (props) => {
                     </p>{" "}
                     <button
                       onClick={() => {
-                        setL(1 + l);
-                        incrementTot(l, item.pricePerUnit, "increase", "l");
+                        if (l < lLimit) {
+                          setL(1 + l);
+                          incrementTot(l, item.pricePerUnit, "increase", "l");
+                        }
                       }}
                       className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                     >
@@ -305,7 +314,7 @@ const EditOrderItem = (props) => {
                   </div>
                 )}
 
-                {isSizesOpen && product.sizes.xl.xlSizeAvailableQty && (
+                {isSizesOpen && productDetail.sizes.xl.xlSizeAvailableQty && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">XL :</p>
                     <button
@@ -324,8 +333,10 @@ const EditOrderItem = (props) => {
                     </p>{" "}
                     <button
                       onClick={() => {
-                        setXl(1 + xl);
-                        incrementTot(xl, item.pricePerUnit, "increase", "xl");
+                        if (xl < xlLimit) {
+                          setXl(1 + xl);
+                          incrementTot(xl, item.pricePerUnit, "increase", "xl");
+                        }
                       }}
                       className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                     >
@@ -335,14 +346,19 @@ const EditOrderItem = (props) => {
                 )}
               </div>
             )}
+            {/* <div className="m-auto my-auto flex flex-row justify-center">
+              <p className="bg-red-200 mr-1 lg:mr-2 text-sm my-auto">
+                MAX LIMIT
+              </p>
+            </div> */}
           </div>
 
-          <button
+          {/* <button
             className="rounded-full h-6 w-5 bg-red-600 text-white font-medium flex justify-center items-center mt-12 ml-2 my-auto"
             onClick={remove}
           >
             X
-          </button>
+          </button> */}
         </div>
       )}
     </div>
