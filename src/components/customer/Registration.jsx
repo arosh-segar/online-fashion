@@ -4,8 +4,6 @@ import axios from "axios";
 import { API_URL } from "../../constants";
 import moment from "moment";
 
-// import "../../styles/registration.css";
-
 const initialState = {
   fname: "",
   lname: "",
