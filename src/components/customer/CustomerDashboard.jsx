@@ -12,6 +12,7 @@ import Product from "./Product";
 import Navigation from "./Navigation";
 import OrdersList from "./OrdersList";
 import EditOrder from "./EditOrder";
+import CustomerLogin from "./CustomerLogin";
 
 const CustomerDashboard = () => {
   const [products, setproducts] = useState([]);
@@ -20,6 +21,11 @@ const CustomerDashboard = () => {
   const [cartTotal, setCartTotal] = useState(0.0);
 
   useEffect(() => {
+    // let customer = localStorage.getItem("customer");
+    // customer = JSON.parse(customer);
+
+    // if (customer) console.log("customer logged in : ", customer);
+
     axios
       .get(`${API_URL}/customer/get-all-products`)
       .then((response) => {
@@ -42,6 +48,12 @@ const CustomerDashboard = () => {
       }
       setCartTotal(amt);
     }
+    // const loggedInUser = localStorage.getItem("customer");
+    // if (loggedInUser) {
+    //   const foundUser = JSON.parse(loggedInUser);
+    //   // setCustomer(foundUser);
+    //   console.log("logged user:", foundUser);
+    // }
   });
 
   // Adding items to shopping cart
@@ -189,6 +201,10 @@ const CustomerDashboard = () => {
 
           <Route path={"/customer/orders"}>
             <OrdersList />
+          </Route>
+
+          <Route path="/customer/login">
+            <CustomerLogin />
           </Route>
 
           <Route
