@@ -1,12 +1,31 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Home from "./Home";
 import "../../styles/navigation.css";
+import swal from "sweetalert";
 
 export default class Products extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      email: "",
+    };
+
+    let customer = localStorage.getItem("customer");
+    customer = JSON.parse(customer);
+    if (customer) this.state.email = customer.email;
   }
+
+  handleLogout = () => {
+    localStorage.clear();
+    swal({
+      title: "You have logged out Successfully!",
+      text: "",
+      icon: "success",
+    }).then(() => {
+      window.location = `/customer`;
+    });
+  };
 
   // Navigation bar for customer
 
@@ -24,6 +43,14 @@ export default class Products extends Component {
         </Link>
 
         <Link to={"/customer/orders"}>My Orders</Link>
+
+        {this.state.email == "" && <Link to={"/customer/login"}>Login</Link>}
+
+        {this.state.email != "" && (
+          <Link>
+            <button onClick={this.handleLogout}>Logout</button>
+          </Link>
+        )}
       </div>
     );
   }
