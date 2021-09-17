@@ -3,14 +3,18 @@ import ShoppingCartItem from "./ShoppingCartItem";
 import axios from "axios";
 import { API_URL } from "../../constants";
 import moment from "moment";
+import swal from "sweetalert";
 
 const ShoppingCart = (props) => {
   const [cart, setCart] = useState([]);
   const [qty, setQty] = useState([]);
+  const [customer, setCustomer] = useState(props.customer);
 
   useEffect(() => {
     setCart(props.cart);
     setQty(props.qty);
+    setCustomer(props.customer);
+    console.log("customer:", customer);
   }, []);
 
   // Handling cart items delete
@@ -189,79 +193,126 @@ const ShoppingCart = (props) => {
   // };
 
   const confirmOrder = () => {
-    console.log("cart:", cart);
-    console.log("qty: ", qty);
+    // console.log("cart:", cart);
+    // console.log("qty: ", qty);
 
     let date = moment().format("DD-MM-YYYY hh:mm:ss");
-    let email = "vinayagar@gmail.com";
-    let address = "colombo";
+    let customer = localStorage.getItem("customer");
+    customer = JSON.parse(customer);
+    console.log("customer dtls:", customer);
 
-    console.log("date: ", date);
-
-    // let product = {
-    //   productID: "",
-    //   productName: "",
-    //   productType: "",
-    //   productCategory: "",
-    //   productPricePerUnit: 0.0,
-    //   productImageUrl: "",
-    //   productQty: {
-    //     xs: 0,
-    //     s: 0,
-    //     m: 0,
-    //     l: 0,
-    //     xl: 0,
-    //   },
-    // };
-
-    let orderProductArr = [];
-
-    for (let x of cart) {
-      let product = {};
-      let index = cart.indexOf(x);
-      let sizes = qty[index].size;
-
-      product.productID = x._id;
-      product.productName = x.productName;
-      product.productType = x.productType;
-      product.productCategory = x.productCategory;
-      product.pricePerUnit = x.pricePerUnit;
-      product.productImageUrl = x.productImageUrl;
-      product.productQty = sizes;
-
-      orderProductArr.push(product);
-    }
-
-    // console.log("order products: ", orderProductArr);
-    // console.log("tot: ", props.cartTotal);
-
-    let totalAmount = props.cartTotal;
-    // console.log("api: ", API_URL);
-
-    let orderObject = {
-      purchaseDate: date,
-      products: orderProductArr,
-      totalBillAmount: totalAmount,
-      status: "pending",
-      customerEmail: email,
-      deliveryAddress: address,
-    };
-
-    // console.log("order: ", orderObject);
-
-    axios
-      .post(`${API_URL}/customer/create-order`, orderObject)
-      .then((response) => {
-        console.log("success", response.data);
-        alert("successfully placed order!");
-        props.clearCart();
-        setCart([]);
-        setQty([]);
-      })
-      .catch((e) => {
-        console.log("error", e.data);
-        alert("error");
+    if (!customer) {
+      swal({
+        title: "You need to Login to place your order!",
+        text: "",
+        icon: "warning",
+      }).then(() => {
+        window.location = `/customer/login`;
       });
+    } else {
+      let email = customer.email;
+      let address = customer.address;
+
+      // console.log("date: ", date);
+
+      // let product = {
+      //   productID: "",
+      //   productName: "",
+      //   productType: "",
+      //   productCategory: "",
+      //   productPricePerUnit: 0.0,
+      //   productImageUrl: "",
+      //   productQty: {
+      //     xs: 0,
+      //     s: 0,
+      //     m: 0,
+      //     l: 0,
+      //     xl: 0,
+      //   },
+      // };
+
+      let orderProductArr = [];
+
+      if (qty.length > 0) {
+        for (let x of cart) {
+          let product = {};
+          let index = cart.indexOf(x);
+          let sizes = qty[index];
+          sizes = sizes.size;
+
+          product.productID = x._id;
+          product.productName = x.productName;
+          product.productType = x.productType;
+          product.productCategory = x.productCategory;
+          product.pricePerUnit = x.pricePerUnit;
+          product.productImageUrl = x.productImageUrl;
+          product.productQty = sizes;
+
+          orderProductArr.push(product);
+        }
+      }
+
+      // console.log("order products: ", orderProductArr);
+      // console.log("tot: ", props.cartTotal);
+
+      let totalAmount = props.cartTotal;
+
+      // console.log("api: ", API_URL);
+
+      let orderObject = {
+        purchaseDate: date,
+        products: orderProductArr,
+        totalBillAmount: totalAmount,
+        status: "pending",
+        customerEmail: email,
+        deliveryAddress: address,
+      };
+
+      if (orderProductArr.length === 0) {
+        swal({
+          title: "Your cart is empty, please add products to place your order!",
+          text: "",
+          icon: "warning",
+        }).then(() => {
+          // window.location = `/customer/`;
+        });
+      }
+
+      // console.log("pro:", orderProductArr.length === 0);
+      // console.log("pro2:", totalAmount === 0);
+      if (cart.length > 0 && totalAmount === 0) {
+        swal({
+          title:
+            "Quantity of products added to cart is zero, please update products quantity!",
+          text: "",
+          icon: "warning",
+        });
+      }
+
+      // console.log("order: ", orderObject);
+
+      if (orderProductArr.length > 0) {
+        axios
+          .post(`${API_URL}/customer/create-order`, orderObject)
+          .then((response) => {
+            console.log("success", response.data);
+            swal({
+              title: "Your Order has been placed Successfully!",
+              text: "",
+              icon: "success",
+            }).then(() => {
+              window.location = `orders`;
+            });
+            props.clearCart();
+            setCart([]);
+            setQty([]);
+          })
+          .catch((e) => {
+            console.log("error", e.data);
+            alert("error");
+          });
+      }
+    }
   };
 
   return (
