@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import EditOrder from "./EditOrder";
-import OrderProductItem from "./OrderProductItem";
+import axios from "axios";
+import { API_URL } from "../../constants";
+import swal from "sweetalert";
 
 const OrderItem = (props) => {
   const {
@@ -16,7 +17,85 @@ const OrderItem = (props) => {
   const orderID = _id.substring(20).toUpperCase();
   const [orderEdit, setOrderEdit] = useState("");
 
-  // console.log("orderitm: ", props.orderItem);
+  // DELETE ORDER CONFIRMATION
+  const confirmDelete = () => {
+    swal({
+      title: "Are you sure that you want to Delete your order ?",
+      text: " ",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios
+          .delete(`${API_URL}/customer/delete-order/${_id}`)
+          .then((response) => {
+            // console.log("Order Deleted Successfully!!!", response.data);
+            swal("Your Order is Deleted Successfully!", "", "success");
+            swal({
+              title: "Your Order is Deleted Successfully!",
+              text: "",
+              icon: "success",
+              timer: 3000,
+            }).then(() => {
+              window.location = `orders`;
+            });
+            // alert("Order Deleted Successfully!");
+          })
+          .catch((e) => {
+            console.log("error", e.data);
+            swal(
+              "Error Occurred!",
+              "Your order could not be deleted!",
+              "error"
+            );
+            alert("Error occurred! Could not delete your order!");
+          });
+      } else {
+        swal(
+          "Your Order is SAFE and will be confirmed shortly!",
+          "",
+          "success"
+        );
+      }
+    });
+  };
+  // DELETE ORDER
+  const deleteOrder = () => {
+    // console.log("delete order");
+    // axios
+    //   .delete(`${API_URL}/customer/delete-order/${_id}`)
+    //   .then((response) => {
+    //     console.log("Order Deleted Successfully!!!", response.data);
+    //     // alert("Order Deleted Successfully!");
+    //   })
+    //   .catch((e) => {
+    //     console.log("error", e.data);
+    //     alert("Error occurred! Could not delete your order!");
+    //   });
+  };
+
+  const getDisplayStatus = () => {
+    if (status === "confirmed") {
+      return (
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          Button
+        </button>
+      );
+    } else if (status === "pending") {
+      return <button className="rev-btn-status-reject">Rejected</button>;
+    } else {
+      return <button className="rev-btn-status-pending">Pending</button>;
+    }
+  };
+
+  const displayError = () => {
+    swal(
+      "You cannot perform this action as your Order has been confirmed already!",
+      "",
+      "error"
+    );
+  };
 
   return (
     <div>
@@ -24,51 +103,75 @@ const OrderItem = (props) => {
         <div className="grid gap-5 grid-cols-8 sm:grid-cols-8 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
           <div className="pt-4 pb-4 m-auto text-gray-900">{orderID}</div>
           <div className="pt-4 pb-4 m-auto text-gray-900">{purchaseDate}</div>
+          {/* <div className="pt-4 pb-4 m-auto text-gray-900">
+            {productName - productQty}
+          </div> */}
           <div className="pt-4 pb-4 m-auto hidden sm:block">
             {products.map((product) => (
-              <OrderProductItem
-                key={product._id}
-                product={product}
-                status={"name"}
-              />
+              <div className="pt-4 pb-4 m-auto text-gray-900">
+                <div className="pt-4 pb-4 m-auto text-gray-900">
+                  {product.productName}
+                </div>
+              </div>
             ))}
           </div>
           <div className="pt-4 pb-4 m-auto text-center font-normal">
             {products.map((product) => (
-              <OrderProductItem
-                key={product._id}
-                product={product}
-                status={"qty"}
-              />
+              <div className="pt-4 pb-4 m-auto text-gray-900">
+                {product.productQty.xs > 0 && (
+                  <div>
+                    <p>XS -{product.productQty.xs}</p>
+                  </div>
+                )}
+                {product.productQty.s > 0 && (
+                  <div>
+                    <p>S -{product.productQty.s}</p>
+                  </div>
+                )}
+                {product.productQty.m > 0 && (
+                  <div>
+                    <p>M -{product.productQty.m}</p>
+                  </div>
+                )}
+                {product.productQty.l > 0 && (
+                  <div>
+                    <p>L -{product.productQty.l}</p>
+                  </div>
+                )}
+                {product.productQty.xl > 0 && (
+                  <div>
+                    <p>XL -{product.productQty.xl}</p>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
           <div className="pt-4 pb-4 m-auto text-gray-900">
             {totalBillAmount}
           </div>
-          <div className="pt-4 pb-4 m-auto text-gray-900">{status}</div>
-          <div className="flex flex-col justify-center items-center mr-2">
-            <button
-              className="sm:text-xs md:text-sm sm:pt-2 sm:pr-4 sm:pl-4 sm:pb-2 mb-2 w-full rounded-md bg-blue-600"
-              onClick={() => {
-                if (status === "pending") {
-                  setOrderEdit("edit");
-                } else alert("You cannot edit as the order is confirmed!");
-              }}
-            >
-              <i className="fa fa-pencil mr-1 md:mr-3 transition duration-150 ease-in-out"></i>
-              EDIT
-            </button>
-          </div>
-          <div className="flex flex-col justify-center items-center mr-2">
-            <button className="sm:text-xs md:text-sm sm:pt-2 sm:pr-2 sm:pl-2 sm:pb-2 w-full rounded-md bg-red-600">
-              <i className="fa fa-trash mr-1 md:mr- transition duration-150 ease-in-out"></i>
-              DELETE
-            </button>
-          </div>
-          {
-            orderEdit === "edit" && (
-              // products.map((item) => (
-              // <EditOrder key={_id} orderItem={orderItem} />
+          {/* // DISPLAY STATUS AS CONFIRMED OR PENDING FOR ORDERS */}
+          {/* <div className="pt-4 pb-4 m-auto text-gray-900">{status}</div> */}
+
+          {/* STATUS DISPLAY */}
+          {status === "confirmed" && (
+            <div className="pt-4 pb-4 m-auto text-gray-900">
+              <span class="bg-green-600 hover:bg-green-700 text-white text-center py-2 px-4 rounded-full">
+                Confirmed
+              </span>
+            </div>
+          )}
+
+          {status === "pending" && (
+            <div className="pt-4 pb-4 m-auto text-gray-900">
+              <span class="bg-yellow-500 text-white text-center py-2 px-4 rounded-full">
+                Pending
+              </span>
+            </div>
+          )}
+
+          {/* // EDIT BUTOON */}
+          {status === "pending" && (
+            <div className="flex flex-col justify-center items-center mr-2">
               <Link
                 class="px-2 w-full py-2 text-xs font-semibold text-white text-center uppercase transition-colors duration-200 transform bg-blue-500 rounded hover:bg-blue-600 focus:bg-gray-400 focus:outline-none"
                 to={{
@@ -78,11 +181,44 @@ const OrderItem = (props) => {
                   },
                 }}
               >
-                View Order to Edit
+                <i className="fa fa-pencil mr-1 md:mr-3 transition duration-150 ease-in-out"></i>
+                EDIT
               </Link>
-            )
-            // ))
-          }
+            </div>
+          )}
+          {status !== "pending" && (
+            <div className="flex flex-col justify-center items-center mr-2">
+              <button
+                className="sm:text-xs md:text-sm sm:pt-2 sm:pr-4 sm:pl-4 sm:pb-2 mb-2 w-full rounded-md bg-blue-300"
+                onClick={displayError}
+              >
+                <i className="fa fa-pencil mr-1 md:mr-3 opacity-75 transition duration-150 ease-in-out"></i>
+                <i>EDIT</i>
+              </button>
+            </div>
+          )}
+          {status === "pending" && (
+            <div className="flex flex-col justify-center items-center mr-2">
+              <button
+                class="px-2 w-full py-2 text-xs font-semibold text-white text-center uppercase transition-colors duration-200 transform bg-red-500 rounded hover:bg-red-600 focus:bg-gray-400 focus:outline-none"
+                onClick={confirmDelete}
+              >
+                <i className="fa fa-trash mr-1 md:mr- transition duration-150 ease-in-out"></i>
+                DELETE
+              </button>
+            </div>
+          )}
+          {status !== "pending" && (
+            <div className="flex flex-col justify-center items-center mr-2">
+              <button
+                className="sm:text-xs md:text-sm sm:pt-2 sm:pr-4 sm:pl-4 sm:pb-2 mb-2 w-full rounded-md bg-red-300"
+                onClick={displayError}
+              >
+                <i className="fa fa-trash mr-1 md:mr- transition duration-150 ease-in-out"></i>
+                <i> DELETE</i>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
