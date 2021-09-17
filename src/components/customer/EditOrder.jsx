@@ -3,30 +3,32 @@ import axios from "axios";
 import { API_URL } from "../../constants";
 import moment from "moment";
 import EditOrderItem from "./EditOrderItem";
+import swal from "sweetalert";
 
 const EditOrder = (props) => {
   // console.log("tot: ", total);
   const orderItem = props.location.state.orderItem;
   const {
-    orderID,
+    orderID, // substring order ID
     products,
     totalBillAmount,
     status,
     customerEmail,
     purchaseDate,
   } = props.location.state.orderItem;
+  const orderProducts = props.location.state.orderItem.products;
+  const allProducts = props.products;
+  const _id = props.location.state.orderItem._id;
 
   // Edit Order
-  const [editCart, setEditCart] = useState(
-    props.location.state.orderItem.products
-  );
+  const [editCart, setEditCart] = useState(orderProducts);
   const [editQty, setEditQty] = useState([]);
   const [editCartTotal, setEditCartTotal] = useState(0.0);
 
   useEffect(() => {
-    console.log("ord: ", props.location.state.orderItem);
+    // console.log("ord: ", props.location.state.orderItem);
 
-    for (let x of products) {
+    for (let x of orderProducts) {
       let qty = {
         _id: x.productID,
         size: x.productQty,
@@ -36,17 +38,17 @@ const EditOrder = (props) => {
     }
 
     // setEditQty(qtyArr);
-    console.log("cart2: ", editCart);
-    console.log("qty2:", editQty);
+    // console.log("cart2: ", editCart);
+    // console.log("qty2:", editQty);
 
     if (editQty.length == 0) setEditCartTotal(0.0);
     else {
       let amt = 0.0;
       for (let x of editQty) {
-        if (x._id !== editQty._id) {
-          let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
-          amt = amt + 1.0 * (x.pricePerUnit * no);
-        }
+        // if (x._id !== editQty._id) {
+        let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
+        amt = amt + 1.0 * (x.pricePerUnit * no);
+        // }
       }
       setEditCartTotal(amt);
     }
@@ -54,26 +56,36 @@ const EditOrder = (props) => {
 
   // Handling cart items delete
   const handleDelete = (item) => {
+    // console.log("dele called:", item);
+    // console.log("bef del:", editCart);
     // props.removeItem(item);
     setEditCart(
       editCart.filter(function (cartItem) {
-        return cartItem !== item;
+        return cartItem._id !== item.productID;
       })
     );
+
+    // console.log("aftr del:", editCart);
 
     setEditQty(
       editQty.filter(function (newQty) {
         return newQty._id !== item._id;
       })
     );
-    let amt = 0.0;
-    for (let x of editQty) {
-      if (x._id !== editQty._id) {
+
+    // console.log("cart:", editCart);
+
+    if (editCart.length === 0) {
+      setEditCartTotal(0.0);
+      // console.log("del:", editQty.length);
+    } else {
+      let amt = 0.0;
+      for (let x of editQty) {
         let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
         amt = amt + 1.0 * (x.pricePerUnit * no);
       }
+      setEditCartTotal(amt);
     }
-    setEditCartTotal(amt);
   };
 
   const quantityUpdate = (id, price, size) => {
@@ -99,10 +111,8 @@ const EditOrder = (props) => {
     }
     let amt = 0.0;
     for (let x of editQty) {
-      if (x._id !== editQty._id) {
-        let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
-        amt = amt + 1.0 * (x.pricePerUnit * no);
-      }
+      let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
+      amt = amt + 1.0 * (x.pricePerUnit * no);
     }
     setEditCartTotal(amt);
     // setEditCart(props.cart);
@@ -117,7 +127,7 @@ const EditOrder = (props) => {
     let email = "vinayagar@gmail.com";
     let address = "Colombo";
 
-    console.log("date: ", date);
+    // console.log("date: ", date);
 
     let orderProductArr = [];
 
@@ -126,21 +136,23 @@ const EditOrder = (props) => {
       let index = editCart.indexOf(x);
       let sizes = editQty[index].size;
 
-      product.productID = x._id;
+      product.productID = x.productID;
       product.productName = x.productName;
       product.productType = x.productType;
       product.productCategory = x.productCategory;
-      product.productPricePerUnit = x.pricePerUnit;
+      product.pricePerUnit = x.pricePerUnit;
       product.productImageUrl = x.productImageUrl;
       product.productQty = sizes;
 
       orderProductArr.push(product);
     }
 
-    let totalAmount = props.location.state.orderItem.editCartTotal;
+    let totalAmount = editCartTotal;
+    // console.log("tot: ", totalAmount);
     // console.log("api: ", API_URL);
 
     let orderObject = {
+      _id: _id,
       purchaseDate: date,
       products: orderProductArr,
       totalBillAmount: totalAmount,
@@ -149,17 +161,26 @@ const EditOrder = (props) => {
       deliveryAddress: address,
     };
 
-    console.log("order: ", orderObject);
+    // console.log("order: ", orderObject);
 
     axios
-      .post(`${API_URL}/customer/edit-order`, orderObject)
+      .put(`${API_URL}/customer/edit-order/${_id}`, orderObject)
       .then((response) => {
-        console.log("success", response.data);
-        alert("successfully placed order!");
+        // console.log("success", response.data);
+        // swal("Order Updated Successfully!");
+        // swal("SUCCESS!", "Your Order is Updated Successfully!", "success");
+        swal({
+          title: "Your Order is Updated Successfully!",
+          text: "",
+          icon: "success",
+        }).then(() => {
+          window.location = `orders`;
+        });
       })
       .catch((e) => {
         console.log("error", e.data);
-        alert("error");
+        swal("ERROR!", "Your Order could not be Updated!", "error");
+        // alert("error");
       });
   };
 
@@ -185,8 +206,8 @@ const EditOrder = (props) => {
                 item={item}
                 handleDelete={handleDelete}
                 quantityUpdate={quantityUpdate}
-                editQty={editQty}
-                products={props.products}
+                // editQty={editQty}
+                allProducts={allProducts}
               />
             ))}
           </div>
