@@ -21,7 +21,13 @@ setTimeout(async () => {
 // ---------------------- CUSTOMER COLLECTION ----------------------------------
 // Customer Registration
 const createCustomer = async (customerObject) => {
-  const result = await order.insertOne(customerObject);
+  const result = await customer.insertOne(customerObject);
+  return result;
+};
+
+// GET CUSTOMER DETAILS BY PASSING EMAIL- LOGIN
+const getCustomer = async (email) => {
+  const result = await customer.findOne({ email: email });
   return result;
 };
 
@@ -71,6 +77,7 @@ const getAllStocks = async () => {
 
 module.exports = {
   createCustomer,
+  getCustomer,
   createOrder,
   editOrder,
   deleteOrder,
