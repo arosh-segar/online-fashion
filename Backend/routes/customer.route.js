@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const {
   saveCustomer,
+  getCustomerByEmail,
   saveOrder,
   updateOrder,
   deleteOrderByID,
@@ -12,12 +13,23 @@ const {
 router.post("/create-customer", async (req, res) => {
   let customer = req.body;
 
-  customer = saveOrder(customer);
+  customer = saveCustomer(customer);
 
   if (customer) {
     res.status(201).send(customer);
   } else {
     res.status(502).json({ error: "Could not create a new account!" });
+  }
+});
+
+// GET CUSTOMER DETAILS BY PASSING EMAIL = LOGIN
+router.get("/get-customer/:email", async (req, res) => {
+  let customer = await getCustomerByEmail(req.params.email);
+
+  if (customer) {
+    res.status(201).send(customer);
+  } else {
+    res.status(502).json("Could not find email");
   }
 });
 
