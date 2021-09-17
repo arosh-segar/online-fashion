@@ -1,6 +1,5 @@
 const {
   createCustomer,
-  getCustomer,
   createOrder,
   editOrder,
   deleteOrder,
@@ -12,11 +11,7 @@ const {
 const saveCustomer = async (customer) => {
   const newCustomer = customer;
 
-  return await createCustomer(newCustomer);
-};
-
-const getCustomerByEmail = async (email) => {
-  return await getCustomer(email);
+  return await createOrder(newCustomer);
 };
 
 // ---------------------------- ORDER COLLECTION -------------------------------------
@@ -49,7 +44,6 @@ const getStocks = async () => {
 
 module.exports = {
   saveCustomer,
-  getCustomerByEmail,
   saveOrder,
   updateOrder,
   deleteOrderByID,
