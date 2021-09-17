@@ -7,6 +7,7 @@ import {
     StyleSheet,
     PDFViewer,
 } from "@react-pdf/renderer";
+
 import {useParams} from "react-router-dom";
 import axios from "axios";
 import {API_URL} from "../../constants";
@@ -62,19 +63,22 @@ const OrderReport = (props) => {
     });
 
 
-    const [order,setOrder] = useState("")
+    const [order,setOrder] = useState({})
+    const [supplier,setSupplier] = useState({})
+    const [items,setItems] = useState([])
     const params = useParams()
 
     useEffect(() =>{
 
         axios.get(`${API_URL}/supplier/getOrders`)
             .then((response)=>{
-                console.log(response.data)
                 response.data.map(order => {
                     if(order.id == params.id){
                         setOrder(order)
+                        setSupplier(order.supplier)
+                        setItems(order.items)
                     }
-                    console.log(order)
+
                 })
             })
             .catch((error)=>{
@@ -82,17 +86,18 @@ const OrderReport = (props) => {
             })
 
     },[])
+    console.log(supplier)
+
 
     return (
         <PDFViewer style={styles.pdf} className="h-screen">
             <Document>
                 <Page style={styles.mainTitle}>
                     <Text>Purchase Order</Text>
-
                     <View style={styles.section}>
                         <Text>Order No:{order.id}</Text>
-                        <Text>Supplier No:{order.supplier.id}</Text>
-                        <Text>Address:{order.supplier.address}</Text>
+                        <Text>Supplier No:{supplier.id}</Text>
+                        <Text>Address:{supplier.address}</Text>
                         <Text>Date:{order.orderedDate}</Text>
                     </View>
                     <View style={styles.row}>
@@ -100,12 +105,18 @@ const OrderReport = (props) => {
                         <Text style={styles.block}>Product Name</Text>
                         <Text style={styles.block}>Size & Qty</Text>
                     </View>
-                    {order.items.map(item=>{
+                    {items.map(item=>{
                         return(
                             <View style={styles.row}>
                                 <Text style={styles.blockData}>{item.productID}</Text>
                                 <Text style={styles.blockData}>{item.productName}</Text>
-                                {/*<Text style={styles.blockData}>{item.sizes[0]}</Text>*/}
+                                <Text style={styles.blockData}>
+                                    {item.sizes.xs && <Text>XS - {item.sizes.xs}</Text>}
+                                    {item.sizes.s && <Text>S - {item.sizes.s}</Text>}
+                                    {item.sizes.m && <Text>M - {item.sizes.m}</Text>}
+                                    {item.sizes.l && <Text>L - {item.sizes.l}</Text>}
+                                    {item.sizes.xl && <Text>XL - {item.sizes.xl}</Text>}
+                                    </Text>
                             </View>
                     )})}
                 </Page>

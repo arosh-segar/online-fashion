@@ -6,14 +6,16 @@ import Products from "./components/Products";
 import Counter from "./components/Counter";
 import Product from "./components/Product";
 import ReorderStocks from "./components/inventory/ReorderStocks";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route,Redirect } from "react-router-dom";
 import Login from "./components/Login";
 import ShoppingCart from "./components/ShoppingCart";
 import AddStock from "./components/inventory/AddStock";
 import SupplieNavBar from "./components/supplier/SupplierNavBar"
 import AddSupplier from "./components/supplier/AddSupplier"
 import Suppliers from "./components/supplier/Suppliers"
-
+import PurchaseOrders from "./components/supplier/PurchaseOrders";
+import StockRequests from "./components/supplier/StockRequests"
+import OrderReport from './components/supplier/OrderReport'
 
 function App() {
   return (
@@ -36,11 +38,16 @@ function App() {
         </Switch> */}
        <SupplieNavBar/>
        <Switch>
-       <Route exact path={"/"}>
-            <Suppliers />
-        </Route>
-        
-      </Switch> 
+       <Route exact path={"/supplier"} component={Suppliers}/>
+           <Route exact path={"/supplier/orders"}>
+               <PurchaseOrders/>
+           </Route>
+           <Route exact path={"/supplier/stockRequests"}>
+               <StockRequests/>
+           </Route>
+           <Route exact path={"/supplier/orderReport/:id"} component={OrderReport}/>
+       <Redirect to={"/supplier"}/>
+      </Switch>
 
       </body>
     </Router>

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {addSupplier,getAllSuppliers,updateSupplier,deleteSupplier,addOrder,getAllOrders} = require('../api/supplier.api')
+const {addSupplier,getAllSuppliers,updateSupplier,deleteSupplier,addOrder,getAllOrders,deleteOrder,updateOrder} = require('../api/supplier.api')
 const {getStockRequests} = require("../api/stockRequest.api");
 
 router.post("/addSupplier",async(req,res)=>{
@@ -70,28 +70,28 @@ router.get("/getOrders",async (req,res)=>{
 
 
     let orders = await getAllOrders()
-console.log(orders)
+
     res.status(200).send(orders)
 
 })
-//
-//
-// router.delete("/deleteSupplier/:id",async (req,res)=>{
-//
-//
-//     let deleted = await deleteSupplier(req.params.id)
-//
-//     res.status(200).send(deleted)
-//
-// })
-//
-// router.put("/updateSupplier/:id",async (req,res)=>{
-//
-//
-//     let updated = await updateSupplier(req.params.id,req.body,)
-//
-//     res.status(200).send(updated)
-//
-// })
+
+
+router.delete("/deleteOrder/:id",async (req,res)=>{
+
+
+    let deleted = await deleteOrder(req.params.id)
+
+    res.status(200).send(deleted)
+
+})
+
+
+router.put("/updateOrder/:id",async (req,res)=>{
+
+    let updated = await updateOrder(req.params.id,req.body)
+
+    res.status(200).send(updated)
+
+})
 
 module.exports=router

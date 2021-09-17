@@ -37,18 +37,19 @@ const getAllSuppliers = async() => {
 
 const addOrder = async({id,supplier,items})=>{
 
-    const Order = {
+    const order = {
 
         id:id,
         supplier:supplier,
         items:items,
         status:'Pending',
-        orderedDate:new Date().getDate(),
-        deliveredDate:'-'
+        orderedDate:new Date().toISOString().slice(0,10),
+        deliveredDate:'-',
+        amount:''
 
     }
-console.log(Order)
-    return await saveOrder(Order)
+
+    return await saveOrder(order)
 
 }
 
@@ -58,11 +59,41 @@ const getAllOrders = async () => {
 
 }
 
+const deleteOrder = async (id) =>{
+
+    return await removeOrder(id);
+
+}
+
+const updateOrder = async (id,{supplier,items,amount}) =>{
+
+    const order = {
+        id:id,
+        supplier:supplier,
+        items:items,
+    }
+
+    if(amount){
+            order.status='Received',
+            order.deliveredDate=new Date().toISOString().slice(0,10),
+            order.amount=amount
+    }else{
+            order.status='Pending',
+            order.deliveredDate='-',
+            order.amount='-'
+    }
+
+     return await editOrder(order)
+
+}
+
 module.exports = {
     addSupplier,
     deleteSupplier,
     updateSupplier,
     getAllSuppliers,
     addOrder,
-    getAllOrders
+    getAllOrders,
+    deleteOrder,
+    updateOrder
 }

@@ -14,13 +14,16 @@ const PurchaseOrders = () =>{
     const [id,setID] = useState("")
 
     const [openAdd, setAdd] = useState(false);
+    const [edit,setEdit] = useState(0);
     const onOpenAddModal = () => setAdd(true);
     const onCloseAddModal = () => setAdd(false);
+    const onEdit = (val)=>setEdit(val)
+
     const [filter,setFilter] = useState("ALL")
 
 
     useEffect(()=>{
-
+console.log("updates")
         axios.get(`${API_URL}/supplier/getOrders`)
             .then((response)=>{
                 console.log(response.data)
@@ -31,20 +34,45 @@ const PurchaseOrders = () =>{
                 console.log(error)
             })
 
-    },[])
+    },[openAdd,filter,edit])
 
 
     const generateID = ()=>{
 
-        return `${orders.length+1}${Math.floor(Math.random()*10)}`
+        return `P${orders.length+1}${Math.floor(Math.random()*10)}`
 
     }
 
 
+    const deleteOrder = (id)=>{
+
+        axios.delete(`${API_URL}/supplier/deleteOrder/${id}`)
+            .then(response =>{
+                setOrders(orders.filter(order => order.id != id))
+            }).catch(e =>{
+            console.log(e)
+        })
+
+    }
+
+    const editOrder = (order) =>{
+
+        axios.put(`${API_URL}/supplier/updateOrder/${order.id}`,order)
+            .then(response => {
+
+                console.log(response.data)
+
+
+            })
+            .catch(e => {
+                console.log(e.data)
+            })
+    }
+
     const options =[
         {value:"ALL",label:"ALL"},
-        {value:"pending",label:"Pending"},
-        {value:'received',label:"Received"}
+        {value:"Pending",label:"Pending"},
+        {value:'Received',label:"Received"}
     ]
 
     return(
@@ -67,13 +95,14 @@ const PurchaseOrders = () =>{
             </div>
             <div className="hidden sm:block pt-10 pb-32 h-screen">
                 <div className="flex justify-center">
-                    <div className="grid grid-cols-5 sm:grid-cols-7 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
+                    <div className="grid grid-cols-6 sm:grid-cols-8 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
                         <div className="p-3">ORDER ID</div>
                         <div className="p-3">SUPPLIER ID</div>
                         <div className="p-3">REQUEST ID</div>
                         <div className="p-3">STATUS</div>
                         <div className="p-3">ORDERED DATE</div>
                         <div className="p-3">DELIVERED DATE</div>
+                        <div className="p-3">Amount</div>
                         <div className="p-3">ACTIONS</div>
                     </div>
                 </div>
@@ -83,9 +112,21 @@ const PurchaseOrders = () =>{
                 >
                     {orders.map(order => {
                         if(filter=="ALL"){
-                            return <PurchaseOrder order={order}/>
+                            return <PurchaseOrder
+                                    key={order._id}
+                                    order={order}
+                                    editOrder = {editOrder}
+                                    deleteOrder={deleteOrder}
+                                    setEdit={setEdit}
+                                   />
                         }else if(order.status===filter){
-                            return <PurchaseOrder order={order}/>
+                            return <PurchaseOrder
+                                    key={order._id}
+                                    order={order}
+                                    editOrder = {editOrder}
+                                    deleteOrder={deleteOrder}
+                                    setEdit={setEdit}
+                                    />
                         }
                     })}
                 </div>

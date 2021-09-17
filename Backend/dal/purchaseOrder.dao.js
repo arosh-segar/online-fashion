@@ -9,10 +9,10 @@ setTimeout(async ()=>{
 
 
 
-const saveOrder = async ({id,supplier,items,status,orderedDate,deliveredDate}) => {
+const saveOrder = async ({id,supplier,items,status,orderedDate,deliveredDate,amount}) => {
 
 
-    const result = await purchaseOrder.insertOne({id,supplier,items,status,orderedDate,deliveredDate})
+    const result = await purchaseOrder.insertOne({id,supplier,items,status,orderedDate,deliveredDate,amount})
     return result
 
 }
@@ -23,10 +23,10 @@ const removeOrder = async (id) =>{
 
 }
 
-const editOrder = async ({id,supplier,items,status,orderedDate,deliveredDate}) =>{
+const editOrder = async ({id,supplier,items,status,deliveredDate,amount}) =>{
 
+    return await purchaseOrder.updateOne({id:id},{$set:{supplier:supplier,items:items,status:status,deliveredDate:deliveredDate,amount:amount}})
 
-    return await purchaseOrder.replaceOne({id:id},{supplier,items,status,orderedDate,deliveredDate})
 
 }
 

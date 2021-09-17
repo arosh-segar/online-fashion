@@ -15,13 +15,6 @@ const Suppliers = (props) =>{
     const onOpenAddModal = () => setAdd(true);
     const onCloseAddModal = () => setAdd(false);
 
-    const [openDelete,setDelete] = useState(false)
-    const onOpenDelete = () => setDelete(true)
-    const onCloseDelete = () => setDelete(false)
-
-    const [openEdit,setEdit] = useState(false)
-    const onOpenEdit = () => setEdit(true)
-    const onCloseEdit = () => setEdit(false)
 
    useEffect(()=>{
 
@@ -36,12 +29,22 @@ const Suppliers = (props) =>{
         console.log(error)
      })
 
-   },[openAdd,openDelete])
+   },[openAdd])
 
 
     const generateID = ()=>{
 
         return `S${suppliers.length+1}${Math.floor(Math.random()*10)}`
+
+    }
+
+    const deleteSupplier = (id)=>{
+        axios.delete(`${API_URL}/supplier/deleteSupplier/${id}`)
+            .then(response =>{
+                setSuppliers(suppliers.filter(supplier => supplier.id != id))
+            }).catch(e =>{
+            console.log(e)
+        })
 
     }
 
@@ -72,15 +75,13 @@ const Suppliers = (props) =>{
         >
           {suppliers.map(supplier => {
             return (
+
                     <Supplier
                         supplier={supplier}
                         key={supplier._id}
-                        onOpenDelete={onOpenDelete}
-                        onCloseDelete={onCloseDelete}
-                        openDelete={openDelete}
-                        openEdit={openEdit}
-                        onOpenEdit={onOpenEdit}
-                        onCloseEdit={onCloseEdit}/>
+                        deleteSupplier={deleteSupplier}
+                    />
+
                    )
           })}
         </div>
