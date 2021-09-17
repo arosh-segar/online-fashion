@@ -1,25 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../../constants";
 import axios from "axios";
+import swal from "sweetalert";
 import OrderItem from "./OrderItem";
 
 const OrdersList = () => {
   const [stocks, setStocks] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [sortedOrders, setSortedOrders] = useState([]);
   const [filterCategory, setFilterCategory] = useState("all");
 
   useEffect(() => {
-    let email = "vinayagar@gmail.com";
+    let customer = localStorage.getItem("customer");
+    let customerEmail = "";
 
-    axios
-      .get(`${API_URL}/customer/get-all-orders/${email}`)
-      .then((response) => {
-        setOrders(response.data);
-        console.log("response:", response.data);
-      })
-      .catch((error) => {
-        console.log(error);
+    if (customer) {
+      customer = JSON.parse(customer);
+      customerEmail = customer.email;
+    }
+
+    if (customerEmail != "") {
+      axios
+        .get(`${API_URL}/customer/get-all-orders/${customerEmail}`)
+        .then((response) => {
+          setOrders(response.data);
+          // console.log("orders retrieved:", response.data);
+          let ordersSortedByNewDate = response.data.reverse();
+          // console.log("new orders:", ordersSortedByNewDate);
+          setSortedOrders(ordersSortedByNewDate);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    if (customerEmail == "") {
+      swal({
+        title: "You need to Login to view your orders!",
+        text: "",
+        icon: "warning",
+      }).then(() => {
+        // window.location = `/customer/login`;
       });
+    }
   }, []);
 
   return (
@@ -28,7 +51,7 @@ const OrdersList = () => {
         <div className="">
           <div className="flex justify-center">
             <div className="flex justify-center sm:w-11/12 lg:w-10/12">
-              <label className="mr-5 my-auto">CATEGORY : </label>
+              <label className="mr-5 my-auto">ORDER STATUS : </label>
               <select
                 className="p-2 border border-none w-2/4 rounded-lg"
                 style={{ textAlignLast: "center" }}
