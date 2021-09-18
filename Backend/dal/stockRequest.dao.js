@@ -24,4 +24,10 @@ const getAllStockRequests = async () => {
     return results.toArray();
 };
 
-module.exports = { saveStockRequest, getAllStockRequests };
+const editRequestStatus = async (id,status) =>{
+
+    return await stockRequest.updateOne({requestID:id},{$set:{status:status}})
+
+}
+
+module.exports = { saveStockRequest, getAllStockRequests,editRequestStatus };

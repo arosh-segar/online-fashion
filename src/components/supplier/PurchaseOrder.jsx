@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { API_URL } from "../../constants";
 import EditOrder from "./EditOrder";
@@ -29,6 +29,26 @@ const PurchaseOrder = (props) =>{
 
     } )
 
+
+    const handleChange = (update) =>{
+
+        let Order = update
+
+        if(update.amount){
+                Order.status='Received';
+                Order.orderedDate=order.orderedDate;
+                Order.deliveredDate=new Date().toISOString().slice(0,10);
+                Order.amount=update.amount
+        }else{
+                Order.status='Pending';
+                Order.orderedDate=order.orderedDate;
+                Order.deliveredDate='-';
+                Order.amount='-'
+        }
+
+        setOrder(Order)
+
+    }
 
     return(
 
@@ -78,6 +98,7 @@ const PurchaseOrder = (props) =>{
              openEdit={openEdit}
              onCloseEdit={onCloseEdit}
              order={order}
+             handleChange={handleChange}
              editOrder={props.editOrder}
             />
             <DeleteOrder

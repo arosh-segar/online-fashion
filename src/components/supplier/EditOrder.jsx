@@ -23,7 +23,10 @@ const EditOrder = (props) => {
     const [amount,setAmount] = useState("")
 
     const [openResponse, setOpenResponse] = useState(false);
-    const onOpenResponseModal = () => setOpenResponse(true);
+    const onOpenResponseModal = (Order) =>{
+        setOpenResponse(true);
+        props.handleChange(Order)
+    }
 
     const onCloseResponseModal = () => {
         setOpenResponse(false)
@@ -39,12 +42,13 @@ const EditOrder = (props) => {
 
                 setAllRequests(response.data) //passing all requests
 
-                const options=response.data.map(request =>{
+                const options=[]
+                response.data.map(request =>{
                     if(request.status=='pending'){
-                        return {
+                        options.push({
                             value:request.requestID,
                             label:request.requestID
-                        }
+                        })
                     }
                 })
 
@@ -124,7 +128,7 @@ const EditOrder = (props) => {
 
 
         editOrder(Order)
-        onOpenResponseModal()
+        onOpenResponseModal(Order)
 
 
     }

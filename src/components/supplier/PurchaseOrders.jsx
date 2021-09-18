@@ -14,32 +14,35 @@ const PurchaseOrders = () =>{
     const [id,setID] = useState("")
 
     const [openAdd, setAdd] = useState(false);
-    const [edit,setEdit] = useState(0);
     const onOpenAddModal = () => setAdd(true);
     const onCloseAddModal = () => setAdd(false);
-    const onEdit = (val)=>setEdit(val)
 
     const [filter,setFilter] = useState("ALL")
 
 
     useEffect(()=>{
-console.log("updates")
+
+      getOrders()
+
+    },[openAdd])
+
+
+    const generateID = ()=>{
+
+        return `P${orders.length+1}${Math.floor(Math.random()*10)}`
+
+    }
+
+    const getOrders = () => {
+
         axios.get(`${API_URL}/supplier/getOrders`)
             .then((response)=>{
-                console.log(response.data)
                 setOrders(response.data)
                 setID(generateID())
             })
             .catch((error)=>{
                 console.log(error)
             })
-
-    },[openAdd,filter,edit])
-
-
-    const generateID = ()=>{
-
-        return `P${orders.length+1}${Math.floor(Math.random()*10)}`
 
     }
 
@@ -57,11 +60,17 @@ console.log("updates")
 
     const editOrder = (order) =>{
 
-        axios.put(`${API_URL}/supplier/updateOrder/${order.id}`,order)
+        axios.patch(`${API_URL}/supplier/updateOrder/${order.id}`,order)
             .then(response => {
 
                 console.log(response.data)
+                let promise = new Promise((resolve ,reject)=>{
+                    resolve(getOrders())
+                })
 
+                promise.then(()=>{
+                    console.log(orders)
+                })
 
             })
             .catch(e => {
@@ -102,7 +111,7 @@ console.log("updates")
                         <div className="p-3">STATUS</div>
                         <div className="p-3">ORDERED DATE</div>
                         <div className="p-3">DELIVERED DATE</div>
-                        <div className="p-3">Amount</div>
+                        <div className="p-3">Amount(Rs.)</div>
                         <div className="p-3">ACTIONS</div>
                     </div>
                 </div>
@@ -117,7 +126,6 @@ console.log("updates")
                                     order={order}
                                     editOrder = {editOrder}
                                     deleteOrder={deleteOrder}
-                                    setEdit={setEdit}
                                    />
                         }else if(order.status===filter){
                             return <PurchaseOrder
@@ -125,7 +133,6 @@ console.log("updates")
                                     order={order}
                                     editOrder = {editOrder}
                                     deleteOrder={deleteOrder}
-                                    setEdit={setEdit}
                                     />
                         }
                     })}

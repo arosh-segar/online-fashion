@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {addSupplier,getAllSuppliers,updateSupplier,deleteSupplier,addOrder,getAllOrders,deleteOrder,updateOrder} = require('../api/supplier.api')
-const {getStockRequests} = require("../api/stockRequest.api");
+const {getStockRequests,updateStockRequest} = require("../api/stockRequest.api");
 
 router.post("/addSupplier",async(req,res)=>{
 
@@ -86,9 +86,17 @@ router.delete("/deleteOrder/:id",async (req,res)=>{
 })
 
 
-router.put("/updateOrder/:id",async (req,res)=>{
+router.patch("/updateOrder/:id",async (req,res)=>{
 
     let updated = await updateOrder(req.params.id,req.body)
+
+    res.status(200).send(updated)
+
+})
+
+router.patch("/approveRequest/:id",async (req,res)=>{
+
+    let updated = await updateStockRequest(req.params.id,"dispatched")
 
     res.status(200).send(updated)
 

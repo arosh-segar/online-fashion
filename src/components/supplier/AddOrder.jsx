@@ -22,14 +22,18 @@ const AddOrder = (props) => {
         axios.get(`${API_URL}/supplier/getStockRequests`)
             .then((response)=>{
                 setRequests(response.data)
-                const options=response.data.map(request =>{
+
+                const options= []
+                response.data.map(request =>{
+
                     if(request.status=='pending'){
-                    return {
+                        options.push({
                             value:request.requestID,
                             label:request.requestID
-                            }
+                            })
                     }
                 })
+
                 setRequestIDs(options)
             })
             .catch((error)=>{
@@ -39,6 +43,7 @@ const AddOrder = (props) => {
         axios.get(`${API_URL}/supplier/getSuppliers`)
             .then((response)=>{
                 setSuppliers(response.data)
+                console.log(suppliers)
                 const options=response.data.map(supplier =>{
                     return {
                         value:supplier.id,
@@ -52,7 +57,6 @@ const AddOrder = (props) => {
             })
 
     },[])
-
 
     const handleSubmit = (e) => {
 
@@ -77,10 +81,10 @@ const AddOrder = (props) => {
             items:items
         }
 
-
         axios.post(`${API_URL}/supplier/addOrder`, Order)
             .then(response => {
                 console.log(response.data)
+                setRequestIDs(requestIDs.filter(id => !orderRequests.includes(id.value)))
                 onCloseAdd()
             })
             .catch(e => {

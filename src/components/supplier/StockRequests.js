@@ -9,15 +9,13 @@ const StockRequests = () =>{
 
 
     const [requests,setRequests] = useState([])
-    const [openAdd, setAdd] = useState(false);
-    const onOpenAddModal = () => setAdd(true);
-    const onCloseAddModal = () => setAdd(false);
+    const [approve, setApprove] = useState({});
 
-    const onApprove =(requestID)=>{
+    const onDispatch =(requestID)=>{
 
-        axios.put(`${API_URL}/supplier/approveRequest/:id`)
+        axios.patch(`${API_URL}/supplier/approveRequest/${requestID}`)
             .then(response=>{
-
+                setApprove(response)
             })
             .catch(e=>{
                 console.log(e)
@@ -36,7 +34,7 @@ const StockRequests = () =>{
                 console.log(error)
             })
 
-    },[])
+    },[approve])
 
 
     return(
@@ -59,9 +57,13 @@ const StockRequests = () =>{
                     style={{ maxHeight: "70vh" }}
                 >
                     {requests.map(request => {
-                        if(request.status=='pending') {
-                            return <StockRequest stockRequest={request} key={request._id}/>
-                        }
+
+                            return <StockRequest
+                                     stockRequest={request}
+                                     key={request._id}
+                                     onDispatch={onDispatch}
+                                  />
+
                     })}
                 </div>
             </div>

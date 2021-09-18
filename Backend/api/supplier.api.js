@@ -1,6 +1,6 @@
 const {saveSupplier,removeSupplier,editSupplier,getSuppliers} = require('../dal/supplier.dao')
 const {saveOrder,removeOrder,editOrder,getOrders} = require('../dal/purchaseOrder.dao')
-
+const {updateStockRequest} = require('./stockRequest.api')
 
 const addSupplier = async({supplierID,name,address,phoneNo,email})=>{
 
@@ -49,7 +49,13 @@ const addOrder = async({id,supplier,items})=>{
 
     }
 
-    return await saveOrder(order)
+
+
+   return await saveOrder(order).then(()=>{
+         items.map(async item => {
+             await updateStockRequest(item.requestID,"approved")
+         })
+     })
 
 }
 

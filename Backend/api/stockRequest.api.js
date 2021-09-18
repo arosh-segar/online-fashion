@@ -1,6 +1,7 @@
 const {
     saveStockRequest,
     getAllStockRequests,
+    editRequestStatus
 } = require("../dal/stockRequest.dao");
 
 const createStockRequest = async ({
@@ -18,4 +19,10 @@ const getStockRequests = async () => {
     return await getAllStockRequests();
 };
 
-module.exports = { createStockRequest, getStockRequests };
+const updateStockRequest = async (id,status)=>{
+
+    return await editRequestStatus(id,status)
+
+}
+
+module.exports = { createStockRequest, getStockRequests ,updateStockRequest};

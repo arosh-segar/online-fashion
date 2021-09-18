@@ -70,12 +70,6 @@ const AddSupplier = (props) => {
                                         placeholder="S1"
                                         disabled={true}
                                         required
-
-                                        placeholder="S1"
-                                        onChange={e => {
-                                            setSupplierID(e.target.value)
-                                        }}
-
                                     />
                                     {!supplierID &&(
                                         <p class="text-red-500 text-xs italic">
