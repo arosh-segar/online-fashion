@@ -2,14 +2,22 @@ import React, {useState,useEffect} from 'react'
 import axios from 'axios'
 import { API_URL } from "../../constants";
 import EditSupplier from './EditSupplier'
-import DeleteSupplier from '../modals/DeleteSupplierModal'
+import DeleteSupplier from './DeleteSupplierModal'
 
 
 const Supplier = (props) =>{
 
+
     const [supplier,setSupplier] = useState(props.supplier)
 
-    const {openDelete,onOpenDelete,onCloseDelete,onCloseEdit,onOpenEdit,openEdit} =props
+    const [openDelete,setDelete] = useState(false)
+    const onOpenDelete = () => setDelete(true)
+    const onCloseDelete = () => setDelete(false)
+
+    const [openEdit,setEdit] = useState(false)
+    const onOpenEdit = () => setEdit(true)
+    const onCloseEdit = () => setEdit(false)
+
 
     const handleChange = (supplier) =>{
 
@@ -17,16 +25,6 @@ const Supplier = (props) =>{
 
     }
 
-    const deleteSupplier = (id)=>{
-        axios.delete(`${API_URL}/supplier/deleteSupplier/${id}`)
-            .then(response =>{
-                console.log("deleted")
-                onCloseDelete()
-            }).catch(e =>{
-            console.log(e)
-        })
-
-    }
 
 
     return(
@@ -55,19 +53,19 @@ const Supplier = (props) =>{
             <EditSupplier
              openEdit={openEdit}
              onCloseEdit={onCloseEdit}
-             supplier={props.supplier}
+             supplier={supplier}
              onInputChange={handleChange}
             />
             <DeleteSupplier
              openDelete = {openDelete}
              onCloseDelete = {onCloseDelete}
-             id={props.supplier.id}
-             deleteSupplier={deleteSupplier}
+             id={supplier.id}
+             deleteSupplier={props.deleteSupplier}
             />
-        </div>    
+        </div>
 
     )
-   
+
 
 
 

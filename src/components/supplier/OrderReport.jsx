@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
     Page,
     Text,
@@ -8,7 +8,11 @@ import {
     PDFViewer,
 } from "@react-pdf/renderer";
 
-const OrderReport = () => {
+import {useParams} from "react-router-dom";
+import axios from "axios";
+import {API_URL} from "../../constants";
+
+const OrderReport = (props) => {
     const styles = StyleSheet.create({
         page: {
             backgroundColor: "#E4E4E4",
@@ -18,14 +22,15 @@ const OrderReport = () => {
         },
         section: {
             margin: 10,
-            padding: 10,
-            textAlign: "center",
-            fontSize: "10px",
+            padding: 15,
+            textAlign: "left",
+            fontSize: "12px",
+            marginLeft:"110px"
         },
         mainTitle: {
             textAlign: "center",
             fontSize: "20px",
-            marginTop: "20px",
+            marginTop: "150px",
             gridTemplateColumns: "auto auto auto",
         },
         row: {
@@ -56,43 +61,68 @@ const OrderReport = () => {
             marginBottom: 10,
         },
     });
+
+
+    const [order,setOrder] = useState({})
+    const [supplier,setSupplier] = useState({})
+    const [items,setItems] = useState([])
+    const params = useParams()
+
+    useEffect(() =>{
+
+        axios.get(`${API_URL}/supplier/getOrders`)
+            .then((response)=>{
+                response.data.map(order => {
+                    if(order.id == params.id){
+                        setOrder(order)
+                        setSupplier(order.supplier)
+                        setItems(order.items)
+                    }
+
+                })
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+
+    },[])
+    console.log(supplier)
+
+
     return (
         <PDFViewer style={styles.pdf} className="h-screen">
             <Document>
                 <Page style={styles.mainTitle}>
-                    <Text>Summary of received stocks</Text>
-
+                    <Text>Purchase Order</Text>
                     <View style={styles.section}>
-                        <Text>Summary of received stocks</Text>
+                        <Text>Order No:{order.id}</Text>
+                        <Text>Supplier No:{supplier.id}</Text>
+                        <Text>Address:{supplier.address}</Text>
+                        <Text>Date:{order.orderedDate}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.block}>Product Code</Text>
                         <Text style={styles.block}>Product Name</Text>
-                        <Text style={styles.block}>Total Quantity</Text>
-                        <Text style={styles.block}>Total Cost Per Product</Text>
+                        <Text style={styles.block}>Size & Qty</Text>
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.blockData}>Product Code</Text>
-                        <Text style={styles.blockData}>Product Name</Text>
-                        <Text style={styles.blockData}>Total Quantity</Text>
-                        <Text style={styles.blockData}>200.00</Text>
-                    </View>
-                    <View style={styles.row}>
-                        <Text style={styles.blockData}>Product Code</Text>
-                        <Text style={styles.blockData}>Product Name</Text>
-                        <Text style={styles.blockData}>Total Quantity</Text>
-                        <Text style={styles.blockData}>1200.00</Text>
-                    </View>
-                    <View style={styles.total}>
-                        <Text>Total Cost = 1200.00</Text>
-                    </View>
-                    <View style={styles.section}>
-                        <Text>Summary of pending stocks</Text>
-                    </View>
+                    {items.map(item=>{
+                        return(
+                            <View style={styles.row}>
+                                <Text style={styles.blockData}>{item.productID}</Text>
+                                <Text style={styles.blockData}>{item.productName}</Text>
+                                <Text style={styles.blockData}>
+                                    {item.sizes.xs && <Text>XS - {item.sizes.xs}</Text>}
+                                    {item.sizes.s && <Text>S - {item.sizes.s}</Text>}
+                                    {item.sizes.m && <Text>M - {item.sizes.m}</Text>}
+                                    {item.sizes.l && <Text>L - {item.sizes.l}</Text>}
+                                    {item.sizes.xl && <Text>XL - {item.sizes.xl}</Text>}
+                                    </Text>
+                            </View>
+                    )})}
                 </Page>
             </Document>
         </PDFViewer>
     );
 };
 
-export default OrderReport
+export default OrderReport;
