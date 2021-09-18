@@ -37,6 +37,7 @@ const StockRequests = () =>{
     },[approve])
 
 
+
     return(
 
         <div>
@@ -49,6 +50,7 @@ const StockRequests = () =>{
                         <div className="p-3">SIZE & QUANTITY</div>
                         <div className="p-3">STATUS</div>
                         <div className="p-3">REQUESTED DATE</div>
+
                         <div className="p-3">ACTIONS</div>
                     </div>
                 </div>
@@ -63,7 +65,6 @@ const StockRequests = () =>{
                                      key={request._id}
                                      onDispatch={onDispatch}
                                   />
-
                     })}
                 </div>
             </div>

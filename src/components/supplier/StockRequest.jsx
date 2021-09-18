@@ -6,6 +6,7 @@ import { API_URL } from "../../constants";
 
 const StockRequest = (props) =>{
 
+
     const {productID,productName,sizes,status,requestID} = props.stockRequest
 
 
