@@ -36,12 +36,18 @@ const getOrders = async () =>{
     return results.toArray()
 
 }
+const editStatus = async ({_id,status}) =>{
+
+    return await purchaseOrder.updateOne({_id:_id},{$set:{status}})
+   
+   }
 
 module.exports={
 
     saveOrder,
     removeOrder,
     editOrder,
-    getOrders
+    getOrders,
+    editStatus
 
 }

@@ -3,7 +3,7 @@ import {useState,useEffect} from 'react'
 import Order from './Order'
 import axios from 'axios'
 import { API_URL } from "../../constants";
-import AssignVehicle from "./AssignVehicle";
+ 
 
 const Orders = () =>{
 
@@ -39,7 +39,7 @@ const Orders = () =>{
 </div>
         <div className="hidden sm:block pt-3 pb-10 sm-screen">
           <div className="flex justify-center">
-            <div className="grid grid-cols-4 sm:grid-cols-4 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center font-semibold text-sm text-black">
+            <div className="grid grid-cols-4 sm:grid-cols-5 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center font-semibold text-sm text-black">
               <div className="p-3">Order ID</div>
               <div className="p-3"> Date</div>
               <div className="p-3">Location</div>
@@ -57,7 +57,7 @@ const Orders = () =>{
             if(search == ''){
               return value
             }
-            else if(value.orderId.toLowerCase().includes(search.toLowerCase())){
+            else if(value._id.substr(value._id.length - 5).toLowerCase().includes(search.toLowerCase())){
               return value
             }
           }).map(order => {

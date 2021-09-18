@@ -1,4 +1,6 @@
-const { saveVehicle, getVehicle,editVehicle,removeVehicle } = require("../dal/delivery.dao");
+const { saveVehicle, getVehicle,editVehicle,removeVehicle} = require("../dal/delivery.dao");
+ const {saveDeliveryOrder} = require("../dal/deliveryOrder.dao");
+ const {getOrders,editStatus} = require("../dal/purchaseOrder.dao");
 
  
 const createVehicle = async({vechileNumber,vechileBrand,driverName})=>{
@@ -30,5 +32,28 @@ const getAllVehicle = async() => {
    return await getVehicle()
 
 }
+const getAllOrders = async() => {
 
-module.exports = { createVehicle,getAllVehicle,updateVehicle,deleteVehicle };
+  return await getOrders()
+
+}
+
+const createDeliveryOrders = async({orderId,deliveryDate,orderDate,location,vehicleNumber})=>{
+
+  const deliveryOrder = {
+    orderId: orderId,
+    deliveryDate: deliveryDate,
+    orderDate: orderDate,
+    location: location,
+    vehicleNumber: vehicleNumber
+
+  }
+  return await saveDeliveryOrder(deliveryOrder)
+}
+const updateStatus = async(_id,{status})=>{
+
+  return await editStatus({_id,status})
+
+}
+
+module.exports = { createVehicle,getAllVehicle,updateVehicle,deleteVehicle,getAllOrders,createDeliveryOrders,updateStatus };

@@ -1,47 +1,92 @@
-import React, { useState } from "react";
+import {useState,useEffect} from 'react'
+ 
 import axios from 'axios'
 import { API_URL } from "../../constants";
 import {Modal} from 'react-responsive-modal'
+ 
 
 const AssignVehicle = (props) => {
 
-    const {openAssign,onCloseAssign} = props
-    const [orderId, setOrderId] = useState(props.order.Id);
-    const [vechileBrand, setVechileBrand] = useState(props.order.vechileBrand);
-    const [driverName, setDriverName] = useState(props.order.driverName);
+    const {openAssign,onCloseAssign} = props;
+    const [orderId] = useState(props.orders._id.substr(props.orders._id.length - 4));
+    const [_id] = useState(props.orders._id);
+    const [orderDate ] = useState(props.orders.purchaseDate);
+    const [deliveryDate, setDeliveryDate] = useState("");
+    const [location] = useState(props.orders.deliveryAddress);
+    const [status, setStatus] = useState("");
+    const [vehicles,setVehicles] = useState([]);
+    const [vehicleNumber,setVehicleNumber] = useState("");
+   
+    
+   
+
+    
+
      
+    useEffect(()=>{
 
-
+        axios.get(`${API_URL}/delivery/getVehicle`)
+        .then((response)=>{
+            console.log (response.data) 
+            setVehicles(response.data)
+             
+        })
+        .catch((error)=>{
+           console.log(error)
+        })
+        var today = new Date();
+        var dd = String(today. getDate()). padStart(2, '0');
+        var mm = String(today. getMonth() + 1). padStart(2, '0');  
+        var yyyy = today. getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
+        setDeliveryDate(today);
+       
+        
+      },[])
+     
     const handleSubmit = (e)=>{
 
         e.preventDefault()
 
-        const Vehicle = {
-            vechileNumber,
-            vechileBrand,
-            driverName
+        const Order = {
+            orderId,
+            deliveryDate,
+            orderDate,
+            location,
+            vehicleNumber
           }
 
 
-        axios.put(`${API_URL}/delivery/updateVehicle/${vechileNumber}`,Vehicle)
+        axios.post(`${API_URL}/delivery/addDeliveryOrders`,Order)
             .then(response =>{
                 console.log(response.data)
-                onCloseEdit()
-                alert("Successfully edited")
+                onCloseAssign()
+                setStatus("confirmed")
+                alert("Successfully Added")
+                
             })
             .catch(e=>{
                 console.log(e.data)
             })
+       
 
+        axios.put(`${API_URL}/delivery/updateStatus/${_id}`,status)
+            .then(response =>{
+                console.log(response.data)
+              })
+            .catch(e=>{
+                console.log(e.data)
+            })
 
+           
     }
 
 
     return (
         <div>
-            <Modal open={openEdit} onClose={onCloseEdit}>
+            <Modal open={openAssign} onClose={onCloseAssign}>
             <div className="p-5 w-250 md:w-500">
-                <h2 className="text-center font-semibold font-sans">UPDATE SUPPLIER</h2>
+                <h2 className="text-center font-semibold font-sans">Assign Vehicle</h2>
                     <form
                         onSubmit={handleSubmit}
                         className="mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden"
@@ -49,61 +94,33 @@ const AssignVehicle = (props) => {
                             <div class="w-full px-3 mt-10 mb-6 md:mb-0">
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                                    for="grid-first-name"
+                                    for="grid-first-name"  
                                 >
                                    Vehicle Number
                                 </label>
-                                <input
-                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                    id="grid-first-name"
-                                    type="text"
-                                    
-                                    value={vechileNumber}
-                                    onChange={e=>{setVechileNumber(e.target.value)}}
-                                />
+                                <select
+                                    className="p-2 border border-none w-full rounded-lg text-black"
+                                    style={{ textAlignLast: "center" }}
+                                    value={vehicleNumber}
+                                    onChange={(e) => setVehicleNumber(e.target.value)}
+                                    required >
+                                        <option value="" selected>
+                                        Select
+                                        </option>
+                                        {vehicles.map(vehicle =>
+                                          <option value={vehicle.vechileNumber}>{vehicle.vechileNumber}</option>
+                                        )}
+                                        
+                                    </select>
                                 
                             </div>
                             
-                            <div class="w-full px-3 mt-3 mb-6 md:mb-0">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                                    for="grid-first-name"
-                                >
-                                    Brand Name
-                                </label>
-                                <input
-                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                    id="grid-first-name"
-                                    type="text"
-                                    
-                                    value={vechileBrand}
-                                    onChange={e=>{setVechileBrand(e.target.value)}}
-                                />
-                                 
-                            </div>
-                            
-                            <div class="w-full px-3 mt-3 mb-6 md:mb-0">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                                    for="grid-first-name"
-                                >
-                                   Driver Name
-                                </label>
-                                <input
-                                    class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                    id="grid-first-name"
-                                    type="text"
-                                     
-                                    value={driverName}
-                                    onChange={e=>{setDriverName(e.target.value)}}
-                                />
-                                
-                             
-                        </div>
+                           
                         <div class="w-full px-3 mt-3 mb-6 md:mb-0">
                             <button className="w-full rounded-md p-2 mb-5 bg-blue-500" type ="submit" >
-                                UPDATE VEHICLE
+                            ASSIGN VEHICLE
                             </button>
+                             
                         </div>
                     </form>
             </div>
