@@ -31,11 +31,15 @@ const StockItem = (props) => {
             </div>
             <div className="pt-4 pb-4 m-auto">{productName}</div>
             <div className="pt-4 pb-4 m-auto text-center font-normal">
-              {sizes.xs && <p>XS - {sizes.xs.xsSizeAvailableQty}</p>}
-              {sizes.s && <p>S - {sizes.s.sSizeAvailableQty}</p>}
-              {sizes.m && <p>M - {sizes.m.mSizeAvailableQty}</p>}
-              {sizes.l && <p>L - {sizes.l.lSizeAvailableQty}</p>}
-              {sizes.xl && <p>XL - {sizes.xl.xlSizeAvailableQty}</p>}
+              {sizes.xs.isAvailable && (
+                <p>XS - {sizes.xs.xsSizeAvailableQty}</p>
+              )}
+              {sizes.s.isAvailable && <p>S - {sizes.s.sSizeAvailableQty}</p>}
+              {sizes.m.isAvailable && <p>M - {sizes.m.mSizeAvailableQty}</p>}
+              {sizes.l.isAvailable && <p>L - {sizes.l.lSizeAvailableQty}</p>}
+              {sizes.xl.isAvailable && (
+                <p>XL - {sizes.xl.xlSizeAvailableQty}</p>
+              )}
             </div>
             <div className="pt-4 pb-4 m-auto">{reorderQty}</div>
             <div className="flex flex-col justify-center items-center mr-2">

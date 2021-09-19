@@ -21,25 +21,21 @@ const ReorderStockItem = (props) => {
             <div className="pt-4 pb-4 m-auto">{productName}</div>
             <div className="pt-4 pb-4 m-auto">
               {parseFloat(sizes.xs.xsSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>XS - {sizes.xs.xsSizeAvailableQty}</p>
-              )}
-              {parseFloat(sizes.s.sSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>S - {sizes.s.sSizeAvailableQty}</p>
-              )}
-              {parseFloat(sizes.m.mSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>M - {sizes.m.mSizeAvailableQty}</p>
-              )}
-              {parseFloat(sizes.l.lSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>L - {sizes.l.lSizeAvailableQty}</p>
-              )}
+                parseFloat(reorderQty) &&
+                sizes.xs.isAvailable && (
+                  <p>XS - {sizes.xs.xsSizeAvailableQty}</p>
+                )}
+              {parseFloat(sizes.s.sSizeAvailableQty) < parseFloat(reorderQty) &&
+                sizes.s.isAvailable && <p>S - {sizes.s.sSizeAvailableQty}</p>}
+              {parseFloat(sizes.m.mSizeAvailableQty) < parseFloat(reorderQty) &&
+                sizes.m.isAvailable && <p>M - {sizes.m.mSizeAvailableQty}</p>}
+              {parseFloat(sizes.l.lSizeAvailableQty) < parseFloat(reorderQty) &&
+                sizes.l.isAvailable && <p>L - {sizes.l.lSizeAvailableQty}</p>}
               {parseFloat(sizes.xl.xlSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>XL - {sizes.xl.xlSizeAvailableQty}</p>
-              )}
+                parseFloat(reorderQty) &&
+                sizes.xl.isAvailable && (
+                  <p>XL - {sizes.xl.xlSizeAvailableQty}</p>
+                )}
             </div>
             <div className="pt-4 pb-4 m-auto">{reorderQty}</div>
             <div className="pt-4 pb-4 mr-2 my-auto">

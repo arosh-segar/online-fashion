@@ -6,10 +6,12 @@ const {
   getStocks,
   deleteStock,
   modifyStock,
+  updateStockQuantity,
 } = require("../api/inventory.api");
 const {
   createStockRequest,
   getStockRequests,
+  updateStockRequest,
 } = require("../api/stockRequest.api");
 
 //create a stock
@@ -162,6 +164,25 @@ router.get("/stockRequests", async (req, res) => {
     res.status(201).send(stockRequests);
   } else {
     res.status(502).send("Error");
+  }
+});
+
+router.put("/stockRequestUpdate/:id", async (req, res) => {
+  try {
+    const { sizes, requestID } = req.body;
+    let stock = await updateStockQuantity(req.params.id, sizes);
+    let stockStatus = await updateStockRequest(requestID, "received");
+    const stockItem = {
+      _id: req.params.id,
+    };
+
+    if (stock) {
+      res.status(201).send({ stock: stockItem });
+    } else {
+      res.status(502).json({ error: "Stock wasn't updated" });
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 

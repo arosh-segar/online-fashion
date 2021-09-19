@@ -17,16 +17,21 @@ const ReorderStocks = () => {
         setReorderStocks(
           response.data.filter(
             (stock) =>
-              parseFloat(stock.sizes.xs.xsSizeAvailableQty) <
-                parseFloat(stock.reorderQty) ||
-              parseFloat(stock.sizes.s.sSizeAvailableQty) <
-                parseFloat(stock.reorderQty) ||
-              parseFloat(stock.sizes.m.mSizeAvailableQty) <
-                parseFloat(stock.reorderQty) ||
-              parseFloat(stock.sizes.l.lSizeAvailableQty) <
-                parseFloat(stock.reorderQty) ||
-              parseFloat(stock.sizes.xl.xlSizeAvailableQty) <
-                parseFloat(stock.reorderQty)
+              (parseFloat(stock.sizes.xs.xsSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.xs.isAvailable) ||
+              (parseFloat(stock.sizes.s.sSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.s.isAvailable) ||
+              (parseFloat(stock.sizes.m.mSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.m.isAvailable) ||
+              (parseFloat(stock.sizes.l.lSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.l.isAvailable) ||
+              (parseFloat(stock.sizes.xl.xlSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.xl.isAvailable)
           )
         );
 

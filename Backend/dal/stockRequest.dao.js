@@ -40,4 +40,8 @@ const editRequestStatus = async (id, status) => {
   );
 };
 
-module.exports = { saveStockRequest, getAllStockRequests, editRequestStatus };
+module.exports = {
+  saveStockRequest,
+  getAllStockRequests,
+  editRequestStatus,
+};

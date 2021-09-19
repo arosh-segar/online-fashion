@@ -32,4 +32,8 @@ const updateStockRequest = async (id, status) => {
   return await editRequestStatus(id, status);
 };
 
-module.exports = { createStockRequest, getStockRequests, updateStockRequest };
+module.exports = {
+  createStockRequest,
+  getStockRequests,
+  updateStockRequest,
+};

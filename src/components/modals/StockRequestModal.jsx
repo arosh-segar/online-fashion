@@ -87,65 +87,70 @@ const StockRequestModal = (props) => {
         <p className="text-center mt-5">{reorderStock.productName}</p>
         <div className="flex flex-row justify-center items-center mt-5">
           {parseFloat(reorderStock.sizes.xs.xsSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setCheckXS(!checkXS)}
-                checked={checkXS}
-              />
-              <span class="text-sm">XS</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.xs.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setCheckXS(!checkXS)}
+                  checked={checkXS}
+                />
+                <span class="text-sm">XS</span>
+              </label>
+            )}
           {parseFloat(reorderStock.sizes.s.sSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setcheckS(!checkS)}
-                checked={checkS}
-              />
-              <span class="text-sm">S</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.s.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setcheckS(!checkS)}
+                  checked={checkS}
+                />
+                <span class="text-sm">S</span>
+              </label>
+            )}
           {parseFloat(reorderStock.sizes.m.mSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setcheckM(!checkM)}
-                checked={checkM}
-              />
-              <span class="text-sm">M</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.m.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setcheckM(!checkM)}
+                  checked={checkM}
+                />
+                <span class="text-sm">M</span>
+              </label>
+            )}
           {parseFloat(reorderStock.sizes.l.lSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setcheckL(!checkL)}
-                checked={checkL}
-              />
-              <span class="text-sm">L</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.l.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setcheckL(!checkL)}
+                  checked={checkL}
+                />
+                <span class="text-sm">L</span>
+              </label>
+            )}
           {parseFloat(reorderStock.sizes.xl.xlSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setcheckXL(!checkXL)}
-                checked={checkXL}
-              />
-              <span class="text-sm">XL</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.xl.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setcheckXL(!checkXL)}
+                  checked={checkXL}
+                />
+                <span class="text-sm">XL</span>
+              </label>
+            )}
         </div>
         <div class="w-full px-3 md:mb-0">
           {checkXS && (
