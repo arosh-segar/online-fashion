@@ -26,8 +26,6 @@ const ShoppingCartItem = (props) => {
   useEffect(() => {
     // props.handleCartTotal();
     setItem(props.item);
-    console.log(item);
-    console.log("helLo: ", item.sizes.xs.xsSizeAvailableQty);
 
     for (let x of qty) {
       if (x._id === item._id) {
@@ -217,7 +215,7 @@ const ShoppingCartItem = (props) => {
               {(xs + s + m + l + xl) * item.pricePerUnit}
             </div>
 
-            {isSizesOpen && item.sizes.xs.xsSizeAvailableQty && (
+            {isSizesOpen && item.sizes.xs.isAvailable && (
               <div className="pb-4 m-auto col-span-5 w-full flex flex-1 lg:flex-row">
                 <div className="m-auto my-auto flex lg:flex-row justify-center">
                   <p className="mr-1 lg:mr-2 text-sm my-auto">XS :</p>
@@ -245,7 +243,7 @@ const ShoppingCartItem = (props) => {
                     +
                   </button>
                 </div>
-                {isSizesOpen && item.sizes.s.sSizeAvailableQty && (
+                {isSizesOpen && item.sizes.s.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">S :</p>
                     <button
@@ -273,7 +271,7 @@ const ShoppingCartItem = (props) => {
                     </button>
                   </div>
                 )}
-                {isSizesOpen && item.sizes.m.mSizeAvailableQty && (
+                {isSizesOpen && item.sizes.m.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">M :</p>
                     <button
@@ -302,7 +300,7 @@ const ShoppingCartItem = (props) => {
                   </div>
                 )}
 
-                {isSizesOpen && item.sizes.l.lSizeAvailableQty && (
+                {isSizesOpen && item.sizes.l.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">L :</p>
                     <button
@@ -331,7 +329,7 @@ const ShoppingCartItem = (props) => {
                   </div>
                 )}
 
-                {isSizesOpen && item.sizes.xl.xlSizeAvailableQty && (
+                {isSizesOpen && item.sizes.xl.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">XL :</p>
                     <button
