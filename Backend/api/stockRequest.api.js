@@ -5,11 +5,20 @@ const {
 
 const createStockRequest = async ({
   productID,
+  requestID,
+  pricePerUnit,
   productName,
   sizes,
   status,
 }) => {
-  const stockRequest = { productID, productName, sizes, status };
+  const stockRequest = {
+    productID,
+    requestID,
+    pricePerUnit,
+    productName,
+    sizes,
+    status,
+  };
   return await saveStockRequest(stockRequest);
 };
 
