@@ -1,21 +1,47 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ShoppingCartItem from "./ShoppingCartItem";
 import axios from "axios";
 import { API_URL } from "../../constants";
 import moment from "moment";
 import swal from "sweetalert";
+import { Modal } from "react-responsive-modal";
+import "../../styles/customerStyles.css";
 
 const ShoppingCart = (props) => {
   const [cart, setCart] = useState([]);
   const [qty, setQty] = useState([]);
-  const [customer, setCustomer] = useState(props.customer);
+  const [confirmOrderStatus, setConfirmOrderStatus] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [customerDetails, setCustomerDetails] = useState({
+    _id: "",
+    address: "",
+    cardName: "",
+    cardNumber: "",
+    expiry: "",
+    cvv: "",
+    email: "",
+    fname: "",
+    lname: "",
+    password: "",
+    phone: "",
+    registrationDate: "",
+  });
+  const [deliveryAddress, setDeliveryAddress] = useState("");
 
   useEffect(() => {
     setCart(props.cart);
     setQty(props.qty);
-    setCustomer(props.customer);
-    console.log("customer:", customer);
+
+    let customer = localStorage.getItem("customer");
+    if (customer) {
+      customer = JSON.parse(customer);
+      setDeliveryAddress(customer.address);
+    }
   }, []);
+
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
 
   // Handling cart items delete
   const handleDelete = (item) => {
@@ -51,6 +77,7 @@ const ShoppingCart = (props) => {
   const quantityUpdate = () => {
     setCart(props.cart);
     setQty(props.qty);
+
     // let amt = 0.0;
 
     // for (let x of qty) {
@@ -89,7 +116,6 @@ const ShoppingCart = (props) => {
   // const [message, setMessage] = useState("all good");
   // const item = props.location.state.item;
   // duplicate = false;
-  // // console.log(item);
 
   // for (let x of products) {
   //   if (x._id === item._id) {
@@ -109,8 +135,6 @@ const ShoppingCart = (props) => {
   //     price: price,
   //   };
 
-  //   // console.log("item: ", cartItem);
-
   //   for (let x of cartTotal) {
   //     if (x.id === cartItem.id) {
   //       totDuplicate = true;
@@ -128,12 +152,10 @@ const ShoppingCart = (props) => {
 
   // const finalTotal = () => {
   //   let tot = 0.0;
-  //   console.log("totl: ", tot);
 
   //   for (let x of cartTotal) {
   //     tot = tot + x.price;
   //   }
-  //   console.log("ftot: ", tot);
   //   setTotal(tot);
   // };
 
@@ -146,13 +168,11 @@ const ShoppingCart = (props) => {
   //     if (item[i]._id === id) {
   //       item.splice(i, 1);
   //     }
-  //     console.log("item: ", item);
   //   }
 
   //   for (var i = 0; i < products.length; i++) {
   //     if (products.length == 1) {
   //       products.pop();
-  //       console.log("pop");
   //       setMessage("last");
   //       props.location.state.item = {
   //         _id: "",
@@ -171,9 +191,7 @@ const ShoppingCart = (props) => {
   //     }
   //     if (products[i]._id === id) {
   //       products.splice(i, 1);
-  //       // console.log("after del: ", products);
   //     }
-  //     console.log("prod: ", products);
   //   }
 
   //   for (var i = 0; i < cartTotal.length; i++) {
@@ -192,14 +210,15 @@ const ShoppingCart = (props) => {
   //   }
   // };
 
-  const confirmOrder = () => {
-    // console.log("cart:", cart);
-    // console.log("qty: ", qty);
+  const changeAddress = (e) => {
+    if (e.target.name == "address") setDeliveryAddress(e.target.value);
+  };
 
-    let date = moment().format("DD-MM-YYYY hh:mm:ss");
+  const confirmOrder = () => {
+    // let date = moment().format("DD-MM-YYYY hh:mm:ss");
+    let date = moment().format("DD-MM-YYYY");
     let customer = localStorage.getItem("customer");
     customer = JSON.parse(customer);
-    console.log("customer dtls:", customer);
 
     if (!customer) {
       swal({
@@ -212,27 +231,31 @@ const ShoppingCart = (props) => {
     } else {
       let email = customer.email;
       let address = customer.address;
+      setDeliveryAddress(address);
+      let paymentDetails = {
+        cardName: customer.cardName,
+        cardNumber: customer.cardNumber,
+        expiry: customer.expiry,
+        cvv: customer.cvv,
+      };
 
-      // console.log("date: ", date);
-
-      // let product = {
-      //   productID: "",
-      //   productName: "",
-      //   productType: "",
-      //   productCategory: "",
-      //   productPricePerUnit: 0.0,
-      //   productImageUrl: "",
-      //   productQty: {
-      //     xs: 0,
-      //     s: 0,
-      //     m: 0,
-      //     l: 0,
-      //     xl: 0,
-      //   },
-      // };
+      let customerObj = {
+        _id: customer._id,
+        address: customer.address,
+        cardName: customer.cardName,
+        cardNumber: customer.cardNumber,
+        expiry: customer.expiry,
+        cvv: customer.cvv,
+        email: customer.email,
+        fname: customer.fname,
+        lname: customer.lname,
+        password: customer.password,
+        phone: customer.phone,
+        registrationDate: customer.registrationDate,
+      };
+      setCustomerDetails(customerObj);
 
       let orderProductArr = [];
-
       if (qty.length > 0) {
         for (let x of cart) {
           let product = {};
@@ -252,12 +275,7 @@ const ShoppingCart = (props) => {
         }
       }
 
-      // console.log("order products: ", orderProductArr);
-      // console.log("tot: ", props.cartTotal);
-
       let totalAmount = props.cartTotal;
-
-      // console.log("api: ", API_URL);
 
       let orderObject = {
         purchaseDate: date,
@@ -265,7 +283,7 @@ const ShoppingCart = (props) => {
         totalBillAmount: totalAmount,
         status: "pending",
         customerEmail: email,
-        deliveryAddress: address,
+        deliveryAddress: deliveryAddress,
       };
 
       if (orderProductArr.length === 0) {
@@ -277,25 +295,19 @@ const ShoppingCart = (props) => {
           // window.location = `/customer/`;
         });
       }
-
-      // console.log("pro:", orderProductArr.length === 0);
-      // console.log("pro2:", totalAmount === 0);
-      if (cart.length > 0 && totalAmount === 0) {
-        swal({
-          title:
-            "Quantity of products added to cart is zero, please update products quantity!",
-          text: "",
-          icon: "warning",
-        });
-      }
-
-      // console.log("order: ", orderObject);
+      // if (cart.length > 0 && totalAmount == 0) {
+      //   swal({
+      //     title:
+      //       "Quantity of products added to cart is zero, please update products quantity!",
+      //     text: "",
+      //     icon: "warning",
+      //   });
+      // }
 
       if (orderProductArr.length > 0) {
         axios
           .post(`${API_URL}/customer/create-order`, orderObject)
           .then((response) => {
-            console.log("success", response.data);
             swal({
               title: "Your Order has been placed Successfully!",
               text: "",
@@ -360,12 +372,67 @@ const ShoppingCart = (props) => {
           <button
             class="bg-green-400 opacity-75 hover:opacity-300 text-gray-900 hover:text-gray-100 rounded-full px-10 py-3 font-semibold
                           pull-right"
+            onClick={onOpenModal}
+          >
+            <i class="fa fa-paper-plane -ml-2 mr-2"></i> Place Order
+          </button>
+        </div>
+      </div>
+      {/* MODAL POP UP FOR CONFIM ORDER */}
+      <div>
+        <Modal
+          open={open}
+          onClose={onCloseModal}
+          center
+          classNames={{
+            overlay: "customOverlay",
+            modal: "customModal",
+          }}
+        >
+          <h2 className="text-center text-blue-900 text-xl italic">
+            Confirm Delivery Address
+          </h2>
+          <br />
+          <br />
+          <br />
+          {/* <label className="mr-5 my-auto text-center">
+                      SELECT :{" "}
+                    </label> */}
+          <form className="mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden">
+            <div class="w-full px-3 mt-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-blue-700 text-xs font-semibold mb-2"
+                for="grid-first-name"
+              >
+                Delivery Address
+              </label>
+              <input
+                class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
+                type="text"
+                id="address"
+                name="address"
+                value={deliveryAddress}
+                onChange={changeAddress}
+                required
+              />
+            </div>
+          </form>
+
+          <br />
+          <br />
+          <br />
+          <button
+            class="bg-green-400 opacity-75 hover:opacity-300 text-gray-900 hover:text-gray-100 rounded-full px-10 py-3 font-semibold
+                          pull-right"
             onClick={confirmOrder}
           >
             <i class="fa fa-paper-plane -ml-2 mr-2"></i> Confirm Order
           </button>
-        </div>
+          <button></button>
+        </Modal>
       </div>
+
+      {/* END OF CONFIRM ORDER MODAL POP UP */}
     </div>
   );
 };
