@@ -17,7 +17,6 @@ const StockReport = () => {
       .get(`${API_URL}/inventory/stockRequests`)
       .then((response) => {
         setStockRequests(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);

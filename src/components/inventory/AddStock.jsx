@@ -53,37 +53,31 @@ const AddStock = () => {
     let isValid = true;
 
     if (productName.length <= 4) {
-      console.log("name");
       isValid = false;
       return false;
     }
 
     if (!productType) {
-      console.log("producttype");
       isValid = false;
       return false;
     }
 
     if (!productCategory) {
-      console.log("categiry");
       isValid = false;
       return false;
     }
 
     if (!pricePerUnit) {
-      console.log("price");
       isValid = false;
       return false;
     }
 
     if (!reorderQty) {
-      console.log("reorderqty");
       isValid = false;
       return false;
     }
 
     if (!checkXS && !checkS && !checkM && !checkL && !checkXL) {
-      console.log("checkbox");
       isValid = false;
       return false;
     }
@@ -151,7 +145,6 @@ const AddStock = () => {
     axios
       .post(`${API_URL}/inventory/addStock`, formData)
       .then((response) => {
-        console.log(response);
         setIsLoading(false);
         setOpenResponse(true);
         resetValues();

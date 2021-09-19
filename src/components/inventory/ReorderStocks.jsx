@@ -14,7 +14,6 @@ const ReorderStocks = () => {
     axios
       .get(`${API_URL}/inventory`)
       .then((response) => {
-        console.log(response.data);
         setReorderStocks(
           response.data.filter(
             (stock) =>
@@ -36,8 +35,6 @@ const ReorderStocks = () => {
       .catch((error) => {
         console.log(error);
       });
-
-    //console.log(calculatePercentage(200, 1000));
   }, []);
 
   const calculatePercentage = (partialValue, totalValue) => {

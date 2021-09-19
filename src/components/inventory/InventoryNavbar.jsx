@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ".././styles/navbar.css";
 import { useState } from "react";
+import "../../styles/navbar.css";
 import { useLocation } from "react-router-dom";
 
-const Navbar = () => {
+const InventoryNavbar = () => {
   const location = useLocation();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -17,9 +17,7 @@ const Navbar = () => {
             <Link
               to="/"
               className={`font-bold ${
-                window.location.pathname === "/"
-                  ? "navlink-hover"
-                  : "navlink-no-hover"
+                location.pathname === "/" ? "navlink-hover" : "navlink-no-hover"
               }`}
             >
               STOCKS
@@ -28,8 +26,8 @@ const Navbar = () => {
           <div className="p-4">
             <Link
               to="/addStock"
-              className={`font-bold hello ${
-                window.location.pathname === "/addStock"
+              className={`font-bold ${
+                location.pathname === "/addStock"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -41,7 +39,7 @@ const Navbar = () => {
             <Link
               to="/reorder"
               className={`font-bold ${
-                window.location.pathname === "/reorder"
+                location.pathname === "/reorder"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -53,7 +51,7 @@ const Navbar = () => {
             <Link
               to="/stockRequests"
               className={`font-bold ${
-                window.location.pathname === "/stockRequests"
+                location.pathname === "/stockRequests"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -65,7 +63,7 @@ const Navbar = () => {
             <Link
               to="/logout"
               className={`font-bold ${
-                window.location.pathname === "/logout"
+                location.pathname === "/logout"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -93,9 +91,7 @@ const Navbar = () => {
       <div className={`bg-blue-700 ${openMenu ? "" : "hidden"}`}>
         <div
           className={`flex justify-center ${
-            window.location.pathname === "/"
-              ? "bg-blue-500"
-              : "navlink-no-hover"
+            location.pathname === "/" ? "bg-blue-500" : "navlink-no-hover"
           }`}
         >
           <div className="flex justify-center w-11/12 ">
@@ -103,7 +99,7 @@ const Navbar = () => {
               <Link
                 to="/"
                 className={`font-bold ${
-                  window.location.pathname === "/"
+                  location.pathname === "/"
                     ? "navlink-mobile-hover"
                     : "navlink-no-hover"
                 }`}
@@ -115,7 +111,7 @@ const Navbar = () => {
         </div>
         <div
           className={`flex justify-center ${
-            window.location.pathname === "/addStock"
+            location.pathname === "/addStock"
               ? "bg-blue-500"
               : "navlink-no-hover"
           }`}
@@ -125,7 +121,7 @@ const Navbar = () => {
               <Link
                 to="/addStock"
                 className={`font-bold ${
-                  window.location.pathname === "/addStock"
+                  location.pathname === "/addStock"
                     ? "navlink-mobile-hover"
                     : "navlink-no-hover"
                 }`}
@@ -137,7 +133,7 @@ const Navbar = () => {
         </div>
         <div
           className={`flex justify-center ${
-            window.location.pathname === "/reorder"
+            location.pathname === "/reorder"
               ? "bg-blue-500"
               : "navlink-no-hover"
           }`}
@@ -147,7 +143,7 @@ const Navbar = () => {
               <Link
                 to="/reorder"
                 className={`font-bold ${
-                  window.location.pathname === "/reorder"
+                  location.pathname === "/reorder"
                     ? "navlink-mobile-hover"
                     : "navlink-no-hover"
                 }`}
@@ -159,7 +155,7 @@ const Navbar = () => {
         </div>
         <div
           className={`flex justify-center ${
-            window.location.pathname === "/stockRequests"
+            location.pathname === "/stockRequests"
               ? "bg-blue-500"
               : "navlink-no-hover"
           }`}
@@ -169,7 +165,7 @@ const Navbar = () => {
               <Link
                 to="/stockRequests"
                 className={`font-bold ${
-                  window.location.pathname === "/stockRequests"
+                  location.pathname === "/stockRequests"
                     ? "navlink-mobile-hover"
                     : "navlink-no-hover"
                 }`}
@@ -181,9 +177,7 @@ const Navbar = () => {
         </div>
         <div
           className={`flex justify-center ${
-            window.location.pathname === "/logout"
-              ? "bg-blue-500"
-              : "navlink-no-hover"
+            location.pathname === "/logout" ? "bg-blue-500" : "navlink-no-hover"
           }`}
         >
           <div className="flex justify-center w-11/12 ">
@@ -191,7 +185,7 @@ const Navbar = () => {
               <Link
                 to="/logout"
                 className={`font-bold ${
-                  window.location.pathname === "/logout"
+                  location.pathname === "/logout"
                     ? "navlink-mobile-hover"
                     : "navlink-no-hover"
                 }`}
@@ -206,4 +200,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default InventoryNavbar;
