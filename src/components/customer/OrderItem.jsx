@@ -30,7 +30,6 @@ const OrderItem = (props) => {
         axios
           .delete(`${API_URL}/customer/delete-order/${_id}`)
           .then((response) => {
-            // console.log("Order Deleted Successfully!!!", response.data);
             swal("Your Order is Deleted Successfully!", "", "success");
             swal({
               title: "Your Order is Deleted Successfully!",
@@ -60,34 +59,6 @@ const OrderItem = (props) => {
       }
     });
   };
-  // DELETE ORDER
-  const deleteOrder = () => {
-    // console.log("delete order");
-    // axios
-    //   .delete(`${API_URL}/customer/delete-order/${_id}`)
-    //   .then((response) => {
-    //     console.log("Order Deleted Successfully!!!", response.data);
-    //     // alert("Order Deleted Successfully!");
-    //   })
-    //   .catch((e) => {
-    //     console.log("error", e.data);
-    //     alert("Error occurred! Could not delete your order!");
-    //   });
-  };
-
-  const getDisplayStatus = () => {
-    if (status === "confirmed") {
-      return (
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-          Button
-        </button>
-      );
-    } else if (status === "pending") {
-      return <button className="rev-btn-status-reject">Rejected</button>;
-    } else {
-      return <button className="rev-btn-status-pending">Pending</button>;
-    }
-  };
 
   const displayError = () => {
     swal(
@@ -99,7 +70,7 @@ const OrderItem = (props) => {
 
   return (
     <div>
-      <div className="flex justify-center font-medium">
+      <div className="flex justify-center font-medium ">
         <div className="grid gap-5 grid-cols-8 sm:grid-cols-8 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
           <div className="pt-4 pb-4 m-auto text-gray-900">{orderID}</div>
           <div className="pt-4 pb-4 m-auto text-gray-900">{purchaseDate}</div>
