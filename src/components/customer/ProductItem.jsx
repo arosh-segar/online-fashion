@@ -32,29 +32,29 @@ const ProductItem = (props) => {
         <div
           class={`px-12 py-2 flex justify-center items-center mx-auto gap-x-5`}
         >
-          {stock.sizes.xs && (
+          {stock.sizes.xs && stock.sizes.xs.isAvailable && (
             <div className="text-white text-center bg-gray-400 flex-wrap rounded-full h-8 w-8 cursor-pointer hover:bg-green-400 font-bold m-auto flex justify-center items-center">
               <p>XS</p>
             </div>
           )}
-          {stock.sizes.s && (
+          {stock.sizes.s && stock.sizes.s.isAvailable && (
             <div className="text-white text-center bg-gray-400 flex-wrap rounded-full h-8 w-8 cursor-pointer hover:bg-green-400 font-bold m-auto flex justify-center items-center">
               <p>S</p>
             </div>
           )}
-          {stock.sizes.m && (
+          {stock.sizes.m && stock.sizes.m.isAvailable && (
             <div className="text-white text-center bg-gray-400 flex-wrap rounded-full h-8 w-8 cursor-pointer hover:bg-green-400 font-bold m-auto flex justify-center items-center">
               <p>M</p>
             </div>
           )}
 
-          {stock.sizes.l && (
+          {stock.sizes.l && stock.sizes.l.isAvailable && (
             <div className="text-white text-center bg-gray-400 flex-wrap rounded-full h-8 w-8 cursor-pointer hover:bg-green-400 font-bold m-auto flex justify-center items-center">
               <p>L</p>
             </div>
           )}
 
-          {stock.sizes.xl && (
+          {stock.sizes.xl && stock.sizes.xl.isAvailable && (
             <div className="text-white text-center bg-gray-400 flex-wrap rounded-full h-8 w-8 cursor-pointer hover:bg-green-400 font-bold m-auto flex justify-center items-center">
               <p>XL</p>
             </div>
