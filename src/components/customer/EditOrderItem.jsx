@@ -21,10 +21,6 @@ const EditOrderItem = (props) => {
   const [productDetail, setProductDetail] = useState([]);
 
   useEffect(() => {
-    // console.log("edit order itm: ", props.item);
-    // console.log("edit order qty: ", props.editQty);
-    // console.log("all products: ", props.allProducts);
-
     // SETTING QTY OF ORDERED PRODUCT IN ONE ORDER
     setXs(item.productQty.xs);
     setS(item.productQty.s);
@@ -52,8 +48,6 @@ const EditOrderItem = (props) => {
       l: l,
       xl: xl,
     };
-
-    // console.log("call delete");
     props.handleDelete(item);
   };
 
@@ -192,7 +186,7 @@ const EditOrderItem = (props) => {
               {(xs + s + m + l + xl) * item.pricePerUnit}
             </div>
 
-            {isSizesOpen && productDetail.sizes.xs.xsSizeAvailableQty && (
+            {isSizesOpen && productDetail.sizes.xs.isAvailable && (
               <div className="pb-4 m-auto col-span-5 w-full flex flex-1 lg:flex-row">
                 <div className="m-auto my-auto flex lg:flex-row justify-center">
                   <p className="mr-1 lg:mr-2 text-sm my-auto">XS :</p>
@@ -222,7 +216,7 @@ const EditOrderItem = (props) => {
                     +
                   </button>
                 </div>
-                {isSizesOpen && productDetail.sizes.s.sSizeAvailableQty && (
+                {isSizesOpen && productDetail.sizes.s.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">S :</p>
                     <button
@@ -252,7 +246,7 @@ const EditOrderItem = (props) => {
                     </button>
                   </div>
                 )}
-                {isSizesOpen && productDetail.sizes.m.mSizeAvailableQty && (
+                {isSizesOpen && productDetail.sizes.m.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">M :</p>
                     <button
@@ -283,7 +277,7 @@ const EditOrderItem = (props) => {
                   </div>
                 )}
 
-                {isSizesOpen && productDetail.sizes.l.lSizeAvailableQty && (
+                {isSizesOpen && productDetail.sizes.l.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">L :</p>
                     <button
@@ -314,7 +308,7 @@ const EditOrderItem = (props) => {
                   </div>
                 )}
 
-                {isSizesOpen && productDetail.sizes.xl.xlSizeAvailableQty && (
+                {isSizesOpen && productDetail.sizes.xl.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">XL :</p>
                     <button

@@ -6,7 +6,6 @@ import EditOrderItem from "./EditOrderItem";
 import swal from "sweetalert";
 
 const EditOrder = (props) => {
-  // console.log("tot: ", total);
   const orderItem = props.location.state.orderItem;
   const {
     orderID, // substring order ID
@@ -26,8 +25,6 @@ const EditOrder = (props) => {
   const [editCartTotal, setEditCartTotal] = useState(0.0);
 
   useEffect(() => {
-    // console.log("ord: ", props.location.state.orderItem);
-
     for (let x of orderProducts) {
       let qty = {
         _id: x.productID,
@@ -36,10 +33,6 @@ const EditOrder = (props) => {
       };
       editQty.push(qty);
     }
-
-    // setEditQty(qtyArr);
-    // console.log("cart2: ", editCart);
-    // console.log("qty2:", editQty);
 
     if (editQty.length == 0) setEditCartTotal(0.0);
     else {
@@ -56,8 +49,6 @@ const EditOrder = (props) => {
 
   // Handling cart items delete
   const handleDelete = (item) => {
-    // console.log("dele called:", item);
-    // console.log("bef del:", editCart);
     // props.removeItem(item);
     setEditCart(
       editCart.filter(function (cartItem) {
@@ -65,19 +56,14 @@ const EditOrder = (props) => {
       })
     );
 
-    // console.log("aftr del:", editCart);
-
     setEditQty(
       editQty.filter(function (newQty) {
         return newQty._id !== item._id;
       })
     );
 
-    // console.log("cart:", editCart);
-
     if (editCart.length === 0) {
       setEditCartTotal(0.0);
-      // console.log("del:", editQty.length);
     } else {
       let amt = 0.0;
       for (let x of editQty) {
@@ -120,14 +106,11 @@ const EditOrder = (props) => {
   };
 
   const editOrder = () => {
-    // console.log("cart:", editCart);
-    // console.log("qty: ", editQty);
-
-    let date = moment().format("DD-MM-YYYY hh:mm:ss");
-    let email = "vinayagar@gmail.com";
-    let address = "Colombo";
-
-    // console.log("date: ", date);
+    let date = moment().format("DD-MM-YYYY");
+    let customer = localStorage.getItem("customer");
+    customer = JSON.parse(customer);
+    let email = customer.email;
+    let address = customer.address;
 
     let orderProductArr = [];
 
@@ -148,8 +131,6 @@ const EditOrder = (props) => {
     }
 
     let totalAmount = editCartTotal;
-    // console.log("tot: ", totalAmount);
-    // console.log("api: ", API_URL);
 
     let orderObject = {
       _id: _id,
@@ -161,12 +142,9 @@ const EditOrder = (props) => {
       deliveryAddress: address,
     };
 
-    // console.log("order: ", orderObject);
-
     axios
       .put(`${API_URL}/customer/edit-order/${_id}`, orderObject)
       .then((response) => {
-        // console.log("success", response.data);
         // swal("Order Updated Successfully!");
         // swal("SUCCESS!", "Your Order is Updated Successfully!", "success");
         swal({
