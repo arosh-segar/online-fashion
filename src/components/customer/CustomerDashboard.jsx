@@ -13,6 +13,8 @@ import Navigation from "./Navigation";
 import OrdersList from "./OrdersList";
 import EditOrder from "./EditOrder";
 import CustomerLogin from "./CustomerLogin";
+import OrderReport from "./OrderReport";
+import Footer from "./Footer";
 
 const CustomerDashboard = () => {
   const [products, setproducts] = useState([]);
@@ -34,8 +36,7 @@ const CustomerDashboard = () => {
       .catch((error) => {
         console.log(error);
       });
-    // console.log("qty: ", qty);
-    // console.log("cart2: ", cart);
+
     if (qty.length == 0) setCartTotal(0.0);
     else {
       let amt = 0.0;
@@ -59,20 +60,6 @@ const CustomerDashboard = () => {
   // Adding items to shopping cart
   const addItem = (item) => {
     if (item) setCart([...cart, item]);
-
-    // setCart(
-    //   cart.filter(function (cartItem) {
-    //     return cartItem._id !== "";
-    //   })
-    // );
-
-    // for (let x of cart) {
-    //   console.log("arr:", x);
-    // }
-    // console.log("adding item");
-    // console.log(cart);
-    // console.log("passed: ", item);
-    // item.availableqty = item.qty - 1;
   };
 
   // Removing items from shopping cart
@@ -95,8 +82,6 @@ const CustomerDashboard = () => {
     // }
     // for (let x of cart) {
     //   if (x === item) {
-    //     console.log("false", item._id);
-    //     console.log("id cart:", x._id);
 
     //   }
     // }
@@ -199,6 +184,11 @@ const CustomerDashboard = () => {
             <Registration />
           </Route>
 
+          <Route
+            path={"/customer/order-summary"}
+            render={(props) => <OrderReport {...props} />}
+          ></Route>
+
           <Route path={"/customer/orders"}>
             <OrdersList />
           </Route>
@@ -253,6 +243,7 @@ const CustomerDashboard = () => {
 
           {/* <Redirect to={"/products"} /> */}
         </Switch>
+        <Footer />
         {/* </body> */}
       </div>
     </div>
