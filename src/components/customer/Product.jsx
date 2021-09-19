@@ -60,7 +60,6 @@ const Product = (props) => {
       if (parseFloat(x.sizes.s.sSizeAvailableQty) >= 0)
         tot = tot + parseFloat(x.sizes.s.sSizeAvailableQty);
     }
-    console.log("tot: ", tot);
   };
 
   const showSuccess = () => {
@@ -92,7 +91,7 @@ const Product = (props) => {
               <div className="mb-10">
                 <p class="mb-2 font-medium text-center">Available sizes</p>
                 <div className="flex flex-wrap justify-center items-center mt-6 space-x-1 sm:space-x-5 lg:space-x-10">
-                  {stock.sizes.xs && (
+                  {stock.sizes.xs.isAvailable && (
                     <div
                       onClick={() => handleSize("xs")}
                       className={`hover:bg-green-400 bg-gray-400 ${
@@ -103,7 +102,7 @@ const Product = (props) => {
                     </div>
                   )}
 
-                  {stock.sizes.s && (
+                  {stock.sizes.s.isAvailable && (
                     <div
                       onClick={() => handleSize("s")}
                       className={`hover:bg-green-400 bg-gray-400 ${
@@ -114,7 +113,7 @@ const Product = (props) => {
                     </div>
                   )}
 
-                  {stock.sizes.m && (
+                  {stock.sizes.m.isAvailable && (
                     <div
                       onClick={() => handleSize("m")}
                       className={`hover:bg-green-400 bg-gray-400 ${
@@ -125,7 +124,7 @@ const Product = (props) => {
                     </div>
                   )}
 
-                  {stock.sizes.l && (
+                  {stock.sizes.l.isAvailable && (
                     <div
                       onClick={() => handleSize("l")}
                       className={`hover:bg-green-400 bg-gray-400 ${
@@ -136,7 +135,7 @@ const Product = (props) => {
                     </div>
                   )}
 
-                  {stock.sizes.xl && (
+                  {stock.sizes.xl.isAvailable && (
                     <div
                       onClick={() => handleSize("xl")}
                       className={`hover:bg-green-400 bg-gray-400 ${
