@@ -5,7 +5,7 @@ setTimeout(() => {
   stockRequest = require("../utils/connection")
     .db("OnlineFashionDB")
     .collection("stockRequest");
-}, 10000);
+}, 3000);
 
 //Add stock request to the database
 const saveStockRequest = async ({
@@ -33,4 +33,11 @@ const getAllStockRequests = async () => {
   return results.toArray();
 };
 
-module.exports = { saveStockRequest, getAllStockRequests };
+const editRequestStatus = async (id, status) => {
+  return await stockRequest.updateOne(
+    { requestID: id },
+    { $set: { status: status } }
+  );
+};
+
+module.exports = { saveStockRequest, getAllStockRequests, editRequestStatus };

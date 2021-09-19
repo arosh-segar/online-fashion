@@ -1,43 +1,106 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+
 import axios from 'axios'
 import {API_URL} from "../../constants";
 import {Modal} from 'react-responsive-modal'
 import Select from 'react-select'
+import PurchaseOrder from "./PurchaseOrder";
+import OrderReport from "./OrderReport";
 
 const AddOrder = (props) => {
 
     const {openAdd, onCloseAdd} = props
-    const [suppliers,setSuppliers] = useState([101,102,103])
-    const [requests,setRequests] = useState([11,21,22,32])
+
+    const [suppliers,setSuppliers] = useState([])
+    const [requests,setRequests] = useState([])
+    const [supplierIDs,setSupplierIDs] = useState([])
+    const [requestIDs,setRequestIDs] = useState([])
+    const [orderSupplier,setOrderSupplier] = useState(null)
+    const [orderRequests,setOrderRequests] = useState([])
 
 
+    console.log(ss)
+
+    useEffect(() => {
+
+    }, [suppliers]);
+
+    useEffect(()=>{
+
+        axios.get(`${API_URL}/supplier/getStockRequests`)
+            .then((response)=>{
+                setRequests(response.data)
+
+                const options= []
+                response.data.map(request =>{
+
+                    if(request.status=='pending'){
+                        options.push({
+                            value:request.requestID,
+                            label:request.requestID
+                            })
+                    }
+                })
+
+                setRequestIDs(options)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+
+        axios.get(`${API_URL}/supplier/getSuppliers`)
+            .then((response)=>{
+                setSuppliers(response.data)
+                console.log(suppliers)
+                const options=response.data.map(supplier =>{
+                    return {
+                        value:supplier.id,
+                        label:supplier.id
+                    }
+                })
+                setSupplierIDs(options)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+
+    },[])
 
     const handleSubmit = (e) => {
 
 
-        // e.preventDefault()
-        //
-        // const Order = {
-        //
-        // }
+        e.preventDefault()
 
-        // axios.post(`${API_URL}/supplier/addOrder`, Order)
-        //     .then(response => {
-        //         console.log(response.data)
-        //         onCloseAdd()
-        //     })
-        //     .catch(e => {
-        //         console.log(e.data)
-        //     })
+        const items = requests.filter(request =>{
+            return orderRequests.includes(request.requestID)
+        })
+
+        let Supplier = {}
+
+        suppliers.map(supplier => {
+            if(orderSupplier == supplier.id){
+                Supplier=supplier
+            }
+        })
+
+        const Order = {
+            id:props.id,
+            supplier:Supplier,
+            items:items
+        }
+
+        axios.post(`${API_URL}/supplier/addOrder`, Order)
+            .then(response => {
+                console.log(response.data)
+                setRequestIDs(requestIDs.filter(id => !orderRequests.includes(id.value)))
+                onCloseAdd()
+            })
+            .catch(e => {
+                console.log(e.data)
+            })
 
 
     }
-
-    const options =[
-        {value:101,label:101},
-        {value:102,label:102},
-        {value:103,label:103},
-    ]
 
     return (
         <div>
@@ -57,7 +120,10 @@ const AddOrder = (props) => {
                             </label>
                             <Select
                                 className="basic-multi-select appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                options={options}
+                                options={supplierIDs}
+                                onChange={ input=> {
+                                    setOrderSupplier(input.value)
+                                }}
                             />
                             <p class="text-red-500 text-xs italic">
                                 Please fill out this field.
@@ -72,15 +138,25 @@ const AddOrder = (props) => {
                             </label>
                             <Select
                                 className="basic-multi-select appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                                options={options}
+                                options={requestIDs}
                                 isMulti
+                                onChange={ input=> {
+
+                                    const requests = input.map(option=>{
+                                        return option.value
+                                    })
+                                    setOrderRequests(requests)
+
+                                }}
                             />
                             <p className="text-red-500 text-xs italic">
                                 Please fill out this field.
                             </p>
                         </div>
                         <div class="w-full px-3 mt-3 mb-6 md:mb-0">
-                            <button className="w-full rounded-md p-2 mb-5 bg-blue-500" type="submit">
+                            <button className="w-full rounded-md p-2 mb-5 bg-blue-500" type="submit"
+                             disabled={false }
+                            >
                                 ADD ORDER
                             </button>
                         </div>
