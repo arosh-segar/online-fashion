@@ -14,6 +14,7 @@ const initialState = {
   confirmPassword: "",
   cardName: "",
   cardNumber: "",
+  expiry: "",
   cvv: "",
 };
 
@@ -47,15 +48,14 @@ export default class Registration extends Component {
         password: this.state.password,
         cardName: this.state.cardName,
         cardNumber: this.state.cardNumber,
+        expiry: this.state.expiry,
         cvv: this.state.cvv,
         registrationDate: date,
       };
-      console.log("DATA to SEND : ", customerObject);
 
       axios
         .post(`${API_URL}/customer/create-customer`, customerObject)
         .then((response) => {
-          console.log("success", response.data);
           swal({
             title: "Your have Registered Successfully!",
             text: "",
@@ -100,8 +100,9 @@ export default class Registration extends Component {
                   First Name
                 </label>
                 <input
-                  class="appearance-none block w-full bg-purple-100 text-blue-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
+                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
                   type="text"
+                  placeholder="Krish"
                   id="fname"
                   name="fname"
                   value={this.state.fname}
@@ -125,8 +126,9 @@ export default class Registration extends Component {
                   Last Name
                 </label>
                 <input
-                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
+                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
                   type="text"
+                  placeholder="Shiv"
                   id="lname"
                   name="lname"
                   value={this.state.lname}
@@ -150,8 +152,9 @@ export default class Registration extends Component {
                   Email
                 </label>
                 <input
-                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
+                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
                   type="email"
+                  placeholder="shiv@gmail.com"
                   id="email"
                   name="email"
                   value={this.state.email}
@@ -174,8 +177,9 @@ export default class Registration extends Component {
                   Address
                 </label>
                 <input
-                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
+                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
                   type="text"
+                  placeholder="12, New Rd, Manchester"
                   id="address"
                   name="address"
                   value={this.state.address}
@@ -198,8 +202,9 @@ export default class Registration extends Component {
                   Phone
                 </label>
                 <input
-                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
+                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
                   type="text"
+                  placeholder="0751231456"
                   id="phone"
                   name="phone"
                   value={this.state.phone}
@@ -223,7 +228,7 @@ export default class Registration extends Component {
                   Password
                 </label>
                 <input
-                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
+                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
                   type="password"
                   id="password"
                   name="password"
@@ -248,7 +253,7 @@ export default class Registration extends Component {
                   Confirm Password
                 </label>
                 <input
-                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
+                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-blue-100"
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
@@ -282,8 +287,9 @@ export default class Registration extends Component {
                   Card Holder's Name
                 </label>
                 <input
-                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
+                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
                   id="cardName"
+                  placeholder="Shiv"
                   name="cardName"
                   value={this.state.cardName}
                   onChange={this.onChange}
@@ -305,8 +311,9 @@ export default class Registration extends Component {
                   Card Number
                 </label>
                 <input
-                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
+                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
                   type="text"
+                  placeholder="0000 0000 0000 0000"
                   id="cardNumber"
                   name="cardNumber"
                   value={this.state.cardNumber}
@@ -321,6 +328,26 @@ export default class Registration extends Component {
                   ""
                 )} */}
               </div>
+
+              <div class="w-full px-3 mt-3 mb-6 md:mb-0">
+                <label
+                  class="block uppercase tracking-wide text-blue-700 text-xs font-semibold mb-2"
+                  for="grid-first-name"
+                >
+                  Card Expiry
+                </label>
+                <input
+                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
+                  type="text"
+                  placeholder="MM/YY"
+                  id="expiry"
+                  name="expiry"
+                  value={this.state.expiry}
+                  onChange={this.onChange}
+                  required
+                />
+              </div>
+
               <div class="w-full px-3 mt-3 mb-6 md:mb-0">
                 <label
                   class="block uppercase tracking-wide text-blue-700 text-xs font-semibold mb-2"
@@ -329,9 +356,10 @@ export default class Registration extends Component {
                   CVV
                 </label>
                 <input
-                  class="appearance-none block w-full bg-blue-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
+                  class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
                   type="text"
                   id="cvv"
+                  placeholder="0000"
                   name="cvv"
                   value={this.state.cvv}
                   onChange={this.onChange}
