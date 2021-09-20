@@ -69,10 +69,22 @@ const deleteOrder = async (id) => {
   return await order.deleteOne({ _id: ObjectID(id) });
 };
 
+// ---------------------- STOCK COLLECTION --------------------------
 // Retrieve Products to purchase
 const getAllStocks = async () => {
   const results = await stock.find({});
   return results.toArray();
+};
+
+const updateStockQty = async (id, sizesObj) => {
+  return await stock.updateOne(
+    { _id: ObjectID(id) },
+    {
+      $set: {
+        sizes: sizesObj,
+      },
+    }
+  );
 };
 
 module.exports = {
@@ -83,4 +95,5 @@ module.exports = {
   deleteOrder,
   getAllOrders,
   getAllStocks,
+  updateStockQty,
 };

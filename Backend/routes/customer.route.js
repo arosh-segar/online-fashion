@@ -7,6 +7,7 @@ const {
   deleteOrderByID,
   getOrders,
   getStocks,
+  editStockQty,
 } = require("../api/customer.api");
 
 // ------------------------CUSTOMER COLLECTION --------------------
@@ -88,6 +89,17 @@ router.get("/get-all-products", async (req, res) => {
     res.status(201).send(stocks);
   } else {
     res.status(502).send("Error");
+  }
+});
+
+// update stock quantity in inventory control when customer purchases products
+router.put("/update-stock-quantity/:id", async (req, res) => {
+  let result = await editStockQty(req.params.id, req.body);
+
+  if (result) {
+    res.status(200).send(result);
+  } else {
+    res.status(502).json("Could not update stock quantity");
   }
 });
 
