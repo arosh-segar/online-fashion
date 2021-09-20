@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ShoppingCart from "./ShoppingCart";
+import { Link } from "react-router-dom";
 
 const Product = (props) => {
+  const [msg, setMessage] = useState("");
   const [xs, setXs] = useState({ type: "xs", active: false });
   const [s, setS] = useState({ type: "s", active: false });
   const [m, setM] = useState({ type: "m", active: false });
   const [l, setL] = useState({ type: "l", active: false });
   const [xl, setXl] = useState({ type: "xl", active: false });
-  //Setting stock from passed props
   const stock = props.location.state.stock;
+  const cart = props.cart;
+
+  useEffect(() => {
+    for (let x of cart) {
+      if (stock._id === x._id) {
+        // Avoiding customer adding the same product to shopping cart
+        setMessage("This Product has been added to cart already!");
+      }
+    }
+  }, []);
 
   const handleSize = (type) => {
     type === xs.type
@@ -27,6 +39,33 @@ const Product = (props) => {
       : setXl((prevState) => ({ ...prevState, active: false }));
   };
 
+  // const addItem = () => props.location.state.addItem;
+
+  const adding = () => {
+    props.addItem(stock);
+    setMessage("This Product has been added to your Cart Successfully!");
+  };
+
+  const navigateToShoppingCartPage = () => {
+    <Link
+      to={{
+        pathname: "/customer/",
+      }}
+    ></Link>;
+  };
+
+  const addToCart = () => {
+    let tot = 0.0;
+    for (let x of stock) {
+      if (parseFloat(x.sizes.s.sSizeAvailableQty) >= 0)
+        tot = tot + parseFloat(x.sizes.s.sSizeAvailableQty);
+    }
+  };
+
+  const showSuccess = () => {
+    return <p>Added Successfully!</p>;
+  };
+
   return (
     <>
       <div class="min-w-screen min-h-screen bg-yellow-300 flex items-center p-5 lg:p-10 overflow-hidden relative">
@@ -42,6 +81,7 @@ const Product = (props) => {
                 <div class="border-4 border-yellow-200 absolute top-10 bottom-10 left-10 right-10 z-0"></div>
               </div>
             </div>
+
             <div class="w-full md:w-1/2 px-10">
               <div class="mb-10">
                 <h1 class="font-bold uppercase text-2xl mb-5">
@@ -51,7 +91,7 @@ const Product = (props) => {
               <div className="mb-10">
                 <p class="mb-2 font-medium text-center">Available sizes</p>
                 <div className="flex flex-wrap justify-center items-center mt-6 space-x-1 sm:space-x-5 lg:space-x-10">
-                  {stock.sizes.xs && (
+                  {stock.sizes.xs.isAvailable && (
                     <div
                       onClick={() => handleSize("xs")}
                       className={`hover:bg-green-400 bg-gray-400 ${
@@ -62,7 +102,7 @@ const Product = (props) => {
                     </div>
                   )}
 
-                  {stock.sizes.s && (
+                  {stock.sizes.s.isAvailable && (
                     <div
                       onClick={() => handleSize("s")}
                       className={`hover:bg-green-400 bg-gray-400 ${
@@ -73,7 +113,7 @@ const Product = (props) => {
                     </div>
                   )}
 
-                  {stock.sizes.m && (
+                  {stock.sizes.m.isAvailable && (
                     <div
                       onClick={() => handleSize("m")}
                       className={`hover:bg-green-400 bg-gray-400 ${
@@ -84,7 +124,7 @@ const Product = (props) => {
                     </div>
                   )}
 
-                  {stock.sizes.l && (
+                  {stock.sizes.l.isAvailable && (
                     <div
                       onClick={() => handleSize("l")}
                       className={`hover:bg-green-400 bg-gray-400 ${
@@ -95,7 +135,7 @@ const Product = (props) => {
                     </div>
                   )}
 
-                  {stock.sizes.xl && (
+                  {stock.sizes.xl.isAvailable && (
                     <div
                       onClick={() => handleSize("xl")}
                       className={`hover:bg-green-400 bg-gray-400 ${
@@ -116,11 +156,61 @@ const Product = (props) => {
                   <span class="text-2xl leading-none align-baseline">.00</span>
                 </div>
                 <div class="inline-block align-bottom">
-                  <button class="bg-yellow-300 opacity-75 hover:opacity-100 text-yellow-900 hover:text-gray-900 rounded-full px-10 py-2 font-semibold">
-                    <i class="fa fa-paper-plane -ml-2 mr-2"></i> ADD TO CART
-                  </button>
+                  {/* <Link
+                    to={{
+                      pathname: "/cart",
+                      state: {
+                        item: {
+                          _id: stock._id,
+                          name: stock.productName,
+                          image: stock.productImageUrl,
+                          sizes: {
+                            xs: xs,
+                            s: s,
+                            m: m,
+                            l: l,
+                            xl: xl,
+                          },
+                          pricePerUnit: stock.pricePerUnit,
+                        },
+                      },
+                    }}
+                  > */}
+                  {!msg && (
+                    <button
+                      class="bg-yellow-300 opacity-75 hover:opacity-100 text-yellow-900 hover:text-gray-900 rounded-full px-10 py-2 font-semibold"
+                      onClick={() => adding()}
+                    >
+                      <i class="fa fa-paper-plane -ml-2 mr-2"></i> ADD TO CART
+                    </button>
+                  )}
+
+                  {msg && (
+                    <button class="text-red-500 text-m text-center bg-yellow-300 opacity-75 rounded-full px-10 py-2 font-semibold">
+                      <i class="fa fa-bookmark  -ml-2 mr-2"></i> Product Added
+                    </button>
+                  )}
+
+                  {/* </Link> */}
+                  <br />
                 </div>
               </div>
+              <p class="text-red-500 text-m italic text-center">{msg}</p>
+              <br />
+              <br />
+
+              <Link
+                to={{
+                  pathname: "/customer/products",
+                }}
+              >
+                <div class="text-right">
+                  <button class="bg-yellow-300 text-left opacity-75 hover:opacity-100 text-blue-1000 hover:text-blue-900 rounded-full px-10 py-2 font-semibold">
+                    <i class="fa fa-hand-o-right fa-2x -ml-3 mr-3"></i>Continue
+                    Shopping
+                  </button>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,0 +1,9 @@
+.customOverlay {
+  background: rgba(62, 64, 65, 0.7);
+}
+.customModal {
+  align-items: center;
+  background: #f2f8f8;
+  max-width: 500px;
+  width: 100%;
+}

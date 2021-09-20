@@ -19,7 +19,7 @@ const deleteVehicle = async(vechileNumber) => {
 
 }
 
-const updateVehicle = async(vechileNumber,vechileBrand,driverName)=>{
+const updateVehicle = async(vechileNumber,{vechileBrand,driverName})=>{
 
    return await editVehicle({vechileNumber,vechileBrand,driverName})
 
