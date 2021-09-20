@@ -19,6 +19,7 @@ const getStockRequests = async () => {
     return await getAllStockRequests();
 };
 
+
 const updateStockRequest = async (id,status)=>{
 
     return await editRequestStatus(id,status)
@@ -26,3 +27,4 @@ const updateStockRequest = async (id,status)=>{
 }
 
 module.exports = { createStockRequest, getStockRequests ,updateStockRequest};
+

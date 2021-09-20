@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+
 import axios from 'axios'
 import {API_URL} from "../../constants";
 import {Modal} from 'react-responsive-modal'
@@ -9,6 +10,7 @@ import OrderReport from "./OrderReport";
 const AddOrder = (props) => {
 
     const {openAdd, onCloseAdd} = props
+
     const [suppliers,setSuppliers] = useState([])
     const [requests,setRequests] = useState([])
     const [supplierIDs,setSupplierIDs] = useState([])
@@ -16,6 +18,12 @@ const AddOrder = (props) => {
     const [orderSupplier,setOrderSupplier] = useState(null)
     const [orderRequests,setOrderRequests] = useState([])
 
+
+    console.log(ss)
+
+    useEffect(() => {
+
+    }, [suppliers]);
 
     useEffect(()=>{
 
@@ -133,10 +141,12 @@ const AddOrder = (props) => {
                                 options={requestIDs}
                                 isMulti
                                 onChange={ input=> {
+
                                     const requests = input.map(option=>{
                                         return option.value
                                     })
                                     setOrderRequests(requests)
+
                                 }}
                             />
                             <p className="text-red-500 text-xs italic">

@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {addSupplier,getAllSuppliers,updateSupplier,deleteSupplier,addOrder,getAllOrders,deleteOrder,updateOrder} = require('../api/supplier.api')
 const {getStockRequests,updateStockRequest} = require("../api/stockRequest.api");
 
+
 router.post("/addSupplier",async(req,res)=>{
 
     let supplier = req.body
@@ -54,6 +55,7 @@ router.get("/getStockRequests",async(req,res)=>{
 
 })
 
+
 router.post("/addOrder",async(req,res)=>{
 
     let order = req.body
@@ -103,3 +105,4 @@ router.patch("/approveRequest/:id",async (req,res)=>{
 })
 
 module.exports=router
+
