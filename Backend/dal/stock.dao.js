@@ -68,4 +68,11 @@ const updateStockById = async (
   return result;
 };
 
+const updateStockQuantity = (id) =>{
+
+    //const result = await stock.updateOne
+
+
+}
+
 module.exports = { saveStock, getAllStocks, deleteStockById, updateStockById };
