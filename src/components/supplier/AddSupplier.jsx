@@ -137,7 +137,6 @@ const AddSupplier = (props) => {
                                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                                         id="grid-first-name"
                                         type="text"
-                                        title="Eg:0112212321/0776765557"
                                         placeholder="0112227086"
                                         onChange={e => {
                                             setPhoneNo(e.target.value)
@@ -166,7 +165,6 @@ const AddSupplier = (props) => {
                                         id="grid-first-name"
                                         type="email"
                                         placeholder="lynx@gmail.com"
-                                        title="Eg:lynx@gmail.com"
                                         onChange={e => {
                                             setEmail(e.target.value)
                                         }}
@@ -179,7 +177,7 @@ const AddSupplier = (props) => {
                                     )}
                                 </div>
                             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
-                                <button className={`w-full rounded-md p-2 mb-5 bg-blue-500`} type="submit">
+                                <button className="w-full rounded-md p-2 mb-5 bg-blue-500" type="submit">
                                     ADD SUPPLIER
                                 </button>
                                 <ResponseModal heading={'Add Supplier'} text={`You have successfully added the Supplier ${supplierID}`} color={'#4287f5'} openResponse={openResponse} onCloseResponseModal={onCloseResponseModal} />
