@@ -29,7 +29,7 @@ const AddStock = () => {
   const onOpenResponseModal = () => setOpenResponse(true);
   const onCloseResponseModal = () => setOpenResponse(false);
 
-  const resetValues =() => {
+  const resetValues = () => {
     setCheckXS(checkXS && false);
     setcheckS(checkS && false);
     setcheckM(checkM && false);
@@ -47,7 +47,7 @@ const AddStock = () => {
     setXlSizeAvailableQty("");
     setProductImage("");
     setPreviewProductImage("");
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -104,7 +104,7 @@ const AddStock = () => {
 
     const formData = serialize(product);
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     axios
       .post(`${API_URL}/inventory/addStock`, formData)
@@ -468,8 +468,14 @@ const AddStock = () => {
                 />
               </div>
             )}
-            {isLoading && <><Scale /><p className="text-center">Please wait the information is being processed...</p></>}
-
+            {isLoading && (
+              <>
+                <Scale />
+                <p className="text-center">
+                  Please wait the information is being processed...
+                </p>
+              </>
+            )}
 
             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
               <button
@@ -478,7 +484,13 @@ const AddStock = () => {
               >
                 ADD STOCK
               </button>
-              <ResponseModal heading={'Add stock'} text={`You have successfully added the product`} color={'#4287f5'} openResponse={openResponse} onCloseResponseModal={onCloseResponseModal} />
+              <ResponseModal
+                heading={"Add stock"}
+                text={`You have successfully added the product`}
+                color={"#4287f5"}
+                openResponse={openResponse}
+                onCloseResponseModal={onCloseResponseModal}
+              />
             </div>
           </form>
         </div>

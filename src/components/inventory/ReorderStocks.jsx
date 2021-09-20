@@ -3,10 +3,12 @@ import { API_URL } from "../../constants";
 import axios from "axios";
 import ReorderStockItem from "./ReorderStockItem";
 import Clip from "../loaders/Clip";
+import { Link } from "react-router-dom";
 
 const ReorderStocks = () => {
   const [reorderStocks, setReorderStocks] = useState([]);
-  const [isStockLoading,setIsStockLoading] = useState(true);
+  const [isStockLoading, setIsStockLoading] = useState(true);
+  const [filterRisk, setFilterRisk] = useState("all");
 
   useEffect(() => {
     axios
@@ -28,33 +30,174 @@ const ReorderStocks = () => {
           )
         );
 
-        setIsStockLoading(false)
+        setIsStockLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  },[]);
+
+    console.log(calculatePercentage(200, 1000));
+  }, []);
+
+  const calculatePercentage = (partialValue, totalValue) => {
+    return (100 * partialValue) / totalValue;
+  };
+
+  const filterByRisk = (reorderStock) => {
+    if (
+      filterRisk === "l" &&
+      (calculatePercentage(
+        parseFloat(reorderStock.sizes.xs.xsSizeAvailableQty),
+        parseFloat(reorderStock.reorderQty)
+      ) > 70 ||
+        calculatePercentage(
+          parseFloat(reorderStock.sizes.s.sSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) > 70 ||
+        calculatePercentage(
+          parseFloat(reorderStock.sizes.m.mSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) > 70 ||
+        calculatePercentage(
+          parseFloat(reorderStock.sizes.l.lSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) > 70 ||
+        calculatePercentage(
+          parseFloat(reorderStock.sizes.xl.xlSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) > 70)
+    ) {
+      return (
+        <ReorderStockItem
+          key={reorderStock._id}
+          view="web"
+          reorderStock={reorderStock}
+        />
+      );
+    } else if (
+      filterRisk === "h" &&
+      (calculatePercentage(
+        parseFloat(reorderStock.sizes.xs.xsSizeAvailableQty),
+        parseFloat(reorderStock.reorderQty)
+      ) < 31 ||
+        calculatePercentage(
+          parseFloat(reorderStock.sizes.s.sSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) < 31 ||
+        calculatePercentage(
+          parseFloat(reorderStock.sizes.m.mSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) < 31 ||
+        calculatePercentage(
+          parseFloat(reorderStock.sizes.l.lSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) < 31 ||
+        calculatePercentage(
+          parseFloat(reorderStock.sizes.xl.xlSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) < 31)
+    ) {
+      return (
+        <ReorderStockItem
+          key={reorderStock._id}
+          view="web"
+          reorderStock={reorderStock}
+        />
+      );
+    } else if (
+      filterRisk === "m" &&
+      ((calculatePercentage(
+        parseFloat(reorderStock.sizes.xs.xsSizeAvailableQty),
+        parseFloat(reorderStock.reorderQty)
+      ) > 30 &&
+        calculatePercentage(
+          parseFloat(reorderStock.sizes.xs.xsSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) < 71) ||
+        (calculatePercentage(
+          parseFloat(reorderStock.sizes.s.sSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) > 30 &&
+          calculatePercentage(
+            parseFloat(reorderStock.sizes.s.sSizeAvailableQty),
+            parseFloat(reorderStock.reorderQty)
+          ) < 71) ||
+        (calculatePercentage(
+          parseFloat(reorderStock.sizes.m.mSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) > 30 &&
+          calculatePercentage(
+            parseFloat(reorderStock.sizes.m.mSizeAvailableQty),
+            parseFloat(reorderStock.reorderQty)
+          ) < 71) ||
+        (calculatePercentage(
+          parseFloat(reorderStock.sizes.l.lSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) > 30 &&
+          calculatePercentage(
+            parseFloat(reorderStock.sizes.l.lSizeAvailableQty),
+            parseFloat(reorderStock.reorderQty)
+          ) < 71) ||
+        (calculatePercentage(
+          parseFloat(reorderStock.sizes.xl.xlSizeAvailableQty),
+          parseFloat(reorderStock.reorderQty)
+        ) > 30 &&
+          calculatePercentage(
+            parseFloat(reorderStock.sizes.xl.xlSizeAvailableQty),
+            parseFloat(reorderStock.reorderQty)
+          ) < 71))
+    ) {
+      return (
+        <ReorderStockItem
+          key={reorderStock._id}
+          view="web"
+          reorderStock={reorderStock}
+        />
+      );
+    } else if (filterRisk === "all") {
+      return (
+        <ReorderStockItem
+          key={reorderStock._id}
+          view="web"
+          reorderStock={reorderStock}
+        />
+      );
+    }
+  };
 
   return (
     <div>
       {/* medium and large screens */}
       <div className="hidden sm:block pt-10 h-screen">
         <div>
-          <div className="flex justify-center ">
-            <div className="flex justify-center sm:w-11/12 lg:w-10/12">
+          <div className="flex justify-center items-center mx-auto">
+            <div className="flex justify-center">
+              <Link
+                to={{
+                  pathname: "/stockRequestsSummary",
+                  state: {
+                    reorderStocks: reorderStocks,
+                  },
+                }}
+                className="bg-green-500  text-white px-5 py-3 rounded-lg"
+              >
+                <i className="fa fa-eye mr-3"></i>View Stock Summary
+              </Link>
+            </div>
+            <div className="flex justify-center sm:w-5/12 lg:w-5/12">
               <label className="mr-5 my-auto">RISK LEVEL : </label>
               <select
                 className="p-2 border border-none w-2/4 rounded-lg"
-                name="cars"
-                id="cars"
                 style={{ textAlignLast: "center" }}
+                value={filterRisk}
+                onChange={(e) => setFilterRisk(e.target.value)}
               >
                 <option value="all" selected>
                   All
                 </option>
-                <option value="1">Low</option>
-                <option value="2">Medium</option>
-                <option value="3">High</option>
+                <option value="l">Low</option>
+                <option value="m">Medium</option>
+                <option value="h">High</option>
               </select>
             </div>
           </div>
@@ -69,20 +212,13 @@ const ReorderStocks = () => {
           </div>
         </div>
         <div className="overflow-y-auto pb-10" style={{ height: "70vh" }}>
-          {isStockLoading &&
-          <>
-            <Clip />
-          </>
-
-          }
-          {reorderStocks.map((reorderStock) => (
+          {isStockLoading && (
             <>
-              <ReorderStockItem
-                key={reorderStock._id}
-                view="web"
-                reorderStock={reorderStock}
-              />
+              <Clip />
             </>
+          )}
+          {reorderStocks.map((reorderStock) => (
+            <>{filterByRisk(reorderStock)}</>
           ))}
         </div>
       </div>
