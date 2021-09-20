@@ -9,37 +9,57 @@ import Registration from "./Registration";
 import ShoppingCart from "./ShoppingCart";
 import Products from "./Products";
 import Product from "./Product";
+import Navigation from "./Navigation";
+import OrdersList from "./OrdersList";
+import EditOrder from "./EditOrder";
+import CustomerLogin from "./CustomerLogin";
+import OrderReport from "./OrderReport";
+import Footer from "./Footer";
 
 const CustomerDashboard = () => {
   const [products, setproducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [qty, setQty] = useState([
-    { _id: "", price: 0.0, size: { xs: 0, s: 0, m: 0, l: 0, xl: 0 } },
-  ]);
+  const [qty, setQty] = useState([]);
   const [cartTotal, setCartTotal] = useState(0.0);
 
   useEffect(() => {
+    // let customer = localStorage.getItem("customer");
+    // customer = JSON.parse(customer);
+
+    // if (customer) console.log("customer logged in : ", customer);
+
     axios
-      .get(`${API_URL}/inventory`)
+      .get(`${API_URL}/customer/get-all-products`)
       .then((response) => {
         setproducts(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
+
+    if (qty.length == 0) setCartTotal(0.0);
+    else {
+      let amt = 0.0;
+
+      for (let x of qty) {
+        if (x._id !== qty._id) {
+          let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
+          amt = amt + 1.0 * (x.price * no);
+        }
+      }
+      setCartTotal(amt);
+    }
+    // const loggedInUser = localStorage.getItem("customer");
+    // if (loggedInUser) {
+    //   const foundUser = JSON.parse(loggedInUser);
+    //   // setCustomer(foundUser);
+    //   console.log("logged user:", foundUser);
+    // }
   });
 
   // Adding items to shopping cart
   const addItem = (item) => {
     if (item) setCart([...cart, item]);
-
-    // for (let x of cart) {
-    //   console.log("arr:", x);
-    // }
-    // console.log("adding item");
-    // console.log(cart);
-    // console.log("passed: ", item);
-    // item.availableqty = item.qty - 1;
   };
 
   // Removing items from shopping cart
@@ -62,8 +82,6 @@ const CustomerDashboard = () => {
     // }
     // for (let x of cart) {
     //   if (x === item) {
-    //     console.log("false", item._id);
-    //     console.log("id cart:", x._id);
 
     //   }
     // }
@@ -74,20 +92,18 @@ const CustomerDashboard = () => {
         return cartItem !== item;
       })
     );
-
     //Increasing and updating cart items quantity
     setQty(
       qty.filter(function (newQty) {
         return newQty._id !== item._id;
       })
     );
-
-    return cart;
   };
 
   const updateQuantity = (id, price, size) => {
     // item.availableqty = qty;
     let exist = false;
+    let amt = 0.0;
 
     for (let x of qty) {
       if (x._id === id) {
@@ -104,23 +120,36 @@ const CustomerDashboard = () => {
         price: price,
         size: size,
       };
+
       setQty([...qty, item]);
     }
   };
 
-  // Calculating total of cart items
-  const calculateCartTotal = () => {
-    let total = 0.0;
-
-    for (let x of qty) {
-      let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
-
-      total = total + 1.0 * (x.price * no);
-    }
-
-    setCartTotal(total);
-    return total;
+  const clearCart = () => {
+    setCart([]);
+    setQty([]);
+    setCartTotal(0.0);
   };
+
+  // Calculating total of cart items
+  // const calculateCartTotal = () => {
+  //   let total = 0.0;
+
+  //   // if (qty.length === 1) {
+  //   //   // let sizes = size.xs + size.s + size.m + size.l + size.xl;
+  //   //   let newTot = price;
+  //   //   setCartTotal(newTot);
+  //   // }
+
+  //   for (let x of qty) {
+  //     let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
+
+  //     total = total + 1.0 * (x.price * no);
+  //   }
+
+  //   setCartTotal(total);
+  //   // return total;
+  // };
 
   return (
     <div>
@@ -144,14 +173,34 @@ const CustomerDashboard = () => {
       </div>
 
       <div>
+        <Navigation />
+        {/* <body className="bg-gradient-to-r from-blue-600 to-blue-400"> */}
         <Switch>
-          {/* <Route exact path={"/"}>
+          <Route exact path={"/customer"}>
             <Home />
-          </Route> */}
+          </Route>
 
-          <Route path={"/registration"}>
+          <Route path={"/customer/registration"}>
             <Registration />
           </Route>
+
+          <Route
+            path={"/customer/order-summary"}
+            render={(props) => <OrderReport {...props} />}
+          ></Route>
+
+          <Route path={"/customer/orders"}>
+            <OrdersList />
+          </Route>
+
+          <Route path="/customer/login">
+            <CustomerLogin />
+          </Route>
+
+          <Route
+            path={"/customer/edit-order"}
+            render={(props) => <EditOrder {...props} products={products} />}
+          ></Route>
 
           <Route path="/customer/products">
             <Products addItem={addItem} products={products} />
@@ -174,7 +223,8 @@ const CustomerDashboard = () => {
               removeItem={removeItem}
               updateQuantity={updateQuantity}
               cartTotal={cartTotal}
-              calculateCartTotal={calculateCartTotal}
+              clearCart={clearCart}
+              // calculateCartTotal={calculateCartTotal}
               cart={cart}
               qty={qty}
             />
@@ -193,6 +243,8 @@ const CustomerDashboard = () => {
 
           {/* <Redirect to={"/products"} /> */}
         </Switch>
+        <Footer />
+        {/* </body> */}
       </div>
     </div>
   );

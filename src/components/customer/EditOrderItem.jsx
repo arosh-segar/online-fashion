@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const ShoppingCartItem = (props) => {
+const EditOrderItem = (props) => {
   const [isSizesOpen, setSizesOpen] = useState(false);
   const [xs, setXs] = useState(0);
   const [s, setS] = useState(0);
@@ -8,56 +8,37 @@ const ShoppingCartItem = (props) => {
   const [l, setL] = useState(0);
   const [xl, setXl] = useState(0);
 
-  // ----------------- SPRINT 2 CHANGE AVAILABLE QTY -----------------------------------------
+  // MAXIMUM LIMIT FOR QUANTITY UPDATE DUE TO PRODUCT AVAILABILITY
+  const [xsLimit, setXsLimit] = useState(0);
+  const [sLimit, setSLimit] = useState(0);
+  const [mLimit, setMLimit] = useState(0);
+  const [lLimit, setLLimit] = useState(0);
+  const [xlLimit, setXlLimit] = useState(0);
 
-  // const [xs, setXs] = useState({
-  //   qty: 0,
-  //   xsSizeAvailableQty: props.xsSizeAvailableQty,
-  // });
-  // setXs((prevState) => ({ ...prevState, xsSizeAvailableQty: "any int value" }));
-
-  // -----------------------------------------------------------------------------------------
-
-  // ----------------- SPRINT 2 ADD ORDER ----------------------------------------------------
-
-  const [item, setItem] = useState(props.item);
-  const [qty, setQty] = useState(props.qty);
+  const item = props.item;
+  const allProducts = props.allProducts;
+  // const editQty = props.editQty;
+  const [productDetail, setProductDetail] = useState([]);
 
   useEffect(() => {
-    // props.handleCartTotal();
-    setItem(props.item);
+    // SETTING QTY OF ORDERED PRODUCT IN ONE ORDER
+    setXs(item.productQty.xs);
+    setS(item.productQty.s);
+    setM(item.productQty.m);
+    setL(item.productQty.l);
+    setXl(item.productQty.xl);
 
-    for (let x of qty) {
-      if (x._id === item._id) {
-        setXs(x.size.xs);
-        setS(x.size.s);
-        setM(x.size.m);
-        setL(x.size.l);
-        setXl(x.size.xl);
+    for (let y of allProducts) {
+      if (y._id === item.productID) {
+        setProductDetail(y);
+        setXsLimit(parseInt(y.sizes.xs.xsSizeAvailableQty));
+        setSLimit(parseInt(y.sizes.s.sSizeAvailableQty));
+        setMLimit(parseInt(y.sizes.m.mSizeAvailableQty));
+        setLLimit(parseInt(y.sizes.l.lSizeAvailableQty));
+        setXlLimit(parseInt(y.sizes.xl.xlSizeAvailableQty));
       }
     }
-
-    // previous method
-    // if (item.sizes.xs.active === true) {
-    //   setXs(xs + 1);
-    // }
-    // if (item.sizes.s.active === true) {
-    //   setS(s + 1);
-    // }
-    // if (item.sizes.m.active === true) {
-    //   setM(m + 1);
-    // }
-    // if (item.sizes.l.active === true) {
-    //   setL(l + 1);
-    // }
-    // if (item.sizes.xl.active === true) {
-    //   setXl(xl + 1);
-    // }
   }, []);
-
-  // previous method
-  // const p = (xs + s + m + l + xl) * props.item.pricePerUnit;
-  // props.calculateTotal(p, "", props.item._id);
 
   const remove = () => {
     let obj = {
@@ -67,11 +48,7 @@ const ShoppingCartItem = (props) => {
       l: l,
       xl: xl,
     };
-
-    props.removeItem(item);
     props.handleDelete(item);
-    // props.updateTotal();
-    // props.handleCartTotal();
   };
 
   const incrementTot = async (value, price, action, size) => {
@@ -126,12 +103,7 @@ const ShoppingCartItem = (props) => {
         };
       } else console.log("Invalid size");
 
-      props.updateQuantity(item._id, price, obj);
-      props.quantityUpdate();
-      // props.updateTotal();
-      // props.calcTot();
-      // props.calculateCartTotal();
-      // props.handleCartTotal();
+      props.quantityUpdate(item.productID, price, obj);
     }
 
     if (action === "decrease") {
@@ -177,8 +149,7 @@ const ShoppingCartItem = (props) => {
         };
       } else console.log("Invalid size");
 
-      props.updateQuantity(item._id, price, obj);
-      props.quantityUpdate();
+      props.quantityUpdate(item.productID, price, obj);
     }
   };
 
@@ -215,7 +186,7 @@ const ShoppingCartItem = (props) => {
               {(xs + s + m + l + xl) * item.pricePerUnit}
             </div>
 
-            {isSizesOpen && item.sizes.xs.isAvailable && (
+            {isSizesOpen && productDetail.sizes.xs.isAvailable && (
               <div className="pb-4 m-auto col-span-5 w-full flex flex-1 lg:flex-row">
                 <div className="m-auto my-auto flex lg:flex-row justify-center">
                   <p className="mr-1 lg:mr-2 text-sm my-auto">XS :</p>
@@ -235,15 +206,17 @@ const ShoppingCartItem = (props) => {
                   </p>{" "}
                   <button
                     onClick={() => {
-                      setXs(xs + 1);
-                      incrementTot(xs, item.pricePerUnit, "increase", "xs");
+                      if (xs < xsLimit) {
+                        setXs(xs + 1);
+                        incrementTot(xs, item.pricePerUnit, "increase", "xs");
+                      }
                     }}
                     className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                   >
                     +
                   </button>
                 </div>
-                {isSizesOpen && item.sizes.s.isAvailable && (
+                {isSizesOpen && productDetail.sizes.s.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">S :</p>
                     <button
@@ -262,8 +235,10 @@ const ShoppingCartItem = (props) => {
                     </p>{" "}
                     <button
                       onClick={() => {
-                        setS(1 + s);
-                        incrementTot(s, item.pricePerUnit, "increase", "s");
+                        if (s < sLimit) {
+                          setS(1 + s);
+                          incrementTot(s, item.pricePerUnit, "increase", "s");
+                        }
                       }}
                       className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                     >
@@ -271,7 +246,7 @@ const ShoppingCartItem = (props) => {
                     </button>
                   </div>
                 )}
-                {isSizesOpen && item.sizes.m.isAvailable && (
+                {isSizesOpen && productDetail.sizes.m.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">M :</p>
                     <button
@@ -290,8 +265,10 @@ const ShoppingCartItem = (props) => {
                     </p>{" "}
                     <button
                       onClick={() => {
-                        setM(1 + m);
-                        incrementTot(m, item.pricePerUnit, "increase", "m");
+                        if (m < mLimit) {
+                          setM(1 + m);
+                          incrementTot(m, item.pricePerUnit, "increase", "m");
+                        }
                       }}
                       className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                     >
@@ -300,7 +277,7 @@ const ShoppingCartItem = (props) => {
                   </div>
                 )}
 
-                {isSizesOpen && item.sizes.l.isAvailable && (
+                {isSizesOpen && productDetail.sizes.l.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">L :</p>
                     <button
@@ -319,8 +296,10 @@ const ShoppingCartItem = (props) => {
                     </p>{" "}
                     <button
                       onClick={() => {
-                        setL(1 + l);
-                        incrementTot(l, item.pricePerUnit, "increase", "l");
+                        if (l < lLimit) {
+                          setL(1 + l);
+                          incrementTot(l, item.pricePerUnit, "increase", "l");
+                        }
                       }}
                       className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                     >
@@ -329,7 +308,7 @@ const ShoppingCartItem = (props) => {
                   </div>
                 )}
 
-                {isSizesOpen && item.sizes.xl.isAvailable && (
+                {isSizesOpen && productDetail.sizes.xl.isAvailable && (
                   <div className="m-auto my-auto flex flex-row justify-center">
                     <p className="mr-1 lg:mr-2 text-sm my-auto">XL :</p>
                     <button
@@ -348,8 +327,10 @@ const ShoppingCartItem = (props) => {
                     </p>{" "}
                     <button
                       onClick={() => {
-                        setXl(1 + xl);
-                        incrementTot(xl, item.pricePerUnit, "increase", "xl");
+                        if (xl < xlLimit) {
+                          setXl(1 + xl);
+                          incrementTot(xl, item.pricePerUnit, "increase", "xl");
+                        }
                       }}
                       className="bg-blue-500 text-xl font-bold h-8 w-8 rounded-md lg:ml-2"
                     >
@@ -359,19 +340,23 @@ const ShoppingCartItem = (props) => {
                 )}
               </div>
             )}
+            {/* <div className="m-auto my-auto flex flex-row justify-center">
+              <p className="bg-red-200 mr-1 lg:mr-2 text-sm my-auto">
+                MAX LIMIT
+              </p>
+            </div> */}
           </div>
 
-          {/* Remove items from shopping cart */}
-          <button
+          {/* <button
             className="rounded-full h-6 w-5 bg-red-600 text-white font-medium flex justify-center items-center mt-12 ml-2 my-auto"
             onClick={remove}
           >
             X
-          </button>
+          </button> */}
         </div>
       )}
     </div>
   );
 };
 
-export default ShoppingCartItem;
+export default EditOrderItem;

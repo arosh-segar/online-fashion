@@ -1,8 +1,19 @@
 import "./index.css";
-import InventoryDashboard from "./components/inventory/InventoryDashboard.jsx";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import Login from "./components/Login";
+import SupplierDashboard from "./components/supplier/SupplierDashboard";
 
 function App() {
-  return <InventoryDashboard />;
+  return (
+    <Router>
+      <SupplierDashboard />
+    </Router>
+  );
 }
 
 export default App;
