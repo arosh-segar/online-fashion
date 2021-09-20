@@ -7,17 +7,7 @@ const Product = (props) => {
   const [products, setproducts] = useState([]);
 
   useEffect(() => {
-    // axios;
-    // .get(`${API_URL}/inventory`)
-    // .then((response) => {
-    //   setproducts(response.data);
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
-
     setproducts(props.products);
-    console.log("data: ", props.products);
   }, []);
   return (
     <section class="bg-yellow-300 h-screen">

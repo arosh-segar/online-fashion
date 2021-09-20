@@ -41,15 +41,17 @@ const StockRequests = () => {
                 </option>
                 <option value="pending">Pending</option>
                 <option value="accepted">Accepted</option>
+                <option value="dispatched">Dispatched</option>
               </select>
             </div>
           </div>
           <div className="flex justify-center">
-            <div className="grid grid-cols-5 sm:grid-cols-4 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
+            <div className="grid grid-cols-5 sm:grid-cols-5 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
               <div className="p-3">PRODUCT CODE</div>
               <div className="p-3">PRODUCT NAME</div>
               <div className="p-3">REQUESTED QUANTITY</div>
               <div className="p-3">STATUS</div>
+              <div className="p-3">ACTION</div>
             </div>
           </div>
         </div>

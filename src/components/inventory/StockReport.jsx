@@ -17,7 +17,6 @@ const StockReport = () => {
       .get(`${API_URL}/inventory/stockRequests`)
       .then((response) => {
         setStockRequests(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -60,7 +59,7 @@ const StockReport = () => {
   };
 
   const acceptedTotal = stockRequests.reduce(function (prev, current) {
-    if (current.status === "accepted") {
+    if (current.status === "received") {
       const totalQty = calculateTotalQty(current);
 
       let totalPrice = calculateTotalPrice(current, totalQty);
@@ -97,14 +96,17 @@ const StockReport = () => {
       width: "100%",
     },
     section: {
-      margin: 10,
+      marginHorizontal: 10,
       padding: 10,
+      marginTop: "10px",
       textAlign: "center",
-      fontSize: "10px",
+      fontSize: "12px",
+      textDecoration: "underline",
     },
     mainTitle: {
       textAlign: "center",
-      fontSize: "20px",
+      fontSize: "15px",
+      fontWeight: 700,
       marginTop: "20px",
       gridTemplateColumns: "auto auto auto",
     },
@@ -115,7 +117,7 @@ const StockReport = () => {
       justifyContent: "center",
       paddingLeft: 40,
       paddingRight: 40,
-      marginBottom: 10,
+      fontSize: 5,
     },
     block: {
       width: "25%",
@@ -127,7 +129,7 @@ const StockReport = () => {
       fontSize: "10px",
       paddingLeft: 20,
       paddingRight: 20,
-      marginTop: 5,
+      marginTop: 7,
     },
     total: {
       textAlign: "right",
@@ -135,6 +137,13 @@ const StockReport = () => {
       marginRight: 85,
       marginTop: 10,
       marginBottom: 10,
+    },
+    border: {
+      borderBottom: "1px solid black",
+      marginLeft: "auto",
+      marginRight: "auto",
+      width: "80%",
+      height: "10px",
     },
   });
   return (
@@ -144,7 +153,7 @@ const StockReport = () => {
           <Text>Summary of received stocks</Text>
 
           <View style={styles.section}>
-            <Text>Summary of received stocks</Text>
+            <Text>Summary of pending stock requests</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.block}>Product Code</Text>
@@ -152,6 +161,7 @@ const StockReport = () => {
             <Text style={styles.block}>Total Quantity</Text>
             <Text style={styles.block}>Total Cost Per Product</Text>
           </View>
+
           {stockRequests.map((stockRequest) => (
             <>
               {stockRequest.status === "pending" && (
@@ -176,15 +186,24 @@ const StockReport = () => {
               )}
             </>
           ))}
+          <View style={styles.border}>
+            <Text></Text>
+          </View>
           <View style={styles.total}>
             <Text>Total Cost = {pendingTotal}.00</Text>
           </View>
           <View style={styles.section}>
-            <Text>Summary of received stocks</Text>
+            <Text>Summary of received stock requests</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.block}>Product Code</Text>
+            <Text style={styles.block}>Product Name</Text>
+            <Text style={styles.block}>Total Quantity</Text>
+            <Text style={styles.block}>Total Cost Per Product</Text>
           </View>
           {stockRequests.map((stockRequest) => (
             <>
-              {stockRequest.status === "accepted" && (
+              {stockRequest.status === "received" && (
                 <View style={styles.row}>
                   <Text style={styles.blockData}>
                     {stockRequest._id.substring(17, 23).toUpperCase()}
@@ -206,6 +225,9 @@ const StockReport = () => {
               )}
             </>
           ))}
+          <View style={styles.border}>
+            <Text></Text>
+          </View>
           <View style={styles.total}>
             <Text>Total Cost = {acceptedTotal}.00</Text>
           </View>

@@ -3,6 +3,7 @@ const {
   getAllStocks,
   deleteStockById,
   updateStockById,
+  editStockQuantityById,
 } = require("../dal/stock.dao");
 
 const createStock = async ({
@@ -63,4 +64,14 @@ const modifyStock = async (
   return await updateStockById(id, stock);
 };
 
-module.exports = { createStock, getStocks, deleteStock, modifyStock };
+const updateStockQuantity = async (id, sizes) => {
+  return await editStockQuantityById(id, sizes);
+};
+
+module.exports = {
+  createStock,
+  getStocks,
+  deleteStock,
+  modifyStock,
+  updateStockQuantity,
+};

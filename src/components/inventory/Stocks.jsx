@@ -14,6 +14,7 @@ const Stocks = () => {
       .get(`${API_URL}/inventory`)
       .then((response) => {
         setStocks(response.data);
+        console.log(response.data);
         setIsStockLoading(false);
       })
       .catch((error) => {

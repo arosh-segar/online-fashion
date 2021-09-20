@@ -10,40 +10,78 @@ import Select from "react-select";
 const PurchaseOrders = () =>{
 
 
-    const [suppliers,setSuppliers] = useState([])
+    const [orders,setOrders] = useState([])
+    const [id,setID] = useState("")
+
     const [openAdd, setAdd] = useState(false);
     const onOpenAddModal = () => setAdd(true);
     const onCloseAddModal = () => setAdd(false);
+
     const [filter,setFilter] = useState("ALL")
 
 
-    // useEffect(()=>{
-    //
-    //     axios.get(`${API_URL}/supplier/getRequests`)
-    //         .then((response)=>{
-    //             console.log(response.data)
-    //             setSuppliers(response.data)
-    //         })
-    //         .catch((error)=>{
-    //             console.log(error)
-    //         })
-    //
-    // },[])
+    useEffect(()=>{
+
+      getOrders()
+
+    },[openAdd])
+
+
+    const generateID = ()=>{
+
+        return `P${orders.length+1}${Math.floor(Math.random()*10)}`
+
+    }
+
+    const getOrders = () => {
+
+        axios.get(`${API_URL}/supplier/getOrders`)
+            .then((response)=>{
+                setOrders(response.data)
+                setID(generateID())
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+
+    }
+
+
+    const deleteOrder = (id)=>{
+
+        axios.delete(`${API_URL}/supplier/deleteOrder/${id}`)
+            .then(response =>{
+                setOrders(orders.filter(order => order.id != id))
+            }).catch(e =>{
+            console.log(e)
+        })
+
+    }
+
+    const editOrder = (order) =>{
+
+        axios.patch(`${API_URL}/supplier/updateOrder/${order.id}`,order)
+            .then(response => {
+
+                console.log(response.data)
+                let promise = new Promise((resolve ,reject)=>{
+                    resolve(getOrders())
+                })
+
+                promise.then(()=>{
+                    console.log(orders)
+                })
+
+            })
+            .catch(e => {
+                console.log(e.data)
+            })
+    }
 
     const options =[
         {value:"ALL",label:"ALL"},
-        {value:"pending",label:"Pending"},
-        {value:'received',label:"Received"}
-    ]
-
-    const orders = [
-        {id:10,supplierID:'S121',requestID:[101,102],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
-        {id:11,supplierID:'S11',requestID:[131,104],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
-        {id:12,supplierID:'S23',requestID:[103],status:"pending",orderedDate:"20/08/2021",deliveredDate:"-"},
-        {id:13,supplierID:'S24',requestID:[105],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"},
-        {id:14,supplierID:'S15',requestID:[103,109],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"},
-        {id:15,supplierID:'S55',requestID:[100,112],status:"received",orderedDate:"20/08/2021",deliveredDate:"21/08/2021"}
-
+        {value:"Pending",label:"Pending"},
+        {value:'Received',label:"Received"}
     ]
 
     return(
@@ -66,13 +104,14 @@ const PurchaseOrders = () =>{
             </div>
             <div className="hidden sm:block pt-10 pb-32 h-screen">
                 <div className="flex justify-center">
-                    <div className="grid grid-cols-5 sm:grid-cols-7 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
+                    <div className="grid grid-cols-6 sm:grid-cols-8 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
                         <div className="p-3">ORDER ID</div>
                         <div className="p-3">SUPPLIER ID</div>
                         <div className="p-3">REQUEST ID</div>
                         <div className="p-3">STATUS</div>
                         <div className="p-3">ORDERED DATE</div>
                         <div className="p-3">DELIVERED DATE</div>
+                        <div className="p-3">Amount(Rs.)</div>
                         <div className="p-3">ACTIONS</div>
                     </div>
                 </div>
@@ -82,15 +121,26 @@ const PurchaseOrders = () =>{
                 >
                     {orders.map(order => {
                         if(filter=="ALL"){
-                            return <PurchaseOrder order={order}/>
+                            return <PurchaseOrder
+                                    key={order._id}
+                                    order={order}
+                                    editOrder = {editOrder}
+                                    deleteOrder={deleteOrder}
+                                   />
                         }else if(order.status===filter){
-                            return <PurchaseOrder order={order}/>
+                            return <PurchaseOrder
+                                    key={order._id}
+                                    order={order}
+                                    editOrder = {editOrder}
+                                    deleteOrder={deleteOrder}
+                                    />
                         }
                     })}
                 </div>
             </div>
             <AddOrder
              openAdd={openAdd}
+             id={id}
              onCloseAdd={onCloseAddModal}
             />
         </div>

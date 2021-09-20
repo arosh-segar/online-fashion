@@ -3,16 +3,16 @@ const ObjectID = require('mongodb').ObjectId;
 
 
 setTimeout(async ()=>{
-        purchaseOrder =await require('../utils/connection').db('OnlineFashionDB').collection('order')
+        purchaseOrder =await require('../utils/connection').db('OnlineFashionDB').collection('purchaseOrder')
     }
     ,3000)
 
 
 
-const saveOrder = async ({id,items,date}) => {
+const saveOrder = async ({id,supplier,items,status,orderedDate,deliveredDate,amount}) => {
 
 
-    const result = await purchaseOrder.insertOne({id,items,date})
+    const result = await purchaseOrder.insertOne({id,supplier,items,status,orderedDate,deliveredDate,amount})
     return result
 
 }
@@ -23,10 +23,10 @@ const removeOrder = async (id) =>{
 
 }
 
-const editOrder = async ({id,name,address,phoneNo,email}) =>{
+const editOrder = async ({id,supplier,items,status,deliveredDate,amount}) =>{
 
+    return await purchaseOrder.updateOne({id:id},{$set:{supplier:supplier,items:items,status:status,deliveredDate:deliveredDate,amount:amount}})
 
-    return await purchaseOrder.replaceOne({id:id},{id,name,address,phoneNo,email})
 
 }
 

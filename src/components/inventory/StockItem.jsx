@@ -10,7 +10,7 @@ const StockItem = (props) => {
   const [openDelete, setOpen] = useState(false);
   const onOpenDeleteModal = () => setOpen(true);
   const onCloseDeleteModal = () => setOpen(false);
-  /* Delete Modal variables */
+  /* Edit Modal variables */
   const [openEdit, setEdit] = useState(false);
   const onOpenEditModal = () => setEdit(true);
   const onCloseEditModal = () => setEdit(false);
@@ -19,8 +19,8 @@ const StockItem = (props) => {
     <>
       {/* web view */}
       {view === "web" && (
-        <div className="flex justify-center font-medium">
-          <div className="grid gap-5 grid-cols-5 sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
+        <div className="flex justify-center">
+          <div className="grid grid-cols-5 my-auto sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
             <div className="pt-4 pb-4 m-auto">{productCode}</div>
             <div className="pt-4 pb-4 m-auto hidden sm:block">
               <img
@@ -31,11 +31,15 @@ const StockItem = (props) => {
             </div>
             <div className="pt-4 pb-4 m-auto">{productName}</div>
             <div className="pt-4 pb-4 m-auto text-center font-normal">
-              {sizes.xs && <p>XS - {sizes.xs.xsSizeAvailableQty}</p>}
-              {sizes.s && <p>S - {sizes.s.sSizeAvailableQty}</p>}
-              {sizes.m && <p>M - {sizes.m.mSizeAvailableQty}</p>}
-              {sizes.l && <p>L - {sizes.l.lSizeAvailableQty}</p>}
-              {sizes.xl && <p>XL - {sizes.xl.xlSizeAvailableQty}</p>}
+              {sizes.xs.isAvailable && (
+                <p>XS - {sizes.xs.xsSizeAvailableQty}</p>
+              )}
+              {sizes.s.isAvailable && <p>S - {sizes.s.sSizeAvailableQty}</p>}
+              {sizes.m.isAvailable && <p>M - {sizes.m.mSizeAvailableQty}</p>}
+              {sizes.l.isAvailable && <p>L - {sizes.l.lSizeAvailableQty}</p>}
+              {sizes.xl.isAvailable && (
+                <p>XL - {sizes.xl.xlSizeAvailableQty}</p>
+              )}
             </div>
             <div className="pt-4 pb-4 m-auto">{reorderQty}</div>
             <div className="flex flex-col justify-center items-center mr-2">
