@@ -1,6 +1,6 @@
 const { saveVehicle, getVehicle,editVehicle,removeVehicle} = require("../dal/delivery.dao");
  const {saveDeliveryOrder,getOrder} = require("../dal/deliveryOrder.dao");
- const {getOrders,editStatus} = require("../dal/purchaseOrder.dao");
+ const {getOrders,editStatus} = require("../dal/customer.dao");
 
  
 const createVehicle = async({vechileNumber,vechileBrand,driverName})=>{

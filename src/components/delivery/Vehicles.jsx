@@ -34,7 +34,8 @@ const Vehicles = () =>{
 
     axios.delete(`${API_URL}/delivery/deleteVehicle/${vechileNumber}`)
         .then(response =>{
-            console.log("delted")
+             
+            alert("Successfully Deleted")
         }).catch(e =>{
             console.log(e)
     })

@@ -13,7 +13,7 @@ const AssignVehicle = (props) => {
     const [orderDate ] = useState(props.orders.purchaseDate);
     const [deliveryDate, setDeliveryDate] = useState("");
     const [location] = useState(props.orders.deliveryAddress);
-    const [status, setStatus] = useState("");
+     
     const [vehicles,setVehicles] = useState([]);
     const [vehicleNumber,setVehicleNumber] = useState("");
    
@@ -55,7 +55,7 @@ const AssignVehicle = (props) => {
             location,
             vehicleNumber
           }
-          setStatus("confirmed")
+          
 
         axios.post(`${API_URL}/delivery/addDeliveryOrders`,Order)
             .then(response =>{
@@ -68,13 +68,13 @@ const AssignVehicle = (props) => {
                  }
                   axios.put(`${API_URL}/delivery/updateStatus/${_id}`,data)
                       .then(response =>{
-                          console.log(response.data)
+                           
                         })
                       .catch(e=>{
                           console.log(e.data)
                       })
 
-                alert("Successfully Added")
+                alert("Successfully Assigned")
                 
             })
             .catch(e=>{
@@ -99,8 +99,8 @@ const AssignVehicle = (props) => {
                     >
                             <div class="w-full px-3 mt-10 mb-6 md:mb-0">
                                 <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
-                                    for="grid-first-name"  
+                                    class="block uppercase tracking-wide  text-gray-700 text-xs font-semibold mb-2"
+                                      
                                 >
                                    Vehicle Number
                                 </label>

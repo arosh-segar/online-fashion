@@ -31,12 +31,12 @@ const Order = (props) =>{
                 <div className="pt-2 pb-2 sm:pt-4 sm:pb-4 mr-2">
                   <button className="sm:text-xs md:text-sm sm:pt-2 sm:pr-4 sm:pl-4 sm:pb-2 mb-2 w-full rounded-md bg-blue-600"
                   onClick={onOpenProduct}>
-                    <i className="fa fa-pencil mr-1 md:mr-3 transition duration-150 ease-in-out"></i>
+                    <i className="fa fa-eye mr-1 md:mr-3 transition duration-150 ease-in-out"></i>
                     View Product
                   </button>
                   <button className="sm:text-xs md:text-sm sm:pt-2 sm:pr-2 sm:pl-2 sm:pb-2 w-full rounded-md bg-red-600"
                     onClick={onOpenAssign} disabled={order.status == "confirmed" ? true : false}>
-                    <i className="fa fa-trash mr-1 md:mr-3"></i>
+                    <i className="fa fa-bus mr-1 md:mr-3"></i>
                     Assign Vehicle
                   </button>
                 </div>

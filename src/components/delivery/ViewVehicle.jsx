@@ -60,7 +60,7 @@ const ViewVehicle = (props) => {
                                     
                                     value={vechileNumber}
                                     onChange={e=>{setVechileNumber(e.target.value)}}
-                                />
+                                disabled/>
                                 
                             </div>
                             
@@ -78,7 +78,7 @@ const ViewVehicle = (props) => {
                                     
                                     value={vechileBrand}
                                     onChange={e=>{setVechileBrand(e.target.value)}}
-                                />
+                                    disabled/>
                                  
                             </div>
                             

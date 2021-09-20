@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Page,
   Text,
@@ -7,9 +7,7 @@ import {
   StyleSheet,
   PDFViewer,
 } from "@react-pdf/renderer";
-import { API_URL } from "../../constants";
-import axios from "axios";
-
+ 
 const DeliveryReport = (props) => {
    
     const [orders] = useState(props.location.state.order)
@@ -45,19 +43,20 @@ const DeliveryReport = (props) => {
       justifyContent: "center",
       paddingLeft: 40,
       paddingRight: 40,
-      marginBottom: 10,
+      marginBottom: 5,
+      marginTop:10
     },
     block: {
-      width: "25%",
-      fontSize: "12px",
-      padding: 20,
+      width: "30%",
+      fontSize: "10px",
+      padding: 10,
     },
     blockData: {
-      width: "25%",
+      width: "35%",
       fontSize: "10px",
-      paddingLeft: 20,
-      paddingRight: 20,
-      marginTop: 5,
+      paddingLeft: 10,
+      paddingRight: 10,
+       
     },
     total: {
       textAlign: "right",
@@ -71,11 +70,7 @@ const DeliveryReport = (props) => {
     <PDFViewer style={styles.pdf} className="h-screen">
       <Document>
         <Page style={styles.mainTitle}>
-          <Text>Summary of deliverd orders</Text>
-
-          <View style={styles.section}>
-            <Text>Summary of deliverd orders</Text>
-          </View>
+          <Text>Summary of {search ? search : "Delivery"} </Text>
           <View style={styles.row}>
             <Text style={styles.block}>DELIVERY ID</Text>
             <Text style={styles.block}>ORDER ID</Text>

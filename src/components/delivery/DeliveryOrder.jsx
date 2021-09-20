@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import DeliveryReport from './DeliveryReport' 
-import {Link} from 'react-router-dom'
+ 
 const DeliveryOrder = (props) =>{
 
     const [d_order] = useState(props.d_order)

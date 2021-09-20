@@ -11,15 +11,15 @@ const ViewProduct = (props) => {
 
     return (
         <div>
-            <Modal open={openProduct} onClose={onCloseProduct} center>
-                <div className="p-5 w-200 md:w-full">
-                    <h2 className="text-center font-semibold font-sans">Products</h2>
+            <Modal open={openProduct} onClose={onCloseProduct} center >
+                <div className="p-5 w-96 h-40" >
+                    <h2 className="text-center font-semibold font-sans mb-5">Products</h2>
                    
                         {products.map(product =>
-                          <p className="text-center mt-5"> {product.productName}</p>
+                          <p className="text-left mt-2"> {product.productName}</p>
                         )}
                     
-                    <h2 className="text-right font-semibold font-sans">Total :{total}</h2>
+                    <h2 className="text-right font-semibold font-sans mt-6 ml-8">Total :{total}</h2>
                 </div>
             </Modal>
         </div>

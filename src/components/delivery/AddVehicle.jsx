@@ -22,9 +22,7 @@ const AddVehicle = (props) => {
       }
 
       axios.post(`${API_URL}/delivery/addVehicle`, Vehicle)
-          .then(response => {
-              console.log(response.data)
-               
+          .then(response => { 
               onCloseAdd()
               alert("Successfully added")
           })
@@ -61,7 +59,7 @@ const AddVehicle = (props) => {
                                     required/>
                                    
                                 </div>
-                                {/* Name */}
+                                 
                                 <div class="w-full px-3 mt-3 mb-6 md:mb-0">
                                     <label
                                         class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
@@ -80,7 +78,7 @@ const AddVehicle = (props) => {
                                         required/>
                                      
                                 </div>
-                                {/* Address */}
+                                 
                                 <div class="w-full px-3 mt-3 mb-6 md:mb-0">
                                     <label
                                         class="block uppercase tracking-wide text-gray-700 text-xs font-semibold mb-2"
