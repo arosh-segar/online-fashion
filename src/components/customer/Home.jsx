@@ -34,7 +34,7 @@ export default class Registration extends Component {
 
   render() {
     return (
-      <div>
+      <div className="bg-blue-100">
         <Slideshow />
 
         <br />
@@ -69,7 +69,7 @@ export default class Registration extends Component {
             </h2>
             <br />
             <br />
-            <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-6 gap-y-10 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-4 lg:gap-x-5 lg:gap-y-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-6 gap-y-10 md:grid-cols-3 md:gap-6 lg:grid-cols-3 lg:gap-4 lg:gap-x-5 lg:gap-y-10">
               <div class="max-w-xs w-full mx-auto overflow-hidden bg-gray-900 rounded-lg shadow-lg dark:bg-gray-800 hover:shadow-2xl">
                 <img
                   class="bg-contain bg-center w-full h-50"
@@ -127,26 +127,7 @@ export default class Registration extends Component {
                       class="px-2 w-full py-2 text-xs font-semibold text-white text-center uppercase transition-colors duration-200 transform bg-blue-500 rounded hover:bg-blue-600 focus:bg-gray-400 focus:outline-none"
                       to={"/customer/products"}
                     >
-                      Boys' Wear
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <div class="max-w-xs w-full mx-auto overflow-hidden bg-gray-900 rounded-lg shadow-lg dark:bg-gray-800 hover:shadow-2xl">
-                <img
-                  class="bg-contain bg-center w-full h-58"
-                  src={babies2}
-                  alt="Babies' Wear"
-                />
-                <div className="bg-gray-900 pb-2">
-                  <div class="flex items-center justify-center px-4 py-2"></div>
-                  <div class="flex items-center justify-between px-4 py-2">
-                    <Link
-                      class="px-2 w-full py-2 text-xs font-semibold text-white text-center uppercase transition-colors duration-200 transform bg-blue-500 rounded hover:bg-blue-600 focus:bg-gray-400 focus:outline-none"
-                      to={"/customer/products"}
-                    >
-                      Babies' Wear
+                      Kids' Wear
                     </Link>
                   </div>
                 </div>

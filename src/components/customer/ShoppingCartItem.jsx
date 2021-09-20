@@ -26,8 +26,7 @@ const ShoppingCartItem = (props) => {
   useEffect(() => {
     // props.handleCartTotal();
     setItem(props.item);
-
-    for (let x of qty) {
+    for (let x of props.qty) {
       if (x._id === item._id) {
         setXs(x.size.xs);
         setS(x.size.s);

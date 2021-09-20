@@ -16,6 +16,7 @@ const initialState = {
   cardNumber: "",
   expiry: "",
   cvv: "",
+  todayVal: "",
 };
 
 export default class Registration extends Component {
@@ -35,6 +36,9 @@ export default class Registration extends Component {
     e.preventDefault();
 
     let date = moment().format("DD-MM-YYYY hh:mm:ss");
+    let todayVal = moment().format("MM-YY");
+    this.state.todayVal = todayVal;
+    console.log("todayVal: ", todayVal);
 
     if (this.state.password !== this.state.confirmPassword) {
       alert("Password does not match!");
@@ -157,6 +161,7 @@ export default class Registration extends Component {
                   placeholder="shiv@gmail.com"
                   id="email"
                   name="email"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   value={this.state.email}
                   onChange={this.onChange}
                   required
@@ -206,6 +211,7 @@ export default class Registration extends Component {
                   type="text"
                   placeholder="0751231456"
                   id="phone"
+                  pattern="[0-9]{10}"
                   name="phone"
                   value={this.state.phone}
                   onChange={this.onChange}
@@ -314,6 +320,7 @@ export default class Registration extends Component {
                   class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
                   type="text"
                   placeholder="0000 0000 0000 0000"
+                  patter="/^(?:5[1-5][0-9]{14})$/"
                   id="cardNumber"
                   name="cardNumber"
                   value={this.state.cardNumber}
@@ -344,9 +351,17 @@ export default class Registration extends Component {
                   name="expiry"
                   value={this.state.expiry}
                   onChange={this.onChange}
+                  maxLength="4"
                   required
                 />
               </div>
+              {this.state.expiry < this.state.todayVal ? (
+                <p class="text-red-500 text-sm italic text-center">
+                  Your Card has Expired!
+                </p>
+              ) : (
+                ""
+              )}
 
               <div class="w-full px-3 mt-3 mb-6 md:mb-0">
                 <label
@@ -363,6 +378,7 @@ export default class Registration extends Component {
                   name="cvv"
                   value={this.state.cvv}
                   onChange={this.onChange}
+                  maxLength="4"
                   required
                 />
                 {/* {verifyState.cvv || this.state.cvv.length != 4 ? (
