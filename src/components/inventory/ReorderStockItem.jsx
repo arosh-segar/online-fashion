@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
+import StockRequestModal from "../modals/StockRequestModal";
 
 const ReorderStockItem = (props) => {
   const { _id, productName, sizes, reorderQty } = props.reorderStock;
   const productCode = _id.substring(17, 23).toUpperCase();
   const view = props.view;
+  /* Stock purchase Modal variables */
+  const [openStockRequestModal, setOpenStockRequestModal] = useState(false);
+  const onOpenStockRequestModal = () => setOpenStockRequestModal(true);
+  const onCloseStockRequestModal = () => setOpenStockRequestModal(false);
 
   return (
     <>
@@ -36,11 +41,20 @@ const ReorderStockItem = (props) => {
               )}
             </div>
             <div className="pt-4 pb-4 m-auto">{reorderQty}</div>
-            <div className="pt-4 pb-4 mr-2">
-              <button className="text-xs pt-2 pb-2 md:pt-4 md:pb-4 w-full md:w-10/12 rounded-md bg-blue-600">
+            <div className="pt-4 pb-4 mr-2 my-auto">
+              <button
+                onClick={onOpenStockRequestModal}
+                className="text-xs pt-2 pb-2 md:pt-4 md:pb-4 w-full md:w-10/12 rounded-md bg-blue-600"
+              >
                 <i className="fa fa-paper-plane mr-3 transition duration-150 ease-in-out"></i>
                 RE-ORDER
               </button>
+              {/* Stock Request Modal component */}
+              <StockRequestModal
+                openStockRequestModal={openStockRequestModal}
+                onCloseStockRequestModal={onCloseStockRequestModal}
+                reorderStock={props.reorderStock}
+              />
             </div>
           </div>
         </div>

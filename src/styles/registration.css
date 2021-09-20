@@ -1,0 +1,92 @@
+.SPM-Registration {
+	padding: 16px;
+	background-color: white;
+	margin-top: 5%;
+	margin-left: 25%;
+	margin-right: 25%;
+}
+
+.SPM-heading {
+	margin-top: 0%;
+	color: #00009b;
+	text-align: center;
+	font-size: 34px;
+	font-style: italic;
+}
+
+.SPM-heading:hover {
+	font-size: 36px;
+	color: #6cb6ff;
+}
+  .hrStyles {
+    border-top: 2px solid #6cb6ff;
+    width: 100%;
+  }
+  
+  .hrStyles:hover {
+    border-top: 2px solid #9999ff;
+  }
+
+.SPM-reg-input 
+{
+	width: 90%;
+	font-family: Arial, Helevetica, sans-serif;
+	padding: 15px;
+	display: inline-block;
+	border: none;
+	background: #e6e6ff;
+}
+
+.SPM-reg-input:focus
+	{
+	background-color: #d5eaff;
+	outline: none;
+}
+
+.SPM-reg-input:hover
+	{
+	background-color: #d5eaff;
+	outline: none;
+}
+
+.SPM-reg-label {
+	font-style: italic;
+	font-size: 20px;
+	font-weight: bold;
+	color: #00009b;
+}
+
+.SPM-btn-register {
+	background-color: blue;
+	color: white;
+	padding: 20px 50px;
+	border: none;
+	outline: blue;
+	font-size: 20px;
+	font-style: italic;
+	font-family: "Times New Roman", Times, serif;
+}
+
+.SPM-btn-register:hover {
+	background-color: #6cb6ff;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.SPM-btn-reset {
+	background-color: red;
+	color: white;
+	padding: 20px 70px;
+	border: none;
+	outline: red;
+	margin-left: 10%;
+	font-size: 20px;
+	font-style: italic;
+	font-family: "Times New Roman", Times, serif;
+}
+
+.SPM-btn-reset:hover {
+	background-color: #f892e6;
+	font-style: italic;
+	font-weight: bold;
+}
