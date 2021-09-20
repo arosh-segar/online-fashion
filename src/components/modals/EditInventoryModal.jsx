@@ -16,11 +16,21 @@ const EditInventoryModal = (props) => {
     setOpenResponse(false);
     onCloseEditModal();
   };
-  const [checkXS, setCheckXS] = useState(isNaN(stock.sizes.xs));
-  const [checkS, setcheckS] = useState(stock.sizes.s);
-  const [checkM, setcheckM] = useState(stock.sizes.m);
-  const [checkL, setcheckL] = useState(stock.sizes.l);
-  const [checkXL, setcheckXL] = useState(stock.sizes.xl);
+  const [checkXS, setCheckXS] = useState(
+    stock.sizes.xs.xsSizeAvailableQty > 0 ? true : false
+  );
+  const [checkS, setcheckS] = useState(
+    stock.sizes.s.sSizeAvailableQty > 0 ? true : false
+  );
+  const [checkM, setcheckM] = useState(
+    stock.sizes.m.mSizeAvailableQty > 0 ? true : false
+  );
+  const [checkL, setcheckL] = useState(
+    stock.sizes.l.lSizeAvailableQty > 0 ? true : false
+  );
+  const [checkXL, setcheckXL] = useState(
+    stock.sizes.xl.xlSizeAvailableQty > 0 ? true : false
+  );
   const [productName, setProductName] = useState(stock.productName);
   const [productType, setProductType] = useState(stock.productType);
   const [productCategory, setProductCategory] = useState(stock.productCategory);
@@ -130,15 +140,15 @@ const EditInventoryModal = (props) => {
                   Product Name
                 </label>
                 <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                   type="text"
                   placeholder="NIKE T-shirt"
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
                 />
-                <p class="text-red-500 text-xs italic">
+                {/*  <p class="text-red-500 text-xs italic">
                   Please fill out this field.
-                </p>
+                </p> */}
               </div>
               {/* Product Type */}
               <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -161,9 +171,9 @@ const EditInventoryModal = (props) => {
                   <option value="trousers">Trousers</option>
                   <option value="sports">Sports</option>
                 </select>
-                <p class="text-red-500 text-xs italic">
+                {/*  <p class="text-red-500 text-xs italic">
                   Please fill out this field.
-                </p>
+                </p> */}
               </div>
               {/* Product Category */}
               <div class="w-full px-3 mt-3 mb-6 md:mb-0">
@@ -186,9 +196,9 @@ const EditInventoryModal = (props) => {
                   <option value="women">women</option>
                   <option value="kids">kids</option>
                 </select>
-                <p class="text-red-500 text-xs italic">
+                {/*  <p class="text-red-500 text-xs italic">
                   Please fill out this field.
-                </p>
+                </p> */}
               </div>
               {/* Price per unit */}
               <div class="w-full px-3 mt-10 mb-6 md:mb-0">
@@ -199,15 +209,15 @@ const EditInventoryModal = (props) => {
                   Price per unit
                 </label>
                 <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                   placeholder="1000"
                   type="number"
                   value={pricePerUnit}
                   onChange={(e) => setPricePerUnit(e.target.value)}
                 />
-                <p class="text-red-500 text-xs italic">
+                {/*  <p class="text-red-500 text-xs italic">
                   Please fill out this field.
-                </p>
+                </p> */}
               </div>
               {/* Reorder quantity */}
               <div class="w-full px-3 mt-10 mb-6 md:mb-0">
@@ -218,15 +228,15 @@ const EditInventoryModal = (props) => {
                   Re-order quantity
                 </label>
                 <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                   placeholder="1000"
                   type="number"
                   value={reorderQty}
                   onChange={(e) => setReorderQty(e.target.value)}
                 />
-                <p class="text-red-500 text-xs italic">
+                {/*  <p class="text-red-500 text-xs italic">
                   Please fill out this field.
-                </p>
+                </p> */}
               </div>
               <div class="w-full px-3 mt-10 mb-6 md:mb-0">
                 <label
@@ -255,7 +265,7 @@ const EditInventoryModal = (props) => {
                         Available quantity
                       </label>
                       <input
-                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         type="number"
                         value={xsSizeAvailableQty}
                         onChange={(e) => setXsSizeAvailableQty(e.target.value)}
@@ -283,7 +293,7 @@ const EditInventoryModal = (props) => {
                         Available quantity
                       </label>
                       <input
-                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         type="number"
                         value={sSizeAvailableQty}
                         onChange={(e) => setSSizeAvailableQty(e.target.value)}
@@ -311,7 +321,7 @@ const EditInventoryModal = (props) => {
                         Available quantity
                       </label>
                       <input
-                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         type="number"
                         value={mSizeAvailableQty}
                         onChange={(e) => setMSizeAvailableQty(e.target.value)}
@@ -339,7 +349,7 @@ const EditInventoryModal = (props) => {
                         Available quantity
                       </label>
                       <input
-                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         type="number"
                         value={lSizeAvailableQty}
                         onChange={(e) => setLSizeAvailableQty(e.target.value)}
@@ -367,7 +377,7 @@ const EditInventoryModal = (props) => {
                         Available quantity
                       </label>
                       <input
-                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        class="appearance-none w-4/12 bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         type="number"
                         value={xlSizeAvailableQty}
                         onChange={(e) => setXlSizeAvailableQty(e.target.value)}
@@ -395,9 +405,9 @@ const EditInventoryModal = (props) => {
                     );
                   }}
                 />
-                <p class="text-red-500 text-xs italic">
+                {/*  <p class="text-red-500 text-xs italic">
                   Please select an image
-                </p>
+                </p> */}
               </div>
               {previewProductImage && (
                 <div className="px-4 flex justify-center">

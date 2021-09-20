@@ -1,46 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import StockRequestModal from "../modals/StockRequestModal";
 
 const ReorderStockItem = (props) => {
   const { _id, productName, sizes, reorderQty } = props.reorderStock;
+  const length = props.length;
   const productCode = _id.substring(17, 23).toUpperCase();
   const view = props.view;
+  /* Stock purchase Modal variables */
+  const [openStockRequestModal, setOpenStockRequestModal] = useState(false);
+  const onOpenStockRequestModal = () => setOpenStockRequestModal(true);
+  const onCloseStockRequestModal = () => setOpenStockRequestModal(false);
 
   return (
     <>
       {/* Web view */}
       {view === "web" && (
         <div className="flex justify-center">
-          <div className="grid gap-5 grid-cols-5 sm:grid-cols-5 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
+          <div className="grid grid-cols-5 my-auto sm:grid-cols-5 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
             <div className="pt-4 pb-4 m-auto">{productCode}</div>
             <div className="pt-4 pb-4 m-auto">{productName}</div>
             <div className="pt-4 pb-4 m-auto">
               {parseFloat(sizes.xs.xsSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>XS - {sizes.xs.xsSizeAvailableQty}</p>
-              )}
-              {parseFloat(sizes.s.sSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>S - {sizes.s.sSizeAvailableQty}</p>
-              )}
-              {parseFloat(sizes.m.mSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>M - {sizes.m.mSizeAvailableQty}</p>
-              )}
-              {parseFloat(sizes.l.lSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>L - {sizes.l.lSizeAvailableQty}</p>
-              )}
+                parseFloat(reorderQty) &&
+                sizes.xs.isAvailable && (
+                  <p>XS - {sizes.xs.xsSizeAvailableQty}</p>
+                )}
+              {parseFloat(sizes.s.sSizeAvailableQty) < parseFloat(reorderQty) &&
+                sizes.s.isAvailable && <p>S - {sizes.s.sSizeAvailableQty}</p>}
+              {parseFloat(sizes.m.mSizeAvailableQty) < parseFloat(reorderQty) &&
+                sizes.m.isAvailable && <p>M - {sizes.m.mSizeAvailableQty}</p>}
+              {parseFloat(sizes.l.lSizeAvailableQty) < parseFloat(reorderQty) &&
+                sizes.l.isAvailable && <p>L - {sizes.l.lSizeAvailableQty}</p>}
               {parseFloat(sizes.xl.xlSizeAvailableQty) <
-                parseFloat(reorderQty) && (
-                <p>XL - {sizes.xl.xlSizeAvailableQty}</p>
-              )}
+                parseFloat(reorderQty) &&
+                sizes.xl.isAvailable && (
+                  <p>XL - {sizes.xl.xlSizeAvailableQty}</p>
+                )}
             </div>
             <div className="pt-4 pb-4 m-auto">{reorderQty}</div>
-            <div className="pt-4 pb-4 mr-2">
-              <button className="text-xs pt-2 pb-2 md:pt-4 md:pb-4 w-full md:w-10/12 rounded-md bg-blue-600">
+            <div className="pt-4 pb-4 mr-2 my-auto">
+              <button
+                onClick={onOpenStockRequestModal}
+                className="text-xs pt-2 pb-2 md:pt-4 md:pb-4 w-full md:w-10/12 rounded-md bg-blue-600"
+              >
                 <i className="fa fa-paper-plane mr-3 transition duration-150 ease-in-out"></i>
                 RE-ORDER
               </button>
+              {/* Stock Request Modal component */}
+              <StockRequestModal
+                openStockRequestModal={openStockRequestModal}
+                onCloseStockRequestModal={onCloseStockRequestModal}
+                reorderStock={props.reorderStock}
+                length={length}
+              />
             </div>
           </div>
         </div>

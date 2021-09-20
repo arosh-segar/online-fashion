@@ -5,7 +5,7 @@ setTimeout(() => {
   delivery = require("../utils/connection")
     .db("OnlineFashionDB")
     .collection("delivery");
-}, 10000);
+ }, 10000);
 
 //Add vehicle to the database
  
@@ -34,5 +34,9 @@ const getVehicle = async () =>{
   return results.toArray()
 
 }
+ 
+
+
+
 
 module.exports = { saveVehicle, editVehicle,getVehicle,removeVehicle };

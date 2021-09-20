@@ -6,7 +6,7 @@ import DeleteVehicle from './DeleteVehicle'
 
 const Vehicle = (props) =>{
 
-    const [vehicle,setVehicle] = useState(props.vehicle)
+    const [vehicle] = useState(props.vehicle)
     const [openEdit,setEdit] = useState(false)
     const onOpenEdit = () => setEdit(true)
     const onCloseEdit = () => setEdit(false)
@@ -14,8 +14,10 @@ const Vehicle = (props) =>{
     const [openDelete,setDelete] = useState(false)
     const onOpenDelete = () => setDelete(true)
     const onCloseDelete = () => setDelete(false)
+
+    
     const onDeleteVehicle = ()=>{
-        props.deleteSupplier(props.vehicle.vechileNumber)
+        props.deleteVehicles(vehicle.vechileNumber)
         onCloseDelete()
     }
 
@@ -25,7 +27,7 @@ const Vehicle = (props) =>{
 
         <div>
             <div className="flex justify-center">
-              <div className="grid gap-3 grid-cols-4 sm:grid-cols-4 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
+              <div className="grid gap-3 grid-cols-4 sm:grid-cols-4 w-11/12 sm:w-11/12 lg:w-10/12 mt-3 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
                   <div className="pt-4 pb-4 m-auto">{vehicle.vechileNumber}</div>
                   <div className="pt-4 pb-4 m-auto">{vehicle.vechileBrand}</div>
                   <div className="pt-4 pb-4 m-auto">{vehicle.driverName}</div>

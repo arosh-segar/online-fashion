@@ -23,10 +23,10 @@ const AddStock = () => {
   const [lSizeAvailableQty, setLSizeAvailableQty] = useState("");
   const [xlSizeAvailableQty, setXlSizeAvailableQty] = useState("");
   const [productImage, setProductImage] = useState("");
+  const [isFormCorrect, setIsFormValid] = useState(false);
   const [previewProductImage, setPreviewProductImage] = useState("");
   /* Response Modal variables */
   const [openResponse, setOpenResponse] = useState(false);
-  const onOpenResponseModal = () => setOpenResponse(true);
   const onCloseResponseModal = () => setOpenResponse(false);
 
   const resetValues = () => {
@@ -47,6 +47,42 @@ const AddStock = () => {
     setXlSizeAvailableQty("");
     setProductImage("");
     setPreviewProductImage("");
+  };
+
+  const isFormValid = () => {
+    let isValid = true;
+
+    if (productName.length <= 4) {
+      isValid = false;
+      return false;
+    }
+
+    if (!productType) {
+      isValid = false;
+      return false;
+    }
+
+    if (!productCategory) {
+      isValid = false;
+      return false;
+    }
+
+    if (!pricePerUnit) {
+      isValid = false;
+      return false;
+    }
+
+    if (!reorderQty || Number(reorderQty) > 1000 || Number(reorderQty) < 100) {
+      isValid = false;
+      return false;
+    }
+
+    if (!checkXS && !checkS && !checkM && !checkL && !checkXL) {
+      isValid = false;
+      return false;
+    }
+
+    return isValid;
   };
 
   const handleSubmit = (e) => {
@@ -109,7 +145,6 @@ const AddStock = () => {
     axios
       .post(`${API_URL}/inventory/addStock`, formData)
       .then((response) => {
-        console.log(response);
         setIsLoading(false);
         setOpenResponse(true);
         resetValues();
@@ -140,7 +175,10 @@ const AddStock = () => {
                 type="text"
                 placeholder="NIKE T-shirt"
                 value={productName}
-                onChange={(e) => setProductName(e.target.value)}
+                onChange={(e) => {
+                  setProductName(e.target.value);
+                  setIsFormValid(isFormValid());
+                }}
                 required
               />
               {!productName || productName.length < 5 ? (
@@ -164,7 +202,10 @@ const AddStock = () => {
                 className="p-2 border border-none w-full rounded-lg text-black"
                 style={{ textAlignLast: "center" }}
                 value={productType}
-                onChange={(e) => setProductType(e.target.value)}
+                onChange={(e) => {
+                  setProductType(e.target.value);
+                  setIsFormValid(isFormValid());
+                }}
                 required
               >
                 <option value="" selected>
@@ -192,7 +233,10 @@ const AddStock = () => {
                 className="p-2 border border-none w-full rounded-lg text-black"
                 style={{ textAlignLast: "center" }}
                 value={productCategory}
-                onChange={(e) => setProductCategory(e.target.value)}
+                onChange={(e) => {
+                  setProductCategory(e.target.value);
+                  setIsFormValid(isFormValid());
+                }}
                 required
               >
                 <option value="" selected>
@@ -221,7 +265,10 @@ const AddStock = () => {
                 placeholder="1000"
                 type="number"
                 value={pricePerUnit}
-                onChange={(e) => setPricePerUnit(e.target.value)}
+                onChange={(e) => {
+                  setPricePerUnit(e.target.value);
+                  setIsFormValid(isFormValid());
+                }}
                 required
               />
               {!pricePerUnit && (
@@ -243,7 +290,10 @@ const AddStock = () => {
                 placeholder="1000"
                 type="number"
                 value={reorderQty}
-                onChange={(e) => setReorderQty(e.target.value)}
+                onChange={(e) => {
+                  setReorderQty(e.target.value);
+                  setIsFormValid(isFormValid());
+                }}
                 required
               />
               {!reorderQty || reorderQty > 1000 ? (
@@ -268,7 +318,10 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setCheckXS(!checkXS)}
+                    onClick={() => {
+                      setCheckXS(!checkXS);
+                      setIsFormValid(isFormValid());
+                    }}
                   />
                   <span class="text-sm">XS</span>
                 </label>
@@ -284,7 +337,10 @@ const AddStock = () => {
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       type="number"
                       value={xsSizeAvailableQty}
-                      onChange={(e) => setXsSizeAvailableQty(e.target.value)}
+                      onChange={(e) => {
+                        setXsSizeAvailableQty(e.target.value);
+                        setIsFormValid(isFormValid());
+                      }}
                     />
                   </div>
                   {!xsSizeAvailableQty ||
@@ -303,7 +359,10 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setcheckS(!checkS)}
+                    onClick={() => {
+                      setcheckS(!checkS);
+                      setIsFormValid(isFormValid());
+                    }}
                   />
                   <span class="text-sm">S</span>
                 </label>
@@ -319,7 +378,10 @@ const AddStock = () => {
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       type="number"
                       value={sSizeAvailableQty}
-                      onChange={(e) => setSSizeAvailableQty(e.target.value)}
+                      onChange={(e) => {
+                        setSSizeAvailableQty(e.target.value);
+                        setIsFormValid(isFormValid());
+                      }}
                     />
                   </div>
                   {!sSizeAvailableQty ||
@@ -337,7 +399,10 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setcheckM(!checkM)}
+                    onClick={() => {
+                      setcheckM(!checkM);
+                      setIsFormValid(isFormValid());
+                    }}
                   />
                   <span class="text-sm">M</span>
                 </label>
@@ -353,7 +418,10 @@ const AddStock = () => {
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       type="number"
                       value={mSizeAvailableQty}
-                      onChange={(e) => setMSizeAvailableQty(e.target.value)}
+                      onChange={(e) => {
+                        setMSizeAvailableQty(e.target.value);
+                        setIsFormValid(isFormValid());
+                      }}
                     />
                   </div>
                   {!mSizeAvailableQty ||
@@ -371,7 +439,10 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setcheckL(!checkL)}
+                    onClick={() => {
+                      setcheckL(!checkL);
+                      setIsFormValid(isFormValid());
+                    }}
                   />
                   <span class="text-sm">L</span>
                 </label>
@@ -387,7 +458,10 @@ const AddStock = () => {
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       type="number"
                       value={lSizeAvailableQty}
-                      onChange={(e) => setLSizeAvailableQty(e.target.value)}
+                      onChange={(e) => {
+                        setLSizeAvailableQty(e.target.value);
+                        setIsFormValid(isFormValid());
+                      }}
                     />
                   </div>
                   {!lSizeAvailableQty ||
@@ -405,7 +479,10 @@ const AddStock = () => {
                   <input
                     class="mr-2 leading-tight"
                     type="checkbox"
-                    onClick={() => setcheckXL(!checkXL)}
+                    onClick={() => {
+                      setcheckXL(!checkXL);
+                      setIsFormValid(isFormValid());
+                    }}
                   />
                   <span class="text-sm">XL</span>
                 </label>
@@ -421,7 +498,10 @@ const AddStock = () => {
                       class="appearance-none w-4/12 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       type="number"
                       value={xlSizeAvailableQty}
-                      onChange={(e) => setXlSizeAvailableQty(e.target.value)}
+                      onChange={(e) => {
+                        setXlSizeAvailableQty(e.target.value);
+                        setIsFormValid(isFormValid());
+                      }}
                     />
                   </div>
                 </div>
@@ -451,6 +531,7 @@ const AddStock = () => {
                   setPreviewProductImage(
                     URL.createObjectURL(e.target.files[0])
                   );
+                  setIsFormValid(isFormValid());
                 }}
               />
               {!productImage && (
@@ -480,7 +561,9 @@ const AddStock = () => {
             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
               <button
                 type="submit"
+                onClick={() => isFormValid()}
                 className="w-full rounded-md p-2 mb-5 bg-blue-500"
+                disabled={!isFormCorrect}
               >
                 ADD STOCK
               </button>
