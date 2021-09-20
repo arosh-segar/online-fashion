@@ -1,7 +1,11 @@
 const router = require("express").Router();
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
-const { createVehicle,getAllVehicle,updateVehicle,deleteVehicle } = require("../api/delivery.api");
+const { createVehicle,
+    getAllVehicle,
+    updateVehicle,
+    deleteVehicle,
+    getAllOrders,createDeliveryOrders,updateStatus,getAll_DOrders} = require("../api/delivery.api");
 
 router.post("/addVehicle", async (req, res) => {
 
@@ -48,5 +52,51 @@ router.get("/getVehicle",async (req,res)=>{
     res.status(200).send(updated)
 
 })
+router.get("/getOrders",async (req,res)=>{
+
+
+    let Order = await getAllOrders()
+ 
+    res.status(200).send(Order)
+ 
+ })
+
+ router.post("/addDeliveryOrders", async (req, res) => {
+
+    try{
+
+        let deliveryOrder = req.body
+
+        
+
+        deliveryOrder = createDeliveryOrders(deliveryOrder)
+
+        if(deliveryOrder) {
+            res.status(201).send(deliveryOrder);
+        } else {
+            res.status(502).json({error:"Could not assign vehicle"});
+        }
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+router.put("/updateStatus/:_id",async (req,res)=>{
+
+
+    let updated = await updateStatus(req.params._id,req.body)
+    
+    
+    res.status(200).send(updated)
+
+})
+router.get("/getD_Orders",async (req,res)=>{
+
+
+    let Order = await getAll_DOrders()
+ 
+    res.status(200).send(Order)
+ 
+ })
 
 module.exports = router;

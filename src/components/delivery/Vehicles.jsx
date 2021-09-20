@@ -8,7 +8,8 @@ import AddVehicle from "./AddVehicle";
 const Vehicles = () =>{
 
 
-    const [vehicles,setVehicles] = useState([])
+    const [vehicles,setVehicles] = useState([]);
+    const [search,setSearch] = useState("");
     const [openAdd, setAdd] = useState(false);
     const onOpenAddModal = () => setAdd(true);
     const onCloseAddModal = () => setAdd(false);
@@ -25,7 +26,7 @@ const Vehicles = () =>{
      .catch((error)=>{
         console.log(error)
      })
-     
+      
    },[])
      
     
@@ -33,30 +34,37 @@ const Vehicles = () =>{
 
     axios.delete(`${API_URL}/delivery/deleteVehicle/${vechileNumber}`)
         .then(response =>{
-            console.log("delted")
+             
+            alert("Successfully Deleted")
         }).catch(e =>{
             console.log(e)
     })
 
    }
-
+  
+    
 
     return(
-
+ 
         <div>
-        
             <button
-                className="ml-40 mt-20  bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+                className="ml-40 mt-10  bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                    onClick={onOpenAddModal}  >
                 + ADD VEHICLE
             </button>
-        <div className="hidden sm:block pt-10 pb-10 sm-screen">
+
+            <div class="flex items-center justify-center">
+    <div class="flex border-2 rounded">
+        <input type="text" class="px-4 py-2 w-80" placeholder="Search..."onChange={e => {setSearch(e.target.value)}}/>
+    </div>
+</div>
+        <div className="hidden sm:block pt-3 pb-10 sm-screen">
           <div className="flex justify-center">
-            <div className="grid grid-cols-4 sm:grid-cols-4 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
-              <div className="p-3">Vehicle Number</div>
-              <div className="p-3"> Vehicle Brand</div>
-              <div className="p-3">Driver Name</div>
-                <div className="p-3">Action</div>
+            <div className="grid grid-cols-4 sm:grid-cols-4 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center font-semibold text-sm text-black">
+              <div className="p-3">VEHICLE NUMBER</div>
+              <div className="p-3"> VEHICLE BRAND</div>
+              <div className="p-3">DRIVER NAME</div>
+                <div className="p-3">ACTION</div>
             </div>
           </div>
         </div>
@@ -65,7 +73,14 @@ const Vehicles = () =>{
           style={{ maxHeight: "70vh" }}
         >
 
-          {vehicles.map(vehicle => {
+          {vehicles.filter((value)=>{
+            if(search == ''){
+              return value
+            }
+            else if(value.vechileNumber.toLowerCase().includes(search.toLowerCase())){
+              return value
+            }
+          }).map(vehicle => {
              console.log(vehicle)
             return <Vehicle vehicle={vehicle} key={vehicle._id}  deleteVehicles={deleteVehicles}/>
           })}

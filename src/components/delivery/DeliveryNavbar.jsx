@@ -17,36 +17,36 @@ const DNavbar = () => {
             <Link
               to="/"
               className={`font-bold ${
-                window.location.pathname === "/"
+                window.location.pathname === "/delivery"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
             >
-              Vehicles
+              VEHICLES
             </Link>
           </div>
           <div className="p-4">
             <Link
               to="/orderList"
               className={`font-bold ${
-                window.location.pathname === "/orderList"
+                window.location.pathname === "/delivery/orderList"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
             >
-             OrderList
+             ORDER LIST
             </Link>
           </div>
           <div className="p-4 hidden sm:block">
             <Link
               to="/deliveryList"
               className={`font-bold ${
-                window.location.pathname === "/deliveryList"
+                window.location.pathname === "/delivery/deliveryList"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
             >
-              DeliveryList
+              DELIVERY LIST
             </Link>
           </div>
           
@@ -54,7 +54,7 @@ const DNavbar = () => {
             <Link
               to="/logout"
               className={`font-bold ${
-                window.location.pathname === "/logout"
+                window.location.pathname === "/delivery/logout"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -82,7 +82,7 @@ const DNavbar = () => {
       <div className={`bg-blue-700 ${openMenu ? "" : "hidden"}`}>
         <div
           className={`flex justify-center ${
-            window.location.pathname === "/"
+            window.location.pathname === "/delivery"
               ? "bg-blue-500"
               : "navlink-no-hover"
           }`}
@@ -92,19 +92,19 @@ const DNavbar = () => {
               <Link
                 to="/"
                 className={`font-bold ${
-                  window.location.pathname === "/"
+                  window.location.pathname === "/delivery"
                     ? "navlink-mobile-hover"
                     : "navlink-no-hover"
                 }`}
               >
-                Vehicles
+                VEHICLES
               </Link>
             </div>
           </div>
         </div>
         <div
           className={`flex justify-center ${
-            window.location.pathname === "/orderList"
+            window.location.pathname === "/delivery/orderList"
               ? "bg-blue-500"
               : "navlink-no-hover"
           }`}
@@ -114,19 +114,19 @@ const DNavbar = () => {
               <Link
                 to="/orderList"
                 className={`font-bold ${
-                  window.location.pathname === "/orderList"
+                  window.location.pathname === "/delivery/orderList"
                     ? "navlink-mobile-hover"
                     : "navlink-no-hover"
                 }`}
               >
-               OrderList
+               ORDER LIST
               </Link>
             </div>
           </div>
         </div>
         <div
           className={`flex justify-center ${
-            window.location.pathname === "/deliveryList"
+            window.location.pathname === "/delivery/deliveryList"
               ? "bg-blue-500"
               : "navlink-no-hover"
           }`}
@@ -136,19 +136,19 @@ const DNavbar = () => {
               <Link
                 to="/deliveryList"
                 className={`font-bold ${
-                  window.location.pathname === "/deliveryList"
+                  window.location.pathname === "/delivery/deliveryList"
                     ? "navlink-mobile-hover"
                     : "navlink-no-hover"
                 }`}
               >
-               DeliveryList
+               DELIVERY LIST
               </Link>
             </div>
           </div>
         </div>
         <div
           className={`flex justify-center ${
-            window.location.pathname === "/logout"
+            window.location.pathname === "/delivery/logout"
               ? "bg-blue-500"
               : "navlink-no-hover"
           }`}
@@ -158,7 +158,7 @@ const DNavbar = () => {
               <Link
                 to="/logout"
                 className={`font-bold ${
-                  window.location.pathname === "/logout"
+                  window.location.pathname === "/delivery/logout"
                     ? "navlink-mobile-hover"
                     : "navlink-no-hover"
                 }`}
