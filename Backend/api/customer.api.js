@@ -6,6 +6,7 @@ const {
   deleteOrder,
   getAllOrders,
   getAllStocks,
+  updateStockQty,
 } = require("../dal/customer.dao");
 
 // CUSTOMER COLLECTION
@@ -47,6 +48,11 @@ const getStocks = async () => {
   return await getAllStocks();
 };
 
+// Update Stock Quantity as customer purchases it
+const editStockQty = async (id, sizesObj) => {
+  return await updateStockQty(id, sizesObj);
+};
+
 module.exports = {
   saveCustomer,
   getCustomerByEmail,
@@ -55,4 +61,5 @@ module.exports = {
   deleteOrderByID,
   getOrders,
   getStocks,
+  editStockQty,
 };

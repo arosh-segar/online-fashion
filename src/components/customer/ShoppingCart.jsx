@@ -10,9 +10,10 @@ import "../../styles/customerStyles.css";
 
 const ShoppingCart = (props) => {
   const [cart, setCart] = useState([]);
-  const [qty, setQty] = useState([]);
-  const [confirmOrderStatus, setConfirmOrderStatus] = useState(false);
+  const [qty, setQty] = useState(props.qty);
+  const [orderPlaced, setOrderPlaced] = useState([]);
   const [open, setOpen] = useState(false);
+  const [deliveryAddress, setDeliveryAddress] = useState("");
   const [customerDetails, setCustomerDetails] = useState({
     _id: "",
     address: "",
@@ -27,7 +28,6 @@ const ShoppingCart = (props) => {
     phone: "",
     registrationDate: "",
   });
-  const [deliveryAddress, setDeliveryAddress] = useState("");
 
   useEffect(() => {
     setCart(props.cart);
@@ -37,11 +37,30 @@ const ShoppingCart = (props) => {
     if (customer) {
       customer = JSON.parse(customer);
       setDeliveryAddress(customer.address);
+      let customerObj = {
+        _id: customer._id,
+        address: customer.address,
+        cardName: customer.cardName,
+        cardNumber: customer.cardNumber,
+        expiry: customer.expiry,
+        cvv: customer.cvv,
+        email: customer.email,
+        fname: customer.fname,
+        lname: customer.lname,
+        password: customer.password,
+        phone: customer.phone,
+        registrationDate: customer.registrationDate,
+      };
+      setCustomerDetails(customerObj);
     }
   }, []);
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   // Handling cart items delete
   const handleDelete = (item) => {
@@ -210,8 +229,14 @@ const ShoppingCart = (props) => {
   //   }
   // };
 
-  const changeAddress = (e) => {
+  const changeDetails = (e) => {
     if (e.target.name == "address") setDeliveryAddress(e.target.value);
+    if (e.target.name == "cardName")
+      setCustomerDetails.cardName(e.target.value);
+    if (e.target.name == "cardNumber")
+      setCustomerDetails.cardNumber(e.target.value);
+    if (e.target.name == "expiry") setCustomerDetails.expiry(e.target.value);
+    if (e.target.name == "cvv") setCustomerDetails.cvv(e.target.value);
   };
 
   const confirmOrder = () => {
@@ -232,6 +257,13 @@ const ShoppingCart = (props) => {
       let email = customer.email;
       let address = customer.address;
       setDeliveryAddress(address);
+      // let paymentDetails = {
+      //   cardName: customer.cardName,
+      //   cardNumber: customer.cardNumber,
+      //   expiry: customer.expiry,
+      //   cvv: customer.cvv,
+      // };
+
       let paymentDetails = {
         cardName: customer.cardName,
         cardNumber: customer.cardNumber,
@@ -239,29 +271,24 @@ const ShoppingCart = (props) => {
         cvv: customer.cvv,
       };
 
-      let customerObj = {
-        _id: customer._id,
-        address: customer.address,
-        cardName: customer.cardName,
-        cardNumber: customer.cardNumber,
-        expiry: customer.expiry,
-        cvv: customer.cvv,
-        email: customer.email,
-        fname: customer.fname,
-        lname: customer.lname,
-        password: customer.password,
-        phone: customer.phone,
-        registrationDate: customer.registrationDate,
-      };
-      setCustomerDetails(customerObj);
-
       let orderProductArr = [];
+      setQty(props.qty);
       if (qty.length > 0) {
         for (let x of cart) {
           let product = {};
           let index = cart.indexOf(x);
           let sizes = qty[index];
-          sizes = sizes.size;
+          if (sizes) {
+            sizes = qty[index].size;
+          } else {
+            swal({
+              title:
+                "Quantity of products added to cart is zero, please update products quantity!",
+              text: "",
+              icon: "warning",
+            });
+            return;
+          }
 
           product.productID = x._id;
           product.productName = x.productName;
@@ -284,9 +311,10 @@ const ShoppingCart = (props) => {
         status: "pending",
         customerEmail: email,
         deliveryAddress: deliveryAddress,
+        paymentDetails: paymentDetails,
       };
 
-      if (orderProductArr.length === 0) {
+      if (cart.length === 0) {
         swal({
           title: "Your cart is empty, please add products to place your order!",
           text: "",
@@ -295,14 +323,14 @@ const ShoppingCart = (props) => {
           // window.location = `/customer/`;
         });
       }
-      // if (cart.length > 0 && totalAmount == 0) {
-      //   swal({
-      //     title:
-      //       "Quantity of products added to cart is zero, please update products quantity!",
-      //     text: "",
-      //     icon: "warning",
-      //   });
-      // }
+      if (cart.length > 0 && totalAmount == 0) {
+        swal({
+          title:
+            "Quantity of products added to cart is zero, please update products quantity!",
+          text: "",
+          icon: "warning",
+        });
+      }
 
       if (orderProductArr.length > 0) {
         axios
@@ -313,8 +341,12 @@ const ShoppingCart = (props) => {
               text: "",
               icon: "success",
             }).then(() => {
+              setOrderPlaced(orderProductArr);
+              updateStockQty();
               window.location = `orders`;
             });
+            // setOrderPlaced(orderProductArr);
+            // updateStockQty();
             props.clearCart();
             setCart([]);
             setQty([]);
@@ -324,6 +356,72 @@ const ShoppingCart = (props) => {
             alert("error");
           });
       }
+    }
+  };
+
+  const updateStockQty = () => {
+    for (let x of cart) {
+      let index = cart.indexOf(x);
+      let sizes = props.qty[index];
+      if (sizes) {
+        sizes = props.qty[index].size;
+      }
+
+      let xsDiff = x.sizes.xs.xsSizeAvailableQty - sizes.xs;
+      let xsStatus = true;
+      if (!xsDiff > 0) xsStatus = false;
+
+      let sDiff = x.sizes.s.sSizeAvailableQty - sizes.s;
+      let sStatus = true;
+      if (!sDiff > 0) xsStatus = false;
+
+      let mDiff = x.sizes.m.mSizeAvailableQty - sizes.m;
+      let mStatus = true;
+      if (!mDiff > 0) mStatus = false;
+
+      let lDiff = x.sizes.l.lSizeAvailableQty - sizes.l;
+      let lStatus = true;
+      if (!lDiff > 0) lStatus = false;
+
+      let xlDiff = x.sizes.xl.xlSizeAvailableQty - sizes.xl;
+      let xlStatus = true;
+      if (!xlDiff > 0) xlStatus = false;
+
+      let sizeObj = {
+        xs: {
+          isAvailable: xsStatus,
+          xsSizeAvailableQty: xsDiff,
+        },
+        s: {
+          isAvailable: sStatus,
+          sSizeAvailableQty: sDiff,
+        },
+
+        m: {
+          isAvailable: mStatus,
+          mSizeAvailableQty: mDiff,
+        },
+
+        l: {
+          isAvailable: lStatus,
+          lSizeAvailableQty: lDiff,
+        },
+
+        xl: {
+          isAvailable: xlStatus,
+          xlSizeAvailableQty: xlDiff,
+        },
+      };
+
+      axios
+        .put(`${API_URL}/customer/update-stock-quantity/${x._id}`, sizeObj)
+        .then((response) => {
+          console.log("response:", response);
+        })
+        .catch((e) => {
+          console.log("error", e.data);
+          alert("error");
+        });
     }
   };
 
@@ -390,11 +488,8 @@ const ShoppingCart = (props) => {
           }}
         >
           <h2 className="text-center text-blue-900 text-xl italic">
-            Confirm Delivery Address
+            Confirm Details
           </h2>
-          <br />
-          <br />
-          <br />
           {/* <label className="mr-5 my-auto text-center">
                       SELECT :{" "}
                     </label> */}
@@ -412,7 +507,81 @@ const ShoppingCart = (props) => {
                 id="address"
                 name="address"
                 value={deliveryAddress}
-                onChange={changeAddress}
+                onChange={changeDetails}
+                required
+              />
+            </div>
+
+            <div class="w-full px-3 mt-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-blue-700 text-xs font-semibold mb-2"
+                for="grid-first-name"
+              >
+                Card Holder's Name
+              </label>
+              <input
+                class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
+                id="cardName"
+                type="text"
+                name="cardName"
+                value={customerDetails.cardName}
+                onChange={changeDetails}
+                required
+              />
+            </div>
+
+            <div class="w-full px-3 mt-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-blue-700 text-xs font-semibold mb-2"
+                for="grid-first-name"
+              >
+                Card Number
+              </label>
+              <input
+                class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
+                type="text"
+                id="cardNumber"
+                name="cardNumber"
+                value={customerDetails.cardNumber}
+                onChange={changeDetails}
+                required
+              />
+            </div>
+
+            <div class="w-full px-3 mt-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-blue-700 text-xs font-semibold mb-2"
+                for="grid-first-name"
+              >
+                Card Expiry
+              </label>
+              <input
+                class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
+                type="text"
+                placeholder="MM/YY"
+                id="expiry"
+                name="expiry"
+                value={customerDetails.expiry}
+                onChange={changeDetails}
+                required
+              />
+            </div>
+
+            <div class="w-full px-3 mt-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-blue-700 text-xs font-semibold mb-2"
+                for="grid-first-name"
+              >
+                CVV
+              </label>
+              <input
+                class="appearance-none block w-full bg-purple-100 text-gray-700 border border-indigo-300 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-purple-100"
+                type="text"
+                id="cvv"
+                placeholder="0000"
+                name="cvv"
+                value={customerDetails.cvv}
+                onChange={changeDetails}
                 required
               />
             </div>
@@ -420,7 +589,15 @@ const ShoppingCart = (props) => {
 
           <br />
           <br />
+          <label
+            class="block uppercase tracking-wide text-blue-900 text-base font-semibold mb-2 mr-10 float-right"
+            for="grid-first-name"
+          >
+            Total = {numberWithCommas(props.cartTotal)}.00
+          </label>
           <br />
+          <br />
+
           <button
             class="bg-green-400 opacity-75 hover:opacity-300 text-gray-900 hover:text-gray-100 rounded-full px-10 py-3 font-semibold
                           pull-right"
