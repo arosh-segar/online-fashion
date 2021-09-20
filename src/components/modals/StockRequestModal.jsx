@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "react-responsive-modal";
 import { API_URL } from "../../constants";
 import axios from "axios";
+import ResponseModal from "../modals/ResponseModal";
 
 const StockRequestModal = (props) => {
   const [checkXS, setCheckXS] = useState(false);
@@ -16,7 +17,10 @@ const StockRequestModal = (props) => {
   const [xlRange, setXLRange] = useState(0);
   const { openStockRequestModal, onCloseStockRequestModal } = props;
   const reorderStock = props.reorderStock;
-
+  const length = props.length;
+  /* Response Modal variables */
+  const [openResponse, setOpenResponse] = useState(false);
+  const onCloseResponseModal = () => setOpenResponse(false);
   const refillReorder = () => {
     checkXS &&
       setXSRange(
@@ -44,30 +48,33 @@ const StockRequestModal = (props) => {
       );
   };
 
+  const generateID = () => {
+    return `R${length + 1}${Math.floor(Math.random() * 10)}`;
+  };
+
   const handleSubmit = () => {
     const stockRequest = {
       productID: reorderStock._id,
+      requestID: generateID(),
+      pricePerUnit: reorderStock.pricePerUnit,
       productName: reorderStock.productName,
       sizes: {
         xs: xsRange > 0 ? xsRange : null,
         s: sRange > 0 ? sRange : null,
-        m: mRange > 0 ? sRange : null,
+        m: mRange > 0 ? mRange : null,
         l: lRange > 0 ? lRange : null,
         xl: xlRange > 0 ? xlRange : null,
       },
       status: "pending",
     };
-
     axios
       .post(`${API_URL}/inventory/addStockRequest`, stockRequest)
       .then((response) => {
-        console.log(response);
+        setOpenResponse(true);
       })
       .catch((error) => {
         console.log(error);
       });
-
-    console.log(stockRequest);
   };
   return (
     <Modal
@@ -80,65 +87,70 @@ const StockRequestModal = (props) => {
         <p className="text-center mt-5">{reorderStock.productName}</p>
         <div className="flex flex-row justify-center items-center mt-5">
           {parseFloat(reorderStock.sizes.xs.xsSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setCheckXS(!checkXS)}
-                checked={checkXS}
-              />
-              <span class="text-sm">XS</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.xs.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setCheckXS(!checkXS)}
+                  checked={checkXS}
+                />
+                <span class="text-sm">XS</span>
+              </label>
+            )}
           {parseFloat(reorderStock.sizes.s.sSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setcheckS(!checkS)}
-                checked={checkS}
-              />
-              <span class="text-sm">S</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.s.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setcheckS(!checkS)}
+                  checked={checkS}
+                />
+                <span class="text-sm">S</span>
+              </label>
+            )}
           {parseFloat(reorderStock.sizes.m.mSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setcheckM(!checkM)}
-                checked={checkM}
-              />
-              <span class="text-sm">M</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.m.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setcheckM(!checkM)}
+                  checked={checkM}
+                />
+                <span class="text-sm">M</span>
+              </label>
+            )}
           {parseFloat(reorderStock.sizes.l.lSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setcheckL(!checkL)}
-                checked={checkL}
-              />
-              <span class="text-sm">L</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.l.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setcheckL(!checkL)}
+                  checked={checkL}
+                />
+                <span class="text-sm">L</span>
+              </label>
+            )}
           {parseFloat(reorderStock.sizes.xl.xlSizeAvailableQty) <
-            parseFloat(reorderStock.reorderQty) && (
-            <label class="flex mx-2 items-center text-gray-700 font-semibold">
-              <input
-                class="mr-2 leading-tight"
-                type="checkbox"
-                onClick={() => setcheckXL(!checkXL)}
-                checked={checkXL}
-              />
-              <span class="text-sm">XL</span>
-            </label>
-          )}
+            parseFloat(reorderStock.reorderQty) &&
+            reorderStock.sizes.xl.isAvailable && (
+              <label class="flex mx-2 items-center text-gray-700 font-semibold">
+                <input
+                  class="mr-2 leading-tight"
+                  type="checkbox"
+                  onClick={() => setcheckXL(!checkXL)}
+                  checked={checkXL}
+                />
+                <span class="text-sm">XL</span>
+              </label>
+            )}
         </div>
         <div class="w-full px-3 md:mb-0">
           {checkXS && (
@@ -245,6 +257,13 @@ const StockRequestModal = (props) => {
           >
             SEND STOCK REQUEST
           </button>
+          <ResponseModal
+            heading={"Stock Request"}
+            text={`The stock request has been sent successfully`}
+            color={"#4287f5"}
+            openResponse={openResponse}
+            onCloseResponseModal={onCloseResponseModal}
+          />
         </div>
       </div>
     </Modal>
