@@ -6,15 +6,15 @@ const ProductItem = (props) => {
   const stock = props.stock;
 
   useEffect(() => {
-    stock.sizes.xs && setNoOfSizes(noOfSizes + 1);
-    stock.sizes.s && setNoOfSizes(noOfSizes + 1);
-    stock.sizes.m && setNoOfSizes(noOfSizes + 1);
-    stock.sizes.l && setNoOfSizes(noOfSizes + 1);
-    stock.sizes.xl && setNoOfSizes(noOfSizes + 1);
+    stock.sizes.xs.isAvailable && setNoOfSizes(noOfSizes + 1);
+    stock.sizes.s.isAvailable && setNoOfSizes(noOfSizes + 1);
+    stock.sizes.m.isAvailable && setNoOfSizes(noOfSizes + 1);
+    stock.sizes.l.isAvailable && setNoOfSizes(noOfSizes + 1);
+    stock.sizes.xl.isAvailable && setNoOfSizes(noOfSizes + 1);
   }, []);
 
   return (
-    <div class="max-w-xs w-full mx-auto overflow-hidden bg-red-300 rounded-lg shadow-lg dark:bg-gray-800 hover:shadow-2xl">
+    <div class="max-w-xs w-full mx-auto overflow-hidden bg-blue-300 rounded-lg shadow-lg dark:bg-gray-800 hover:shadow-2xl">
       <img
         class="bg-contain bg-center w-full h-48"
         src={stock.productImageUrl}
