@@ -14,7 +14,13 @@ setTimeout(() => {
     return result
   
   }
+  const getOrder = async () =>{
+
+    const results = await deliveryorder.find({})
+    return results.toArray()
+  
+  }
   
    
 
-  module.exports = { saveDeliveryOrder };  
+  module.exports = { saveDeliveryOrder, getOrder};  

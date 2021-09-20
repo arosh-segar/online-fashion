@@ -27,7 +27,7 @@ const AssignVehicle = (props) => {
 
         axios.get(`${API_URL}/delivery/getVehicle`)
         .then((response)=>{
-            console.log (response.data) 
+            
             setVehicles(response.data)
              
         })
@@ -38,7 +38,7 @@ const AssignVehicle = (props) => {
         var dd = String(today. getDate()). padStart(2, '0');
         var mm = String(today. getMonth() + 1). padStart(2, '0');  
         var yyyy = today. getFullYear();
-        today = mm + '/' + dd + '/' + yyyy;
+        today =  yyyy + '/' + mm + '/' + dd;
         setDeliveryDate(today);
        
         
@@ -55,28 +55,34 @@ const AssignVehicle = (props) => {
             location,
             vehicleNumber
           }
-
+          setStatus("confirmed")
 
         axios.post(`${API_URL}/delivery/addDeliveryOrders`,Order)
             .then(response =>{
-                console.log(response.data)
+                 
                 onCloseAssign()
-                setStatus("confirmed")
+                
+                  
+                const data = {
+                    status:"confirmed"       
+                 }
+                  axios.put(`${API_URL}/delivery/updateStatus/${_id}`,data)
+                      .then(response =>{
+                          console.log(response.data)
+                        })
+                      .catch(e=>{
+                          console.log(e.data)
+                      })
+
                 alert("Successfully Added")
                 
             })
             .catch(e=>{
                 console.log(e.data)
             })
-       
-
-        axios.put(`${API_URL}/delivery/updateStatus/${_id}`,status)
-            .then(response =>{
-                console.log(response.data)
-              })
-            .catch(e=>{
-                console.log(e.data)
-            })
+           
+        
+      
 
            
     }

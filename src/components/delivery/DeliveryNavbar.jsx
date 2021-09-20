@@ -22,7 +22,7 @@ const DNavbar = () => {
                   : "navlink-no-hover"
               }`}
             >
-              Vehicles
+              VEHICLES
             </Link>
           </div>
           <div className="p-4">
@@ -34,7 +34,7 @@ const DNavbar = () => {
                   : "navlink-no-hover"
               }`}
             >
-             OrderList
+             ORDER LIST
             </Link>
           </div>
           <div className="p-4 hidden sm:block">
@@ -46,7 +46,7 @@ const DNavbar = () => {
                   : "navlink-no-hover"
               }`}
             >
-              DeliveryList
+              DELIVERY LIST
             </Link>
           </div>
           
@@ -97,7 +97,7 @@ const DNavbar = () => {
                     : "navlink-no-hover"
                 }`}
               >
-                Vehicles
+                VEHICLES
               </Link>
             </div>
           </div>
@@ -119,7 +119,7 @@ const DNavbar = () => {
                     : "navlink-no-hover"
                 }`}
               >
-               OrderList
+               ORDER LIST
               </Link>
             </div>
           </div>
@@ -141,7 +141,7 @@ const DNavbar = () => {
                     : "navlink-no-hover"
                 }`}
               >
-               DeliveryList
+               DELIVERY LIST
               </Link>
             </div>
           </div>

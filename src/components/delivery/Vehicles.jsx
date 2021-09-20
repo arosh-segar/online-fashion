@@ -60,10 +60,10 @@ const Vehicles = () =>{
         <div className="hidden sm:block pt-3 pb-10 sm-screen">
           <div className="flex justify-center">
             <div className="grid grid-cols-4 sm:grid-cols-4 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center font-semibold text-sm text-black">
-              <div className="p-3">Vehicle Number</div>
-              <div className="p-3"> Vehicle Brand</div>
-              <div className="p-3">Driver Name</div>
-                <div className="p-3">Action</div>
+              <div className="p-3">VEHICLE NUMBER</div>
+              <div className="p-3"> VEHICLE BRAND</div>
+              <div className="p-3">DRIVER NAME</div>
+                <div className="p-3">ACTION</div>
             </div>
           </div>
         </div>
