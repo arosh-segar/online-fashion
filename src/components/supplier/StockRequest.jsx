@@ -9,8 +9,6 @@ const StockRequest = (props) =>{
     const {productID,productName,sizes,status,requestID} = props.stockRequest
 
 
-
-
     return(
 
         <div>
@@ -27,7 +25,7 @@ const StockRequest = (props) =>{
                     </div>
                     <div className="pt-4 pb-4 m-auto">{status}</div>
                     <div className="pt-4 pb-4 m-auto">20/08/2021</div>
-                    <div className="pt-2 pb-2 sm:pt-4 sm:pb-4 mr-2">
+                    <div className="pt-2 pb-2 pt-4 pb-4 mr-2 my-auto mr-2">
                         <button className="sm:text-xs md:text-sm sm:pt-2 sm:pr-4 sm:pl-4 sm:pb-2 mb-2 w-full rounded-md bg-blue-600"
                                 onClick={()=>props.onDispatch(requestID)}>
                             <i className="fa fa-check mr-1 md:mr-3 transition duration-150 ease-in-out"></i>

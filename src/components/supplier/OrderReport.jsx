@@ -5,7 +5,7 @@ import {
     View,
     Document,
     StyleSheet,
-    PDFViewer,
+    PDFViewer
 } from "@react-pdf/renderer";
 
 import {useParams} from "react-router-dom";
@@ -95,10 +95,10 @@ const OrderReport = (props) => {
                 <Page style={styles.mainTitle}>
                     <Text>Purchase Order</Text>
                     <View style={styles.section}>
-                        <Text>Order No:{order.id}</Text>
-                        <Text>Supplier No:{supplier.id}</Text>
-                        <Text>Address:{supplier.address}</Text>
-                        <Text>Date:{order.orderedDate}</Text>
+                        <Text style={{marginTop:5}}>Order No:{order.id}</Text>
+                        <Text style={{marginTop:5}}>Supplier No:{supplier.id}</Text>
+                        <Text style={{marginTop:5}}>Address:{supplier.address}</Text>
+                        <Text style={{marginTop:5}}>Date:{order.orderedDate}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.block}>Product Code</Text>
@@ -108,15 +108,15 @@ const OrderReport = (props) => {
                     {items.map(item=>{
                         return(
                             <View style={styles.row}>
-                                <Text style={styles.blockData}>{item.productID}</Text>
+                                <Text style={styles.blockData}>{item.productID.substring(17, 23).toUpperCase()}</Text>
                                 <Text style={styles.blockData}>{item.productName}</Text>
-                                <Text style={styles.blockData}>
+                                <View style={styles.blockData}>
                                     {item.sizes.xs && <Text>XS - {item.sizes.xs}</Text>}
-                                    {item.sizes.s && <Text>S - {item.sizes.s}</Text>}
-                                    {item.sizes.m && <Text>M - {item.sizes.m}</Text>}
-                                    {item.sizes.l && <Text>L - {item.sizes.l}</Text>}
-                                    {item.sizes.xl && <Text>XL - {item.sizes.xl}</Text>}
-                                    </Text>
+                                    {item.sizes.s  &&  <Text style={{marginTop:5}}>S  - {item.sizes.s}</Text>}
+                                    {item.sizes.m  &&  <Text style={{marginTop:5}}>M  - {item.sizes.m}</Text>}
+                                    {item.sizes.l  &&  <Text style={{marginTop:5}}>L  - {item.sizes.l}</Text>}
+                                    {item.sizes.xl && <Text style={{marginTop:5}}>XL - {item.sizes.xl}</Text>}
+                                </View>
                             </View>
                     )})}
                 </Page>
