@@ -17,16 +17,21 @@ const ReorderStocks = () => {
         setReorderStocks(
           response.data.filter(
             (stock) =>
-              parseFloat(stock.sizes.xs.xsSizeAvailableQty) <
-                parseFloat(stock.reorderQty) ||
-              parseFloat(stock.sizes.s.sSizeAvailableQty) <
-                parseFloat(stock.reorderQty) ||
-              parseFloat(stock.sizes.m.mSizeAvailableQty) <
-                parseFloat(stock.reorderQty) ||
-              parseFloat(stock.sizes.l.lSizeAvailableQty) <
-                parseFloat(stock.reorderQty) ||
-              parseFloat(stock.sizes.xl.xlSizeAvailableQty) <
-                parseFloat(stock.reorderQty)
+              (parseFloat(stock.sizes.xs.xsSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.xs.isAvailable) ||
+              (parseFloat(stock.sizes.s.sSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.s.isAvailable) ||
+              (parseFloat(stock.sizes.m.mSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.m.isAvailable) ||
+              (parseFloat(stock.sizes.l.lSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.l.isAvailable) ||
+              (parseFloat(stock.sizes.xl.xlSizeAvailableQty) <
+                parseFloat(stock.reorderQty) &&
+                stock.sizes.xl.isAvailable)
           )
         );
 
@@ -35,12 +40,10 @@ const ReorderStocks = () => {
       .catch((error) => {
         console.log(error);
       });
-
-    console.log(calculatePercentage(200, 1000));
   }, []);
 
   const calculatePercentage = (partialValue, totalValue) => {
-    return (100 * partialValue) / totalValue;
+    return parseFloat((100 * partialValue) / totalValue);
   };
 
   const filterByRisk = (reorderStock) => {
@@ -72,6 +75,7 @@ const ReorderStocks = () => {
           key={reorderStock._id}
           view="web"
           reorderStock={reorderStock}
+          length={reorderStocks.length}
         />
       );
     } else if (
@@ -102,6 +106,7 @@ const ReorderStocks = () => {
           key={reorderStock._id}
           view="web"
           reorderStock={reorderStock}
+          length={reorderStocks.length}
         />
       );
     } else if (
@@ -152,6 +157,7 @@ const ReorderStocks = () => {
           key={reorderStock._id}
           view="web"
           reorderStock={reorderStock}
+          length={reorderStocks.length}
         />
       );
     } else if (filterRisk === "all") {
@@ -160,6 +166,7 @@ const ReorderStocks = () => {
           key={reorderStock._id}
           view="web"
           reorderStock={reorderStock}
+          length={reorderStocks.length}
         />
       );
     }
@@ -173,11 +180,9 @@ const ReorderStocks = () => {
           <div className="flex justify-center items-center mx-auto">
             <div className="flex justify-center">
               <Link
+                target="_blank"
                 to={{
                   pathname: "/stockRequestsSummary",
-                  state: {
-                    reorderStocks: reorderStocks,
-                  },
                 }}
                 className="bg-green-500  text-white px-5 py-3 rounded-lg"
               >

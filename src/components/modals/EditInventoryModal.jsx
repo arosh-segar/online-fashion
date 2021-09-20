@@ -16,11 +16,21 @@ const EditInventoryModal = (props) => {
     setOpenResponse(false);
     onCloseEditModal();
   };
-  const [checkXS, setCheckXS] = useState(isNaN(stock.sizes.xs));
-  const [checkS, setcheckS] = useState(stock.sizes.s);
-  const [checkM, setcheckM] = useState(stock.sizes.m);
-  const [checkL, setcheckL] = useState(stock.sizes.l);
-  const [checkXL, setcheckXL] = useState(stock.sizes.xl);
+  const [checkXS, setCheckXS] = useState(
+    stock.sizes.xs.xsSizeAvailableQty > 0 ? true : false
+  );
+  const [checkS, setcheckS] = useState(
+    stock.sizes.s.sSizeAvailableQty > 0 ? true : false
+  );
+  const [checkM, setcheckM] = useState(
+    stock.sizes.m.mSizeAvailableQty > 0 ? true : false
+  );
+  const [checkL, setcheckL] = useState(
+    stock.sizes.l.lSizeAvailableQty > 0 ? true : false
+  );
+  const [checkXL, setcheckXL] = useState(
+    stock.sizes.xl.xlSizeAvailableQty > 0 ? true : false
+  );
   const [productName, setProductName] = useState(stock.productName);
   const [productType, setProductType] = useState(stock.productType);
   const [productCategory, setProductCategory] = useState(stock.productCategory);
