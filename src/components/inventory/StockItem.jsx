@@ -10,7 +10,7 @@ const StockItem = (props) => {
   const [openDelete, setOpen] = useState(false);
   const onOpenDeleteModal = () => setOpen(true);
   const onCloseDeleteModal = () => setOpen(false);
-  /* Delete Modal variables */
+  /* Edit Modal variables */
   const [openEdit, setEdit] = useState(false);
   const onOpenEditModal = () => setEdit(true);
   const onCloseEditModal = () => setEdit(false);
@@ -19,8 +19,8 @@ const StockItem = (props) => {
     <>
       {/* web view */}
       {view === "web" && (
-        <div className="flex justify-center font-medium">
-          <div className="grid gap-5 grid-cols-5 sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
+        <div className="flex justify-center">
+          <div className="grid grid-cols-5 my-auto sm:grid-cols-6 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
             <div className="pt-4 pb-4 m-auto">{productCode}</div>
             <div className="pt-4 pb-4 m-auto hidden sm:block">
               <img

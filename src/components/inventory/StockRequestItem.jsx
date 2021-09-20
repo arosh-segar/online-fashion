@@ -1,18 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../constants";
+import StockRequestAcceptModal from "../modals/StockRequestAcceptModal";
 
 const StockRequestItem = (props) => {
-  const { productID, productName, sizes, status, requestID } =
-    props.stockRequest;
+  const { productID, productName, sizes, requestID } = props.stockRequest;
   const productCode = productID.substring(17, 23).toUpperCase();
   const view = props.view;
+  const [openRequestAccept, setOpenRequestAccept] = useState(false);
+  /* Stock Request Accept Modal variables */
+  const [status, setStatus] = useState(props.stockRequest.status);
+  const onOpenRequestAcceptModal = () => setOpenRequestAccept(true);
+  const onCloseRequestAcceptModal = () => setOpenRequestAccept(false);
 
   const handleAcceptRequest = () => {
     const stock = { productID, sizes, requestID };
     axios
       .put(`${API_URL}/inventory/stockRequestUpdate/${productID}`, stock)
-      .then((response) => {})
+      .then((response) => {
+        setStatus("received");
+        onCloseRequestAcceptModal();
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -22,8 +30,8 @@ const StockRequestItem = (props) => {
     <>
       {/* Web view */}
       {view === "web" && (
-        <div className="flex justify-center h-40">
-          <div className="grid gap-5 grid-cols-5 sm:grid-cols-5 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
+        <div className="flex justify-center">
+          <div className="grid grid-cols-5 my-auto sm:grid-cols-5 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
             <div className="pt-4 pb-4 m-auto">{productCode}</div>
             <div className="pt-4 pb-4 m-auto">{productName}</div>
             <div className="pt-4 pb-4 m-auto">
@@ -59,7 +67,7 @@ const StockRequestItem = (props) => {
             </div>
             <div className="pt-4 pb-4 mr-2 my-auto">
               <button
-                onClick={handleAcceptRequest}
+                onClick={onOpenRequestAcceptModal}
                 disabled={status === "dispatched" ? false : true}
                 className={`text-xs pt-2 pb-2 md:pt-4 md:pb-4 w-full md:w-10/12 rounded-md ${
                   status === "dispatched" ? "bg-blue-600" : "bg-gray-500"
@@ -69,6 +77,11 @@ const StockRequestItem = (props) => {
                 RECEIVE ORDER
               </button>
             </div>
+            <StockRequestAcceptModal
+              onCloseRequestAcceptModal={onCloseRequestAcceptModal}
+              openRequestAccept={openRequestAccept}
+              handleAcceptRequest={handleAcceptRequest}
+            />
           </div>
         </div>
       )}
