@@ -1,23 +1,42 @@
-import React from "react";
+import React, {useState} from "react";
+
 
 const Login = () => {
-  return (
+
+    const [username, setUsername] = useState("");
+    const [password,setPassword] = useState("");
+
+
+    const signIn = (e)=>{
+
+        e.preventDefault()
+
+        if(username==='ADMIN' && password==='INVENTORY'){
+            window.location="/stock"
+        }else if(username==='ADMIN' && password==='DELIVERY'){
+            window.location="/delivery"
+        }else if(username==='ADMIN' && password==='SUPPLIER'){
+            window.location="/supplier"
+        }
+
+
+    }
+
+
+    return (
     <section class="min-h-screen flex items-stretch text-white ">
       <div
         class="lg:flex w-1/2 hidden bg-gray-500 bg-no-repeat bg-cover relative items-center"
         style={{
           backgroundImage:
-            "url(https://pvlearn.com/wp-content/uploads/2019/08/adobe-stock-image-1.jpg)",
+            "url(https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=869&q=80)",
         }}
       >
         <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
         <div class="w-full px-24 z-10">
           <h1 class="text-5xl font-bold text-left tracking-wide">
-            Keep it special
+            Welcome to Lynx
           </h1>
-          <p class="text-3xl my-4">
-            Capture your personal memory in unique way, anywhere.
-          </p>
         </div>
         <div class="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4">
           <span>
@@ -69,14 +88,19 @@ const Login = () => {
           <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
         </div>
         <div class="w-full py-6 z-20">
-          <form action="" class="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
+          <form class="sm:w-2/3 w-full px-4 lg:px-0 mx-auto" onSubmit={signIn}>
             <div class="pb-2 pt-4">
               <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email"
+                type="username"
+                name="username"
+                id="username"
+                placeholder="Username"
+                value={username}
+                onChange={e=>{
+                    setUsername(e.target.value.toUpperCase())
+                }}
                 class="block w-full p-4 text-lg rounded-sm bg-black"
+                required
               />
             </div>
             <div class="pb-2 pt-4">
@@ -86,10 +110,15 @@ const Login = () => {
                 name="password"
                 id="password"
                 placeholder="Password"
+                value={password}
+                onChange={e=>{
+                    setPassword(e.target.value.toUpperCase())
+                }}
+                required
               />
             </div>
             <div class="px-4 pb-2 pt-4">
-              <button class="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none">
+              <button class="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none" type={"submit"}>
                 sign in
               </button>
             </div>

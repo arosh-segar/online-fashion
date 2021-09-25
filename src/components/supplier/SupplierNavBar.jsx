@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const SupplierNavbar = () => {
-    
+
   const location = useLocation();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -50,12 +50,12 @@ const SupplierNavbar = () => {
               Stock Requests
             </Link>
           </div>
-          
+
           <div className="p-4">
             <Link
-              to="/logout"
+              to="/"
               className={`font-bold ${
-                window.location.pathname === "/logout"
+                window.location.pathname === "/"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
