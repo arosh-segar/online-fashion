@@ -3,34 +3,11 @@ import { Link } from "react-router-dom";
 import Slideshow from "../Slideshow";
 import "../../styles/home.css";
 import men1 from "../../images/categories/men1.jpg";
-import men2 from "../../images/categories/men2.jpg";
-import women1 from "../../images/categories/women1.jpg";
 import women2 from "../../images/categories/women2.jpg";
 import boys1 from "../../images/categories/boys1.jpg";
-import boys2 from "../../images/categories/boys2.jpg";
-import girls1 from "../../images/categories/girls1.jpeg";
-import girls2 from "../../images/categories/girls2.jpg";
-import babies1 from "../../images/categories/babies1.jpg";
-import babies2 from "../../images/categories/babies2.jpg";
-import accessories1 from "../../images/categories/accessories1.jpg";
-import accessories2 from "../../images/categories/accessories2.jpeg";
-import CustomerDashboard from "./CustomerDashboard";
-import Footer from "./Footer";
 
-export default class Registration extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      categories: [],
-    };
-  }
-
+export default class Home extends Component {
   componentDidMount() {}
-
-  navigateProductPage(e, cid, cname) {
-    window.location = `/product/${cid}/${cname}`;
-  }
 
   render() {
     return (
@@ -77,12 +54,6 @@ export default class Registration extends Component {
                   alt="Men's Wear"
                 />
                 <div className="bg-gray-900">
-                  {/* <div class="px-4 py-2">
-                    <h1 class="text-md font-bold text-white text-center uppercase dark:text-white">
-                      Mens' Wear
-                    </h1>
-                  </div> */}
-
                   <div class="flex items-center justify-center px-4 py-2"></div>
                   <div class="flex items-center justify-between px-4 py-2">
                     <Link

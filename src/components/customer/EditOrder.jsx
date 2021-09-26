@@ -6,15 +6,6 @@ import EditOrderItem from "./EditOrderItem";
 import swal from "sweetalert";
 
 const EditOrder = (props) => {
-  const orderItem = props.location.state.orderItem;
-  const {
-    orderID, // substring order ID
-    products,
-    totalBillAmount,
-    status,
-    customerEmail,
-    purchaseDate,
-  } = props.location.state.orderItem;
   const orderProducts = props.location.state.orderItem.products;
   const allProducts = props.products;
   const _id = props.location.state.orderItem._id;
@@ -38,10 +29,8 @@ const EditOrder = (props) => {
     else {
       let amt = 0.0;
       for (let x of editQty) {
-        // if (x._id !== editQty._id) {
         let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
         amt = amt + 1.0 * (x.pricePerUnit * no);
-        // }
       }
       setEditCartTotal(amt);
     }
@@ -49,7 +38,6 @@ const EditOrder = (props) => {
 
   // Handling cart items delete
   const handleDelete = (item) => {
-    // props.removeItem(item);
     setEditCart(
       editCart.filter(function (cartItem) {
         return cartItem._id !== item.productID;
@@ -101,8 +89,6 @@ const EditOrder = (props) => {
       amt = amt + 1.0 * (x.pricePerUnit * no);
     }
     setEditCartTotal(amt);
-    // setEditCart(props.cart);
-    // setEditQty(props.qty);
   };
 
   const editOrder = () => {
@@ -145,8 +131,6 @@ const EditOrder = (props) => {
     axios
       .put(`${API_URL}/customer/edit-order/${_id}`, orderObject)
       .then((response) => {
-        // swal("Order Updated Successfully!");
-        // swal("SUCCESS!", "Your Order is Updated Successfully!", "success");
         swal({
           title: "Your Order is Updated Successfully!",
           text: "",
@@ -158,7 +142,6 @@ const EditOrder = (props) => {
       .catch((e) => {
         console.log("error", e.data);
         swal("ERROR!", "Your Order could not be Updated!", "error");
-        // alert("error");
       });
   };
 
@@ -184,7 +167,6 @@ const EditOrder = (props) => {
                 item={item}
                 handleDelete={handleDelete}
                 quantityUpdate={quantityUpdate}
-                // editQty={editQty}
                 allProducts={allProducts}
               />
             ))}

@@ -40,17 +40,6 @@ const EditOrderItem = (props) => {
     }
   }, []);
 
-  const remove = () => {
-    let obj = {
-      xs: xs,
-      s: s,
-      m: m,
-      l: l,
-      xl: xl,
-    };
-    props.handleDelete(item);
-  };
-
   const incrementTot = async (value, price, action, size) => {
     let obj = {
       xs: xs,
@@ -340,19 +329,7 @@ const EditOrderItem = (props) => {
                 )}
               </div>
             )}
-            {/* <div className="m-auto my-auto flex flex-row justify-center">
-              <p className="bg-red-200 mr-1 lg:mr-2 text-sm my-auto">
-                MAX LIMIT
-              </p>
-            </div> */}
           </div>
-
-          {/* <button
-            className="rounded-full h-6 w-5 bg-red-600 text-white font-medium flex justify-center items-center mt-12 ml-2 my-auto"
-            onClick={remove}
-          >
-            X
-          </button> */}
         </div>
       )}
     </div>

@@ -27,10 +27,6 @@ class Footer extends React.Component {
             <br />
 
             <p>Telephone: +94 71 238 9567 | Email: lynx@gmail.com</p>
-
-            {/* <p className="copyright">
-              © 2021 Lynx Shopping. All Rights Reserved
-            </p> */}
           </div>
         </footer>
       </div>
