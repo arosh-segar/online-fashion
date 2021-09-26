@@ -28,7 +28,7 @@ const OrdersList = () => {
       axios
         .get(`${API_URL}/customer/get-all-orders/${customerEmail}`)
         .then((response) => {
-          setOrders(response.data);
+          setOrders(response.data.reverse());
         })
         .catch((error) => {
           console.log(error);
