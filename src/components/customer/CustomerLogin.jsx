@@ -7,26 +7,8 @@ import moment from "moment";
 const CustomerLogin = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("");
-
-  const [customerDetails, setCustomerDetails] = useState({
-    _id: "",
-    address: "",
-    cardName: "",
-    cardNumber: "",
-    expiry: "",
-    cvv: "",
-    email: "",
-    fname: "",
-    lname: "",
-    password: "",
-    phone: "",
-    registrationDate: "",
-  });
 
   const onChange = (e) => {
-    // this.setState({ [e.target.name]: e.target.value });
-    // this.setState({ [e.target.name]: e.target.value });
     if (e.target.name == "email") setEmail(e.target.value);
 
     if (e.target.name == "password") setPassword(e.target.value);
@@ -34,8 +16,6 @@ const CustomerLogin = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    let date = moment().format("DD-MM-YYYY hh:mm:ss");
 
     axios
       .get(`${API_URL}/customer/get-customer/${email}`)
@@ -51,7 +31,6 @@ const CustomerLogin = (props) => {
         }).then(() => {
           window.location = `/customer/login`;
         });
-        // alert("error");
       });
   };
 
@@ -70,7 +49,6 @@ const CustomerLogin = (props) => {
       phone: data.phone,
       registrationDate: data.registrationDate,
     };
-    setCustomerDetails(customerObj);
 
     let checkPassword = customerObj.password;
 
@@ -78,8 +56,6 @@ const CustomerLogin = (props) => {
       let customerString = JSON.stringify(customerObj);
       localStorage.setItem("customer", customerString);
 
-      // let itm = localStorage.getItem("customer");
-      // console.log("cus log:", JSON.parse(itm));
       swal({
         title: "Login Successful!",
         text: "",

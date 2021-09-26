@@ -1,21 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../constants";
 import swal from "sweetalert";
 
 const OrderItem = (props) => {
-  const {
-    _id,
-    purchaseDate,
-    products,
-    totalBillAmount,
-    status,
-    customerEmail,
-  } = props.orderItem;
+  const { _id, purchaseDate, products, totalBillAmount, status } =
+    props.orderItem;
   const orderItem = props.orderItem;
   const orderID = _id.substring(20).toUpperCase();
-  const [orderEdit, setOrderEdit] = useState("");
 
   // DELETE ORDER CONFIRMATION
   const confirmDelete = () => {
@@ -39,7 +32,6 @@ const OrderItem = (props) => {
             }).then(() => {
               window.location = `orders`;
             });
-            // alert("Order Deleted Successfully!");
           })
           .catch((e) => {
             console.log("error", e.data);
@@ -48,7 +40,6 @@ const OrderItem = (props) => {
               "Your order could not be deleted!",
               "error"
             );
-            alert("Error occurred! Could not delete your order!");
           });
       } else {
         swal(
@@ -74,9 +65,7 @@ const OrderItem = (props) => {
         <div className="grid gap-5 grid-cols-8 sm:grid-cols-8 w-11/12 sm:w-11/12 lg:w-10/12 mt-5 text-center text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden hover:bg-white hover:bg-opacity-40 cursor-pointer">
           <div className="pt-4 pb-4 m-auto text-gray-900">{orderID}</div>
           <div className="pt-4 pb-4 m-auto text-gray-900">{purchaseDate}</div>
-          {/* <div className="pt-4 pb-4 m-auto text-gray-900">
-            {productName - productQty}
-          </div> */}
+
           <div className="pt-4 pb-4 m-auto hidden sm:block">
             {products.map((product) => (
               <div className="pt-4 pb-4 m-auto text-gray-900">
@@ -120,8 +109,6 @@ const OrderItem = (props) => {
           <div className="pt-4 pb-4 m-auto text-gray-900">
             {totalBillAmount}
           </div>
-          {/* // DISPLAY STATUS AS CONFIRMED OR PENDING FOR ORDERS */}
-          {/* <div className="pt-4 pb-4 m-auto text-gray-900">{status}</div> */}
 
           {/* STATUS DISPLAY */}
           {status === "confirmed" && (

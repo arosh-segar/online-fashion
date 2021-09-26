@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { API_URL } from "../../constants";
-import axios from "axios";
 import ProductItem from "./ProductItem";
 
-const Product = (props) => {
+const Products = (props) => {
   const [products, setproducts] = useState([]);
   const [filterCategory, setFilterCategory] = useState("all");
 
@@ -44,10 +42,6 @@ const Product = (props) => {
         <br />
         <br />
         <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-6 gap-y-10 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-4 lg:gap-x-5 lg:gap-y-10">
-          {/* {products.map((stock) => (
-            <ProductItem stock={stock} />
-          ))} */}
-
           {filterCategory === "all" ? (
             <>
               {products.map((stock) => (
@@ -71,4 +65,4 @@ const Product = (props) => {
   );
 };
 
-export default Product;
+export default Products;

@@ -11,7 +11,6 @@ import "../../styles/customerStyles.css";
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
   const [netTotal, setNetTotal] = useState(0.0);
-  const [sortedOrders, setSortedOrders] = useState([]);
   const [filterCategory, setFilterCategory] = useState("all");
   const [orderSummaryType, setOrderSummaryType] = useState("overall");
   const [open, setOpen] = useState(false);
@@ -30,9 +29,6 @@ const OrdersList = () => {
         .get(`${API_URL}/customer/get-all-orders/${customerEmail}`)
         .then((response) => {
           setOrders(response.data);
-
-          let ordersSortedByNewDate = response.data.reverse();
-          setSortedOrders(ordersSortedByNewDate);
         })
         .catch((error) => {
           console.log(error);
@@ -50,8 +46,6 @@ const OrdersList = () => {
         title: "You need to Login to view your orders!",
         text: "",
         icon: "warning",
-      }).then(() => {
-        // window.location = `/customer/login`;
       });
     }
   }, []);
@@ -115,9 +109,6 @@ const OrdersList = () => {
                   <br />
                   <br />
                   <div className="text-center">
-                    {/* <label className="mr-5 my-auto text-center">
-                      SELECT :{" "}
-                    </label> */}
                     <select
                       className="p-2 border w-2/4 rounded-lg text-center"
                       style={{

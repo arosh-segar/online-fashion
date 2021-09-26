@@ -8,23 +8,9 @@ const ShoppingCartItem = (props) => {
   const [l, setL] = useState(0);
   const [xl, setXl] = useState(0);
 
-  // ----------------- SPRINT 2 CHANGE AVAILABLE QTY -----------------------------------------
-
-  // const [xs, setXs] = useState({
-  //   qty: 0,
-  //   xsSizeAvailableQty: props.xsSizeAvailableQty,
-  // });
-  // setXs((prevState) => ({ ...prevState, xsSizeAvailableQty: "any int value" }));
-
-  // -----------------------------------------------------------------------------------------
-
-  // ----------------- SPRINT 2 ADD ORDER ----------------------------------------------------
-
   const [item, setItem] = useState(props.item);
-  const [qty, setQty] = useState(props.qty);
 
   useEffect(() => {
-    // props.handleCartTotal();
     setItem(props.item);
     for (let x of props.qty) {
       if (x._id === item._id) {
@@ -35,42 +21,11 @@ const ShoppingCartItem = (props) => {
         setXl(x.size.xl);
       }
     }
-
-    // previous method
-    // if (item.sizes.xs.active === true) {
-    //   setXs(xs + 1);
-    // }
-    // if (item.sizes.s.active === true) {
-    //   setS(s + 1);
-    // }
-    // if (item.sizes.m.active === true) {
-    //   setM(m + 1);
-    // }
-    // if (item.sizes.l.active === true) {
-    //   setL(l + 1);
-    // }
-    // if (item.sizes.xl.active === true) {
-    //   setXl(xl + 1);
-    // }
   }, []);
 
-  // previous method
-  // const p = (xs + s + m + l + xl) * props.item.pricePerUnit;
-  // props.calculateTotal(p, "", props.item._id);
-
   const remove = () => {
-    let obj = {
-      xs: xs,
-      s: s,
-      m: m,
-      l: l,
-      xl: xl,
-    };
-
     props.removeItem(item);
     props.handleDelete(item);
-    // props.updateTotal();
-    // props.handleCartTotal();
   };
 
   const incrementTot = async (value, price, action, size) => {
@@ -127,10 +82,6 @@ const ShoppingCartItem = (props) => {
 
       props.updateQuantity(item._id, price, obj);
       props.quantityUpdate();
-      // props.updateTotal();
-      // props.calcTot();
-      // props.calculateCartTotal();
-      // props.handleCartTotal();
     }
 
     if (action === "decrease") {

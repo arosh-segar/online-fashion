@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import ShoppingCartItem from "./ShoppingCartItem";
 import axios from "axios";
 import { API_URL } from "../../constants";
@@ -11,7 +10,6 @@ import "../../styles/customerStyles.css";
 const ShoppingCart = (props) => {
   const [cart, setCart] = useState([]);
   const [qty, setQty] = useState(props.qty);
-  const [orderPlaced, setOrderPlaced] = useState([]);
   const [open, setOpen] = useState(false);
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [customerDetails, setCustomerDetails] = useState({
@@ -64,7 +62,6 @@ const ShoppingCart = (props) => {
 
   // Handling cart items delete
   const handleDelete = (item) => {
-    // props.removeItem(item);
     setCart(
       cart.filter(function (cartItem) {
         return cartItem !== item;
@@ -76,158 +73,12 @@ const ShoppingCart = (props) => {
         return newQty._id !== item._id;
       })
     );
-
-    // let amt = 0.0;
-
-    // for (let x of qty) {
-    //   let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
-
-    //   amt = amt + 1.0 * (x.price * no);
-    // }
-
-    // setTotal(amt);
-
-    // props.removeItem(item);
-
-    // updateTotal();
-    // handleCartTotal();
   };
 
   const quantityUpdate = () => {
     setCart(props.cart);
     setQty(props.qty);
-
-    // let amt = 0.0;
-
-    // for (let x of qty) {
-    //   let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
-
-    //   amt = amt + 1.0 * (x.price * no);
-    // }
-
-    // setTotal(amt);
   };
-
-  // const updateTotal = () => {
-  //   var tot = props.calculateCartTotal();
-  //   setTotal(tot);
-  // };
-
-  // const handleCartTotal = () => {
-  //   let tot = 0.0;
-
-  //   for (let x of props.qty) {
-  //     let no = x.size.xs + x.size.s + x.size.m + x.size.l + x.size.xl;
-
-  //     tot = tot + 1.0 * (x.price * no);
-  //   }
-
-  //   setTotal(tot);
-  // };
-
-  // const handleCartTotal = () => {
-  //   props.calculateCartTotal();
-  //   // let tot = props.calculateCartTotal();
-  //   // setTotal(tot);
-  // };
-
-  // const [total, setTotal] = useState(0.0);
-  // const [message, setMessage] = useState("all good");
-  // const item = props.location.state.item;
-  // duplicate = false;
-
-  // for (let x of products) {
-  //   if (x._id === item._id) {
-  //     duplicate = true;
-  //     break;
-  //   }
-  // }
-  // if (duplicate === false) {
-  //   products.push(item);
-  // }
-
-  // const calculateTotal = (price, id) => {
-  //   totDuplicate = false;
-
-  //   let cartItem = {
-  //     id: id,
-  //     price: price,
-  //   };
-
-  //   for (let x of cartTotal) {
-  //     if (x.id === cartItem.id) {
-  //       totDuplicate = true;
-  //       x.price = price;
-  //       break;
-  //     }
-  //   }
-
-  //   if (totDuplicate === false) {
-  //     cartTotal.push(cartItem);
-  //   }
-
-  //   finalTotal();
-  // };
-
-  // const finalTotal = () => {
-  //   let tot = 0.0;
-
-  //   for (let x of cartTotal) {
-  //     tot = tot + x.price;
-  //   }
-  //   setTotal(tot);
-  // };
-
-  // const removeCartItem = (id) => {
-  //   for (var i = 0; i < item.length; i++) {
-  //     if (item.length == 1) {
-  //       item.pop();
-  //       break;
-  //     }
-  //     if (item[i]._id === id) {
-  //       item.splice(i, 1);
-  //     }
-  //   }
-
-  //   for (var i = 0; i < products.length; i++) {
-  //     if (products.length == 1) {
-  //       products.pop();
-  //       setMessage("last");
-  //       props.location.state.item = {
-  //         _id: "",
-  //         name: null,
-  //         image: "",
-  //         sizes: {
-  //           xs: "",
-  //           s: "",
-  //           m: "",
-  //           l: "",
-  //           xl: "",
-  //         },
-  //         pricePerUnit: "",
-  //       };
-  //       break;
-  //     }
-  //     if (products[i]._id === id) {
-  //       products.splice(i, 1);
-  //     }
-  //   }
-
-  //   for (var i = 0; i < cartTotal.length; i++) {
-  //     if (cartTotal.length == 1) {
-  //       cartTotal.pop();
-  //       break;
-  //     }
-  //     if (cartTotal[i].id === id) {
-  //       cartTotal.splice(i, 1);
-  //       finalTotal();
-  //     }
-  //   }
-
-  //   if (products.length === 0) {
-  //     setMessage("last");
-  //   }
-  // };
 
   const changeDetails = (e) => {
     if (e.target.name == "address") setDeliveryAddress(e.target.value);
@@ -240,7 +91,6 @@ const ShoppingCart = (props) => {
   };
 
   const confirmOrder = () => {
-    // let date = moment().format("DD-MM-YYYY hh:mm:ss");
     let date = moment().format("DD-MM-YYYY");
     let customer = localStorage.getItem("customer");
     customer = JSON.parse(customer);
@@ -257,12 +107,6 @@ const ShoppingCart = (props) => {
       let email = customer.email;
       let address = customer.address;
       setDeliveryAddress(address);
-      // let paymentDetails = {
-      //   cardName: customer.cardName,
-      //   cardNumber: customer.cardNumber,
-      //   expiry: customer.expiry,
-      //   cvv: customer.cvv,
-      // };
 
       let paymentDetails = {
         cardName: customer.cardName,
@@ -319,8 +163,6 @@ const ShoppingCart = (props) => {
           title: "Your cart is empty, please add products to place your order!",
           text: "",
           icon: "warning",
-        }).then(() => {
-          // window.location = `/customer/`;
         });
       }
       if (cart.length > 0 && totalAmount == 0) {
@@ -341,19 +183,16 @@ const ShoppingCart = (props) => {
               text: "",
               icon: "success",
             }).then(() => {
-              setOrderPlaced(orderProductArr);
               updateStockQty();
               window.location = `orders`;
             });
-            // setOrderPlaced(orderProductArr);
-            // updateStockQty();
+
             props.clearCart();
             setCart([]);
             setQty([]);
           })
           .catch((e) => {
             console.log("error", e.data);
-            alert("error");
           });
       }
     }
@@ -420,7 +259,6 @@ const ShoppingCart = (props) => {
         })
         .catch((e) => {
           console.log("error", e.data);
-          alert("error");
         });
     }
   };
@@ -448,10 +286,6 @@ const ShoppingCart = (props) => {
               handleDelete={handleDelete}
               updateQuantity={props.updateQuantity}
               quantityUpdate={quantityUpdate}
-              // updateTotal={updateTotal}
-              // calcTot={calcTot}
-              // calculateCartTotal={props.calculateCartTotal}
-              // handleCartTotal={handleCartTotal}
               qty={props.qty}
             />
           ))}
@@ -468,8 +302,7 @@ const ShoppingCart = (props) => {
           <br />
           <br />
           <button
-            class="bg-green-400 opacity-75 hover:opacity-300 text-gray-900 hover:text-gray-100 rounded-full px-10 py-3 font-semibold
-                          pull-right"
+            class="bg-green-400 opacity-75 hover:opacity-300 text-gray-900 hover:text-gray-100 rounded-full px-10 py-3 font-semibold pull-right"
             onClick={onOpenModal}
           >
             <i class="fa fa-paper-plane -ml-2 mr-2"></i> Place Order
@@ -490,9 +323,7 @@ const ShoppingCart = (props) => {
           <h2 className="text-center text-blue-900 text-xl italic">
             Confirm Details
           </h2>
-          {/* <label className="mr-5 my-auto text-center">
-                      SELECT :{" "}
-                    </label> */}
+
           <form className="mt-5 text-sm text-white bg-white shadow-2xl bg-opacity-25 rounded-xl overflow-hidden">
             <div class="w-full px-3 mt-3 mb-6 md:mb-0">
               <label
@@ -599,8 +430,7 @@ const ShoppingCart = (props) => {
           <br />
 
           <button
-            class="bg-green-400 opacity-75 hover:opacity-300 text-gray-900 hover:text-gray-100 rounded-full px-10 py-3 font-semibold
-                          pull-right"
+            class="bg-green-400 opacity-75 hover:opacity-300 text-gray-900 hover:text-gray-100 rounded-full px-10 py-3 font-semibold pull-right"
             onClick={confirmOrder}
           >
             <i class="fa fa-paper-plane -ml-2 mr-2"></i> Confirm Order
