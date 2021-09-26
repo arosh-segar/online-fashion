@@ -11,14 +11,9 @@ import { API_URL } from "../../constants";
 import axios from "axios";
 import swal from "sweetalert";
 import moment from "moment";
-import { buildQueries } from "@testing-library/react";
 
 const OrderReport = (props) => {
-  const [orderSummaryType, setOrderSummaryType] = useState(
-    props.location.state.orderSummaryType
-  );
   const [orders, setOrders] = useState([]);
-  const [sortedOrders, setSortedOrders] = useState([]);
   const [netTotal, setNetTotal] = useState("");
 
   useEffect(() => {
@@ -45,9 +40,6 @@ const OrderReport = (props) => {
             sortOrdersForLastMonth = sortOrdersForLastMonth.filter(function (
               item
             ) {
-              let date = item.purchaseDate;
-              let mm = date.substring(3, 5);
-              mm = parseInt(mm);
               return month == item.purchaseDate.substring(3, 5);
             });
           }
@@ -60,7 +52,7 @@ const OrderReport = (props) => {
           if (props.location.state.orderSummaryType == "last-month") {
             ordersSortedByNewDate = sortOrdersForLastMonth.reverse();
           }
-          setSortedOrders(ordersSortedByNewDate);
+
           setOrders(ordersSortedByNewDate);
           calcTotal(ordersSortedByNewDate);
         })

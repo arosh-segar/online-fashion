@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ShoppingCart from "./ShoppingCart";
 import { Link } from "react-router-dom";
 
 const Product = (props) => {
@@ -39,31 +38,9 @@ const Product = (props) => {
       : setXl((prevState) => ({ ...prevState, active: false }));
   };
 
-  // const addItem = () => props.location.state.addItem;
-
   const adding = () => {
     props.addItem(stock);
     setMessage("This Product has been added to your Cart Successfully!");
-  };
-
-  const navigateToShoppingCartPage = () => {
-    <Link
-      to={{
-        pathname: "/customer/",
-      }}
-    ></Link>;
-  };
-
-  const addToCart = () => {
-    let tot = 0.0;
-    for (let x of stock) {
-      if (parseFloat(x.sizes.s.sSizeAvailableQty) >= 0)
-        tot = tot + parseFloat(x.sizes.s.sSizeAvailableQty);
-    }
-  };
-
-  const showSuccess = () => {
-    return <p>Added Successfully!</p>;
   };
 
   return (
@@ -156,26 +133,6 @@ const Product = (props) => {
                   <span class="text-2xl leading-none align-baseline">.00</span>
                 </div>
                 <div class="inline-block align-bottom">
-                  {/* <Link
-                    to={{
-                      pathname: "/cart",
-                      state: {
-                        item: {
-                          _id: stock._id,
-                          name: stock.productName,
-                          image: stock.productImageUrl,
-                          sizes: {
-                            xs: xs,
-                            s: s,
-                            m: m,
-                            l: l,
-                            xl: xl,
-                          },
-                          pricePerUnit: stock.pricePerUnit,
-                        },
-                      },
-                    }}
-                  > */}
                   {!msg && (
                     <button
                       class="bg-yellow-300 opacity-75 hover:opacity-100 text-yellow-900 hover:text-gray-900 rounded-full px-10 py-2 font-semibold"
@@ -191,7 +148,6 @@ const Product = (props) => {
                     </button>
                   )}
 
-                  {/* </Link> */}
                   <br />
                 </div>
               </div>
