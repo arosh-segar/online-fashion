@@ -9,7 +9,7 @@ import InventoryNavbar from "./InventoryNavbar";
 
 const InventoryDashboard = () => {
   return (
-    <Router>
+    <div>
       <body
         className={
           window.location.pathname !== "/stockRequestsSummary"
@@ -38,7 +38,7 @@ const InventoryDashboard = () => {
           </Route>
         </Switch>
       </body>
-    </Router>
+    </div>
   );
 };
 

@@ -29,7 +29,8 @@ const PurchaseOrders = () =>{
 
     const generateID = ()=>{
 
-        return `P${orders.length+1}${Math.floor(Math.random()*10)}`
+        const crypto = window.crypto
+        return `P${orders.length+1}${crypto.getRandomValues(new Uint8Array(10))[0]}`
 
     }
 
@@ -64,13 +65,6 @@ const PurchaseOrders = () =>{
             .then(response => {
 
                 console.log(response.data)
-                let promise = new Promise((resolve ,reject)=>{
-                    resolve(getOrders())
-                })
-
-                promise.then(()=>{
-                    console.log(orders)
-                })
 
             })
             .catch(e => {

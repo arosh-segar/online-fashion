@@ -1,4 +1,4 @@
-import { Switch, Route,Redirect } from "react-router-dom";
+import { Switch, Route,Redirect,BrowserRouter as Router } from "react-router-dom";
 import SupplierNavBar from "./SupplierNavBar"
 import Suppliers from "./Suppliers"
 import PurchaseOrders from "./PurchaseOrders";

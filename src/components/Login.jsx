@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import swal from 'sweetalert'
 
 const Login = () => {
 
@@ -17,6 +17,8 @@ const Login = () => {
             window.location="/delivery"
         }else if(username==='ADMIN' && password==='SUPPLIER'){
             window.location="/supplier"
+        }else{
+            swal("Invalid Username or Password","Try again!")
         }
 
 

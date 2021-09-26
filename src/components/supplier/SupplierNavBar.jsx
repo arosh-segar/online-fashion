@@ -16,7 +16,7 @@ const SupplierNavbar = () => {
         <div className="grid grid-cols-4 md:w-9/12 text-center font-semibold text-sm">
           <div className="p-4">
             <Link
-              to="/"
+              to="/supplier"
               className={`font-bold ${
                 window.location.pathname === "/supplier"
                   ? "navlink-hover"
@@ -53,9 +53,9 @@ const SupplierNavbar = () => {
 
           <div className="p-4">
             <Link
-              to="/"
+              to="/login"
               className={`font-bold ${
-                window.location.pathname === "/"
+                window.location.pathname === "/login"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}

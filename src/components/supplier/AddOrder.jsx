@@ -6,6 +6,7 @@ import { Modal } from "react-responsive-modal";
 import Select from "react-select";
 import PurchaseOrder from "./PurchaseOrder";
 import OrderReport from "./OrderReport";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const AddOrder = (props) => {
   const { openAdd, onCloseAdd } = props;
@@ -68,11 +69,11 @@ const AddOrder = (props) => {
 
     let Supplier = {};
 
-    suppliers.map((supplier) => {
-      if (orderSupplier == supplier.id) {
-        Supplier = supplier;
-      }
-    });
+    suppliers.forEach((supplier)=>{
+        if (orderSupplier == supplier.id) {
+            Supplier = supplier;
+        }
+    })
 
     const Order = {
       id: props.id,

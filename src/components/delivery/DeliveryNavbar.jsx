@@ -52,7 +52,7 @@ const DNavbar = () => {
 
           <div className="p-4">
             <Link
-              to="/"
+              to="/login"
               className={`font-bold ${
                 window.location.pathname === "/"
                   ? "navlink-hover"

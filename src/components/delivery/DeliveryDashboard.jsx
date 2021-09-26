@@ -12,7 +12,7 @@ const DeliveryDashboard = () => {
 
 
  return (
-     <Router>
+     <div>
       <body
         className={
           window.location.pathname !== "/delivery/deliveryReport"
@@ -34,11 +34,11 @@ const DeliveryDashboard = () => {
              <DeliveryOrders/>
            </Route>
             <Route exact path={"/delivery/deliveryReport"}
-                   render={(props) => <DeliveryReport {...props} />}
+                       render={(props) => <DeliveryReport {...props} />}
             ></Route>
         </Switch>
       </body>
-     </Router>
+     </div>
 
   );
 }

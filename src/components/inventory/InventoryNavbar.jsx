@@ -61,7 +61,7 @@ const InventoryNavbar = () => {
           </div>
           <div className="p-4">
             <Link
-              to="/"
+              to="/login"
               className={`font-bold ${
                 location.pathname === "/logout"
                   ? "navlink-hover"
