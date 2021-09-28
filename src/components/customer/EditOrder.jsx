@@ -89,6 +89,9 @@ const EditOrder = (props) => {
       amt = amt + 1.0 * (x.pricePerUnit * no);
     }
     setEditCartTotal(amt);
+    console.log("olp:", orderProducts[0]);
+    console.log("edip:", editQty);
+    console.log("all:", allProducts);
   };
 
   const editOrder = () => {
