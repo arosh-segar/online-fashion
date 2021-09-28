@@ -17,7 +17,7 @@ const InventoryDashboard = () => {
             : ""
         }
       >
-        {window.location.pathname !== "/stockRequestsSummary" && (
+        {window.location.pathname !== "/stock/stockRequestsSummary" && (
           <InventoryNavbar />
         )}
         <Switch>

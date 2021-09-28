@@ -182,14 +182,14 @@ const ReorderStocks = () => {
               <Link
                 target="_blank"
                 to={{
-                  pathname: "/stockRequestsSummary",
+                  pathname: "/stock/stockRequestsSummary",
                 }}
                 className="bg-green-500  text-white px-5 py-3 rounded-lg"
               >
                 <i className="fa fa-eye mr-3"></i>View Stock Summary
               </Link>
             </div>
-            <div className="flex justify-center sm:w-5/12 lg:w-5/12">
+            {/* <div className="flex justify-center sm:w-5/12 lg:w-5/12">
               <label className="mr-5 my-auto">RISK LEVEL : </label>
               <select
                 className="p-2 border border-none w-2/4 rounded-lg"
@@ -204,7 +204,7 @@ const ReorderStocks = () => {
                 <option value="m">Medium</option>
                 <option value="h">High</option>
               </select>
-            </div>
+            </div> */}
           </div>
           <div className="flex justify-center">
             <div className="grid grid-cols-5 sm:grid-cols-5 w-11/12 sm:w-11/12 lg:w-10/12 mt-10 text-center font-semibold text-sm text-black">
