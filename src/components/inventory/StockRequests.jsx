@@ -40,8 +40,9 @@ const StockRequests = () => {
                   All
                 </option>
                 <option value="pending">Pending</option>
-                <option value="accepted">Accepted</option>
+                <option value="approved">Approved</option>
                 <option value="dispatched">Dispatched</option>
+                <option value="received">Received</option>
               </select>
             </div>
           </div>

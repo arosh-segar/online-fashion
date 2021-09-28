@@ -17,7 +17,7 @@ const InventoryNavbar = () => {
             <Link
               to="/stock"
               className={`font-bold ${
-                location.pathname === "/" ? "navlink-hover" : "navlink-no-hover"
+                location.pathname === "/stock" ? "navlink-hover" : "navlink-no-hover"
               }`}
             >
               STOCKS
@@ -27,7 +27,7 @@ const InventoryNavbar = () => {
             <Link
               to="/stock/addStock"
               className={`font-bold ${
-                location.pathname === "/addStock"
+                location.pathname === "/stock/addStock"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -39,7 +39,7 @@ const InventoryNavbar = () => {
             <Link
               to="/stock/reorder"
               className={`font-bold ${
-                location.pathname === "/reorder"
+                location.pathname === "/stock/reorder"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -51,7 +51,7 @@ const InventoryNavbar = () => {
             <Link
               to="/stock/stockRequests"
               className={`font-bold ${
-                location.pathname === "/stockRequests"
+                location.pathname === "/stock/stockRequests"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
