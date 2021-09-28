@@ -15,9 +15,9 @@ const InventoryNavbar = () => {
         <div className="grid grid-cols-5 md:w-9/12 text-center font-semibold text-sm">
           <div className="p-4">
             <Link
-              to="/"
+              to="/stock"
               className={`font-bold ${
-                location.pathname === "/" ? "navlink-hover" : "navlink-no-hover"
+                location.pathname === "/stock" ? "navlink-hover" : "navlink-no-hover"
               }`}
             >
               STOCKS
@@ -25,9 +25,9 @@ const InventoryNavbar = () => {
           </div>
           <div className="p-4">
             <Link
-              to="/addStock"
+              to="/stock/addStock"
               className={`font-bold ${
-                location.pathname === "/addStock"
+                location.pathname === "/stock/addStock"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -37,9 +37,9 @@ const InventoryNavbar = () => {
           </div>
           <div className="p-4 hidden sm:block">
             <Link
-              to="/reorder"
+              to="/stock/reorder"
               className={`font-bold ${
-                location.pathname === "/reorder"
+                location.pathname === "/stock/reorder"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -49,9 +49,9 @@ const InventoryNavbar = () => {
           </div>
           <div className="p-4">
             <Link
-              to="/stockRequests"
+              to="/stock/stockRequests"
               className={`font-bold ${
-                location.pathname === "/stockRequests"
+                location.pathname === "/stock/stockRequests"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}
@@ -61,7 +61,7 @@ const InventoryNavbar = () => {
           </div>
           <div className="p-4">
             <Link
-              to="/logout"
+              to="/login"
               className={`font-bold ${
                 location.pathname === "/logout"
                   ? "navlink-hover"
@@ -97,7 +97,7 @@ const InventoryNavbar = () => {
           <div className="flex justify-center w-11/12 ">
             <div className="pt-3 pb-3 pl-2 text-sm text-white">
               <Link
-                to="/"
+                to="/stock"
                 className={`font-bold ${
                   location.pathname === "/"
                     ? "navlink-mobile-hover"

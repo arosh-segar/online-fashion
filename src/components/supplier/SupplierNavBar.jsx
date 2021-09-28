@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const SupplierNavbar = () => {
-    
+
   const location = useLocation();
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -16,7 +16,7 @@ const SupplierNavbar = () => {
         <div className="grid grid-cols-4 md:w-9/12 text-center font-semibold text-sm">
           <div className="p-4">
             <Link
-              to="/"
+              to="/supplier"
               className={`font-bold ${
                 window.location.pathname === "/supplier"
                   ? "navlink-hover"
@@ -50,12 +50,12 @@ const SupplierNavbar = () => {
               Stock Requests
             </Link>
           </div>
-          
+
           <div className="p-4">
             <Link
-              to="/logout"
+              to="/login"
               className={`font-bold ${
-                window.location.pathname === "/logout"
+                window.location.pathname === "/login"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}

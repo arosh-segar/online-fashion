@@ -1,4 +1,4 @@
-import { Switch, Route,Redirect } from "react-router-dom";
+import { Switch, Route,Redirect,BrowserRouter as Router } from "react-router-dom";
 import SupplierNavBar from "./SupplierNavBar"
 import Suppliers from "./Suppliers"
 import PurchaseOrders from "./PurchaseOrders";
@@ -15,7 +15,6 @@ function SupplierDashboard() {
                 <Route exact path={"/supplier/orders"} component={PurchaseOrders}/>
                 <Route exact path={"/supplier/stockRequests"} component={StockRequests}/>
                 <Route exact path={"/supplier/orderReport/:id"} component={OrderReport}/>
-                <Redirect to={"/supplier"}/>
             </Switch>
             </body>
       </div>

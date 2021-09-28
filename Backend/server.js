@@ -10,7 +10,11 @@ require("./utils/connection");
 
 const app = new Express();
 
-app.use(cors());
+let corsOptions = {
+    origin:'http://localhost:3000'
+}
+
+app.use(cors(corsOptions));
 app.use(Express.json());
 
 app.use("/supplier", SupplierRoutes);

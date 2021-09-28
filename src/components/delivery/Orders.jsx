@@ -3,14 +3,14 @@ import {useState,useEffect} from 'react'
 import Order from './Order'
 import axios from 'axios'
 import { API_URL } from "../../constants";
- 
+
 
 const Orders = () =>{
 
 
     const [orders,setOrders] = useState([]);
     const [search,setSearch] = useState("");
-     
+
 
 
    useEffect(()=>{
@@ -19,19 +19,19 @@ const Orders = () =>{
      .then((response)=>{
          console.log(response.data)
          setOrders(response.data)
-          
+
      })
      .catch((error)=>{
         console.log(error)
      })
-      
+
    },[])
-  
-    
+
+
 
     return(
- 
-        <div>
+
+        <div className={'h-screen'}>
             <div class="flex items-center justify-center">
     <div class="flex border-2 rounded mt-7">
         <input type="text" class="px-4 py-2 w-80" placeholder="Search..."onChange={e => {setSearch(e.target.value)}}/>
@@ -64,7 +64,7 @@ const Orders = () =>{
               return <Order order={order} key={order._id}/>
           })}
         </div>
-         
+
         </div>
 
         )

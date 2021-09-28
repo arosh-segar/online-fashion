@@ -5,14 +5,14 @@ import axios from 'axios'
 import { API_URL } from "../../constants";
 import {Link} from 'react-router-dom'
 
- 
+
 
 const DeliveryOrders = () =>{
 
 
     const [d_orders,setOrders] = useState([]);
     const [search,setSearch] = useState("");
-     
+
 
 
    useEffect(()=>{
@@ -21,20 +21,20 @@ const DeliveryOrders = () =>{
      .then((response)=>{
          console.log(response.data)
          setOrders(response.data)
-          
+
      })
      .catch((error)=>{
         console.log(error)
      })
-      
+
    },[])
-  
-    
+
+
 
     return(
- 
-        <div>
-             <Link to={{pathname:"/deliveryReport", state:{order:d_orders,filter:search}}}  
+
+        <div className={'h-screen'}>
+             <Link to={{pathname:"/delivery/deliveryReport", state:{order:d_orders,filter:search}}}
                 className="ml-40 mt-10  bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                 PRINT SUMMARY
             </Link>
@@ -71,7 +71,7 @@ const DeliveryOrders = () =>{
           }).map(d_order => {
               return <DeliveryOrder d_order={d_order} key={d_order._id}/>
           })}
-        </div>         
+        </div>
         </div>
 
         )

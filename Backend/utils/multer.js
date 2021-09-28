@@ -2,7 +2,10 @@ const multer = require("multer");
 const path = require("path");
 
 module.exports = multer({
-  storage: multer.diskStorage({}),
+  storage:multer.diskStorage,
+    limits:{
+      fileSize:8000000
+    },
   fileFilter: (req, file, cb) => {
     let ext = path.extname(file.originalname);
     if (

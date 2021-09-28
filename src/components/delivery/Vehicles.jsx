@@ -21,32 +21,32 @@ const Vehicles = () =>{
      .then((response)=>{
          console.log(response.data)
          setVehicles(response.data)
-          
+
      })
      .catch((error)=>{
         console.log(error)
      })
-      
+
    },[])
-     
-    
+
+
     const deleteVehicles = (vechileNumber)=>{
 
     axios.delete(`${API_URL}/delivery/deleteVehicle/${vechileNumber}`)
         .then(response =>{
-             
+
             alert("Successfully Deleted")
         }).catch(e =>{
             console.log(e)
     })
 
    }
-  
-    
+
+
 
     return(
- 
-        <div>
+
+        <div className={"h-screen"}>
             <button
                 className="ml-40 mt-10  bg-green-400 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                    onClick={onOpenAddModal}  >

@@ -12,7 +12,7 @@ const DeliveryDashboard = () => {
 
 
  return (
-     
+     <div>
       <body
         className={
           window.location.pathname !== "/delivery/deliveryReport"
@@ -24,29 +24,22 @@ const DeliveryDashboard = () => {
           < DeliveryNavBar />
         )}
         <Switch>
-          <Router  exact path={"/delivery"}>
-
-        <Vehicles/> 
-          </Router>
-          <Route  exact path={"/delivery/orderList"}>
-             <Orders/> 
-          </Route>
-          <Route  exact path={"/delivery/deliveryList"}>
-             <DeliveryOrders/> 
-          </Route>
-          
-
-          <Route
-
-            path={"/delivery/deliveryReport"}
-
-            render={(props) => <DeliveryReport {...props} />}
-
-          ></Route>
+           <Route  exact path={"/delivery"}>
+              <Vehicles/>
+           </Route>
+           <Route  exact path={"/delivery/orderList"}>
+             <Orders/>
+           </Route>
+           <Route  exact path={"/delivery/deliveryList"}>
+             <DeliveryOrders/>
+           </Route>
+            <Route exact path={"/delivery/deliveryReport"}
+                       render={(props) => <DeliveryReport {...props} />}
+            ></Route>
         </Switch>
       </body>
-     
- 
+     </div>
+
   );
 }
 

@@ -15,7 +15,7 @@ const DNavbar = () => {
         <div className="grid grid-cols-4 md:w-9/12 text-center font-semibold text-sm">
           <div className="p-4">
             <Link
-              to="/"
+              to="/delivery"
               className={`font-bold ${
                 window.location.pathname === "/delivery"
                   ? "navlink-hover"
@@ -27,7 +27,7 @@ const DNavbar = () => {
           </div>
           <div className="p-4">
             <Link
-              to="/orderList"
+              to="/delivery/orderList"
               className={`font-bold ${
                 window.location.pathname === "/delivery/orderList"
                   ? "navlink-hover"
@@ -39,7 +39,7 @@ const DNavbar = () => {
           </div>
           <div className="p-4 hidden sm:block">
             <Link
-              to="/deliveryList"
+              to="/delivery/deliveryList"
               className={`font-bold ${
                 window.location.pathname === "/delivery/deliveryList"
                   ? "navlink-hover"
@@ -49,12 +49,12 @@ const DNavbar = () => {
               DELIVERY LIST
             </Link>
           </div>
-          
+
           <div className="p-4">
             <Link
-              to="/logout"
+              to="/login"
               className={`font-bold ${
-                window.location.pathname === "/delivery/logout"
+                window.location.pathname === "/"
                   ? "navlink-hover"
                   : "navlink-no-hover"
               }`}

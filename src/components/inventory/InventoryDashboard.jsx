@@ -9,7 +9,7 @@ import InventoryNavbar from "./InventoryNavbar";
 
 const InventoryDashboard = () => {
   return (
-    <Router>
+    <div>
       <body
         className={
           window.location.pathname !== "/stockRequestsSummary"
@@ -17,28 +17,28 @@ const InventoryDashboard = () => {
             : ""
         }
       >
-        {window.location.pathname !== "/stockRequestsSummary" && (
+        {window.location.pathname !== "/stock/stockRequestsSummary" && (
           <InventoryNavbar />
         )}
         <Switch>
-          <Route exact path={"/"}>
+          <Route exact path={"/stock"}>
             <Stocks />
           </Route>
-          <Route exact path={"/addStock"}>
+          <Route exact path={"/stock/addStock"}>
             <AddStock />
           </Route>
-          <Route path={"/reorder"}>
+          <Route path={"/stock/reorder"}>
             <ReorderStocks />
           </Route>
-          <Route path={"/stockRequests"}>
+          <Route path={"/stock/stockRequests"}>
             <StockRequests />
           </Route>
-          <Route path={"/stockRequestsSummary"}>
+          <Route path={"/stock/stockRequestsSummary"}>
             <StockReport />
           </Route>
         </Switch>
       </body>
-    </Router>
+    </div>
   );
 };
 

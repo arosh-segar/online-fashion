@@ -113,7 +113,7 @@ const EditOrder = (props) => {
 
         let Supplier = {}
 
-        allSuppliers.map(supplier => {
+        allSuppliers.forEach(supplier => {
             if(orderSupplier == supplier.id){
                 Supplier=supplier
             }
@@ -213,15 +213,6 @@ const EditOrder = (props) => {
                                     }}
                                 />
                                 <span className="text-sm">Mark as Received</span>
-                            </label>
-                        </div>
-                        <div className="w-full px-3 mt-3 mb-6 md:mb-0">
-                            <label className="flex mx-2 items-center text-gray-700 font-semibold">
-                                <input
-                                    className="mr-2 leading-tight"
-                                    type="checkbox"
-                                />
-                                <span className="text-sm">Mark as received</span>
                             </label>
                         </div>
                         <div class="w-full px-3 mt-3 mb-6 md:mb-0">

@@ -34,7 +34,8 @@ const Suppliers = (props) =>{
 
     const generateID = ()=>{
 
-        return `S${suppliers.length+1}${Math.floor(Math.random()*10)}`
+        const crypto = window.crypto
+        return `S${suppliers.length+1}${crypto.getRandomValues(new Uint8Array(10))[0]}`
 
     }
 
