@@ -42,7 +42,7 @@ export default class Home extends Component {
         <section>
           <div class="px-5 sm:px-10 lg:px-20 py-10 lg:py-24 mx-auto">
             <h2 className="text-center text-blue-900 text-3xl font-bold">
-              CATEGORIES
+              OUR PRODUCTS COLLECTIONS
             </h2>
             <br />
             <br />
@@ -60,7 +60,7 @@ export default class Home extends Component {
                       class="px-2 w-full py-2 text-xs font-semibold text-white text-center uppercase transition-colors duration-200 transform bg-blue-500 rounded hover:bg-blue-600 focus:bg-gray-400 focus:outline-none"
                       to={"/customer/products"}
                     >
-                      Mens' Wear
+                      START PURCHASING
                     </Link>
                   </div>
                 </div>
@@ -79,7 +79,7 @@ export default class Home extends Component {
                       class="px-2 w-full py-2 text-xs font-semibold text-white text-center uppercase transition-colors duration-200 transform bg-blue-500 rounded hover:bg-blue-600 focus:bg-gray-400 focus:outline-none"
                       to={"/customer/products"}
                     >
-                      Womens' Wear
+                      START PURCHASING
                     </Link>
                   </div>
                 </div>
@@ -98,7 +98,7 @@ export default class Home extends Component {
                       class="px-2 w-full py-2 text-xs font-semibold text-white text-center uppercase transition-colors duration-200 transform bg-blue-500 rounded hover:bg-blue-600 focus:bg-gray-400 focus:outline-none"
                       to={"/customer/products"}
                     >
-                      Kids' Wear
+                      START PURCHASING
                     </Link>
                   </div>
                 </div>
