@@ -54,7 +54,7 @@ const OrdersList = () => {
   const onCloseModal = () => setOpen(false);
 
   return (
-    <div className="bg-blue-100">
+    <div className="bg-blue-300">
       <div className="hidden sm:block pt-10 pb-32 h-screen ">
         <div className="">
           <div className="mx-10">

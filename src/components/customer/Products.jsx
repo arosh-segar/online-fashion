@@ -9,7 +9,7 @@ const Products = (props) => {
     setproducts(props.products);
   }, []);
   return (
-    <section class="bg-blue-100 min-h-screen flex justify-end">
+    <section class="bg-blue-300 min-h-screen flex justify-end">
       <div class="px-5 sm:px-10 lg:px-20 py-10 lg:py-24 mx-auto">
         {/* PRODUCT RETRIEVE */}
         <div className="flex justify-end ">
