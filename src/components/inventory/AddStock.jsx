@@ -72,7 +72,7 @@ const AddStock = () => {
       return false;
     }
 
-    if (!reorderQty || Number(reorderQty) > 1000 || Number(reorderQty) < 100) {
+    if (!reorderQty || Number(reorderQty) > 1000 || Number(reorderQty) < 1) {
       isValid = false;
       return false;
     }
