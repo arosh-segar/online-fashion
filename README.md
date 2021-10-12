@@ -12,7 +12,7 @@ Name | Student ID | Username |
 A.J.Segar | IT19056630 | arosh-segar | 
 Sabesan.G | IT19129822 | sabesa | 
 Mathursan.B | IT19058788 | Mathursan-007 | 
-Yahdhursheika.V | IT19186948 | Yadhursheeka | 
+V.Yahdhursheika | IT19186948 | Yadhursheeka | 
 
 **Project Description :** 
 LYNX is a clothing store which has a web application that lets their customers order clothes online and also it lets the business users to
