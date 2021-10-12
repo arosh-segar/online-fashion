@@ -1,6 +1,55 @@
-# Getting Started with Create React App
+**Group ID :** 2021S2_REG_WE_11
+<hr> 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Project Name :** Online Fashon Store
+<hr> 
+
+**Group Details :** 
+<hr> 
+
+Name | Student ID | Username |
+--- | --- | --- | 
+A.J.Segar | IT19056630 | arosh-segar | 
+Sabesan.G | IT19129822 | sabesan1998 | 
+Mathursan.B | IT19058788 | Mathursan-007 | 
+Yahdhursheika.V | IT19186948 | Yadhursheeka | 
+
+**Project Description :** 
+LYNX is a clothing store which has a web application that lets their customers order clothes online and also it lets the business users to
+manage the company’s transactions online. This web application consists of 4 types of users such as customer, delivery manager,
+supplier manager and inventory manager. Customers can browse through the available products and purchase their favorite products.
+The delivery manger manages the details of the delivery vehicles and assigns available vehicles to deliver the orders placed by the
+customers to ensure effective delivery. The inventory manger maintains the details of the stocks and keeps track of the re-order level
+of the stocks and informs the supplier manager when the stock level reaches the re-order level. The supplier manager maintains the
+details of the suppliers of the company and requests for stocks from the suppliers by placing the purchase order when there’s a
+shortage of stocks is informed by the inventory manager. 
+<hr> 
+
+**Technologies :** Online Fashon Store
+1. Front end : React js 
+2. Backend : Mongo client, Express js
+3. Database : Mongo DB
+<hr> 
+
+**How to get started with your app :** 
+<hr>
+
+**Prerequisites**
+1. Node js v12 or above should be installed
+2. Github should be installed
+3. Any IDE that supports Javascript should be installed
+
+**Procedure of setting up prerequisites and run the project**
+1. Open the IDE 
+2. Clone the project using this link [https://github.com/arosh-segar/online-fashion.git](https://github.com/arosh-segar/online-fashion.git)
+3. First you need to install the packages for both front end and back end
+4. Open two terminals one for front end and back end
+5. By default you will be in the front end directory therefore you can directly run **npm install** in the front end terminal
+6. Next you need to switch to the back end directory in the back end terminal by giving the **cd Backend** command and then you can run the **npm install** to install the back end packages
+7. Once all the packages are installed in both the front end and the backend you can then start the backend server by running **npm start**.
+8. Once the backend server is started you can run the **npm start** command in the front end terminal to start the front end server. This will usually run the front end on port number 3000
+9. Next you can open up any browser and type the following url http://localhost:3000 and this will load the web application
+
 
 ## Available Scripts
 
@@ -28,43 +77,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
