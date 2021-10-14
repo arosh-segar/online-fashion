@@ -36,7 +36,7 @@ shortage of stocks is informed by the inventory manager.
 
 **Prerequisites**
 1. Node js v12 or above should be installed
-2. Github should be installed
+2. Git should be installed
 3. Any IDE that supports Javascript should be installed
 
 **Procedure of setting up prerequisites and run the project**
